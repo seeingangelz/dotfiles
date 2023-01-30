@@ -1,0 +1,2 @@
+add Music/songs/
+set status_display_program=~/.local/bin/cmus-notify

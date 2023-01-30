@@ -1,0 +1,4 @@
+#!/bin/sh
+
+flameshot gui -r | xclip -selection clipboard -t image/png
+dunstify "Screenshot copied to clipboard"

@@ -1,0 +1,17 @@
+#!/bin/sh
+set -e
+WALLPAPER_PATH="$HOME/Pictures/wallpapers/"
+DMENU="$(ls $WALLPAPER_PATH | dmenu -p "Set Wallpaper:" -l 20)"
+SELECTED="$WALLPAPER_PATH$DMENU"
+if [ -z "$DMENU"]; then
+	exit 0
+else
+	wal -i $SELECTED
+	sed -i ~/.Xresources -re '1,1000d'
+	cat ~/.cache/wal/colors.Xresources >> ~/.Xresources
+  wal-telegram -t 
+  pywalfox update
+  zathura-pywal
+	pkill dwm
+    dunstify "Changed wallpaper"
+fi
