@@ -1,4 +1,3 @@
-#test
 export DISPLAY=:0
 
 PROMPT="λ [%~] "
@@ -31,7 +30,7 @@ alias r="sudo pacman -Rsn"
 alias ys="yay -S"
 alias yss="yay -Ss"
 alias zshrc="nvim ~/.zshrc"
-alias vim="nvim"
+#alias vim="nvim"
 alias ed="cd $HOME/.config/suckless/dwm && ls"
 alias es="cd $HOME/.config/suckless/st && ls"
 alias em="cd $HOME/.config/suckless/dmenu && ls"

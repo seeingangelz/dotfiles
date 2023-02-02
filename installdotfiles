@@ -1,0 +1,32 @@
+#!/bin/sh
+path=$(pwd)
+
+# Home directory
+ln -sf $path/.Xresources $HOME/.Xresources
+ln -sf $path/.xinitrc $HOME/.xinitrc
+ln -sf $path/.Xmodmap $HOME/.Xmodmap
+ln -sf $path/.zprofile $HOME/.zprofile
+ln -sf $path/.zshrc $HOME/.zshrc
+
+# Config directory
+[ ! -d $HOME/.config ] && mkdir $HOME/.config
+[ ! -d $HOME/.local/bin ] && mkdir $HOME/.local/bin
+
+ln -sf $path/.config/cava $HOME/.config/cava
+ln -sf $path/.config/dunst $HOME/.config/dunst
+ln -sf $path/.config/mpv $HOME/.config/mpv
+ln -sf $path/.config/neofetch $HOME/.config/neofetch
+ln -sf $path/.config/picom $HOME/.config/picom
+ln -sf $path/.config/ranger $HOME/.config/ranger
+ln -sf $path/.config/zathura $HOME/.config/zathura
+ln -sf $path/.config/qutebrowser $HOME/.config/qutebrowser
+ln -sf $path/.config/cmus $HOME/.config/cmus
+ln -sf $path/.config/zsh $HOME/.config/zsh
+ln -sf $path/.emacs.d/ $HOME/.emacs.d
+
+ln -sf $path/.local/bin/cmus-notify $HOME/.local/bin
+ln -sf $path/.local/bin/dwall $HOME/.local/bin
+ln -sf $path/.local/bin/dfiles $HOME/.local/bin
+ln -sf $path/.local/bin/emoji $HOME/.local/bin
+ln -sf $path/.local/bin/screenshot $HOME/.local/bin
+ln -sf $path/.local/bin/togglemute $HOME/.local/bin

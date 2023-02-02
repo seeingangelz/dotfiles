@@ -38,9 +38,9 @@ if [ -f "$usermodmap" ]; then
 fi
 
 # Run ssh-agent and dwm in an infinite loop
-while :; do
+ while :; do
   ssh-agent dwm
-done
+ done
 
 # Execute dwm
 exec dbus-launch --sh-syntax --exit-with-session dwm
