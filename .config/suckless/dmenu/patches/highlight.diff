@@ -1,0 +1,97 @@
+From fcdc1593ed418166f20b7e691a49b1e6eefc116e Mon Sep 17 00:00:00 2001
+From: Nathaniel Evan <nathanielevan@zohomail.com>
+Date: Fri, 11 Dec 2020 11:08:12 +0700
+Subject: [PATCH] Highlight matched text in a different color scheme
+
+---
+ config.def.h |  3 +++
+ dmenu.c      | 44 +++++++++++++++++++++++++++++++++++++++++---
+ 2 files changed, 44 insertions(+), 3 deletions(-)
+
+diff --git a/config.def.h b/config.def.h
+index 1edb647..79be73a 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -11,7 +11,10 @@ static const char *colors[SchemeLast][2] = {
+ 	/*     fg         bg       */
+ 	[SchemeNorm] = { "#bbbbbb", "#222222" },
+ 	[SchemeSel] = { "#eeeeee", "#005577" },
++	[SchemeSelHighlight] = { "#ffc978", "#005577" },
++	[SchemeNormHighlight] = { "#ffc978", "#222222" },
+ 	[SchemeOut] = { "#000000", "#00ffff" },
++	[SchemeOutHighlight] = { "#ffc978", "#00ffff" },
+ };
+ /* -l option; if nonzero, dmenu uses vertical list with given number of lines */
+ static unsigned int lines      = 0;
+diff --git a/dmenu.c b/dmenu.c
+index 65f25ce..cce1ad1 100644
+--- a/dmenu.c
++++ b/dmenu.c
+@@ -26,8 +26,7 @@
+ #define TEXTW(X)              (drw_fontset_getwidth(drw, (X)) + lrpad)
+ 
+ /* enums */
+-enum { SchemeNorm, SchemeSel, SchemeOut, SchemeLast }; /* color schemes */
+-
++enum { SchemeNorm, SchemeSel, SchemeOut, SchemeNormHighlight, SchemeSelHighlight, SchemeOutHighlight, SchemeLast }; /* color schemes */
+ struct item {
+ 	char *text;
+ 	struct item *left, *right;
+@@ -113,6 +112,43 @@ cistrstr(const char *s, const char *sub)
+ 	return NULL;
+ }
+ 
++static void
++drawhighlights(struct item *item, int x, int y, int maxw)
++{
++	char restorechar, tokens[sizeof text], *highlight,  *token;
++	int indentx, highlightlen;
++
++	drw_setscheme(drw, scheme[item == sel ? SchemeSelHighlight : item->out ? SchemeOutHighlight : SchemeNormHighlight]);
++	strcpy(tokens, text);
++	for (token = strtok(tokens, " "); token; token = strtok(NULL, " ")) {
++		highlight = fstrstr(item->text, token);
++		while (highlight) {
++			// Move item str end, calc width for highlight indent, & restore
++			highlightlen = highlight - item->text;
++			restorechar = *highlight;
++			item->text[highlightlen] = '\0';
++			indentx = TEXTW(item->text);
++			item->text[highlightlen] = restorechar;
++
++			// Move highlight str end, draw highlight, & restore
++			restorechar = highlight[strlen(token)];
++			highlight[strlen(token)] = '\0';
++			if (indentx - (lrpad / 2) - 1 < maxw)
++				drw_text(
++					drw,
++					x + indentx - (lrpad / 2) - 1,
++					y,
++					MIN(maxw - indentx, TEXTW(highlight) - lrpad),
++					bh, 0, highlight, 0
++				);
++			highlight[strlen(token)] = restorechar;
++
++			if (strlen(highlight) - strlen(token) < strlen(token)) break;
++			highlight = fstrstr(highlight + strlen(token), token);
++		}
++	}
++}
++
+ static int
+ drawitem(struct item *item, int x, int y, int w)
+ {
+@@ -123,7 +159,9 @@ drawitem(struct item *item, int x, int y, int w)
+ 	else
+ 		drw_setscheme(drw, scheme[SchemeNorm]);
+ 
+-	return drw_text(drw, x, y, w, bh, lrpad / 2, item->text, 0);
++	int r = drw_text(drw, x, y, w, bh, lrpad / 2, item->text, 0);
++	drawhighlights(item, x, y, w);
++	return r;
+ }
+ 
+ static void
+-- 
+2.29.2
+

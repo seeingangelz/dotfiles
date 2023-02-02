@@ -21,6 +21,7 @@ ln -sf $path/.config/ranger $HOME/.config/ranger
 ln -sf $path/.config/zathura $HOME/.config/zathura
 ln -sf $path/.config/qutebrowser $HOME/.config/qutebrowser
 ln -sf $path/.config/cmus $HOME/.config/cmus
+ln -sf $path/.config/suckless $HOME/.config/suckless
 ln -sf $path/.config/zsh $HOME/.config/zsh
 ln -sf $path/.emacs.d/ $HOME/.emacs.d
 

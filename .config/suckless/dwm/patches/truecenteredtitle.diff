@@ -1,0 +1,34 @@
+From be8b8d6a0b864a7c6ca7e37a1df9f53ddd87916b Mon Sep 17 00:00:00 2001
+From: explosion-mental <explosion0mental@gmail.com>
+Date: Tue, 12 Apr 2022 12:10:14 -0500
+Subject: [PATCH] [PATCH][truecenteredtitle]Center the title with proportion to
+ the area that the title has, unlike the [other center title](../centretitle)
+ patch that center proportion to the screen size width (`m->ww`), which on
+ smaller monitors doesn't get the effect.
+
+If the title name is to long (title area too small for the title string)
+it will back up to the default behaviour, which is to truncate the
+title.
+---
+ dwm.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/dwm.c b/dwm.c
+index a96f33c..6198b29 100644
+--- a/dwm.c
++++ b/dwm.c
+@@ -735,7 +735,10 @@ drawbar(Monitor *m)
+ 	if ((w = m->ww - tw - x) > bh) {
+ 		if (m->sel) {
+ 			drw_setscheme(drw, scheme[m == selmon ? SchemeSel : SchemeNorm]);
+-			drw_text(drw, x, 0, w, bh, lrpad / 2, m->sel->name, 0);
++			if (TEXTW(m->sel->name) > w) /* title is bigger than the width of the title rectangle, don't center */
++				drw_text(drw, x, 0, w, bh, lrpad / 2, m->sel->name, 0);
++			else /* center window title */
++				drw_text(drw, x, 0, w, bh, (w - TEXTW(m->sel->name)) / 2, m->sel->name, 0);
+ 			if (m->sel->isfloating)
+ 				drw_rect(drw, x + boxs, boxs, boxw, boxw, m->sel->isfixed, 0);
+ 		} else {
+--
+2.35.1
+

@@ -1,0 +1,240 @@
+From f30583c6e2ab5e7de6ef4ebf156076ac0f6e69fc Mon Sep 17 00:00:00 2001
+From: Jack Bird <jack.bird@durham.ac.uk>
+Date: Fri, 27 Aug 2021 00:53:14 +0100
+Subject: [PATCH] xresources updated for 138b405
+
+---
+ config.def.h | 61 ++++++++++++++++++++++++++++++--------------
+ drw.c        |  2 +-
+ drw.h        |  2 +-
+ dwm.c        | 72 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 116 insertions(+), 21 deletions(-)
+
+diff --git a/config.def.h b/config.def.h
+index a2ac963..87ac198 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -1,21 +1,23 @@
+ /* See LICENSE file for copyright and license details. */
+ 
+ /* appearance */
+-static const unsigned int borderpx  = 1;        /* border pixel of windows */
+-static const unsigned int snap      = 32;       /* snap pixel */
+-static const int showbar            = 1;        /* 0 means no bar */
+-static const int topbar             = 1;        /* 0 means bottom bar */
+-static const char *fonts[]          = { "monospace:size=10" };
+-static const char dmenufont[]       = "monospace:size=10";
+-static const char col_gray1[]       = "#222222";
+-static const char col_gray2[]       = "#444444";
+-static const char col_gray3[]       = "#bbbbbb";
+-static const char col_gray4[]       = "#eeeeee";
+-static const char col_cyan[]        = "#005577";
+-static const char *colors[][3]      = {
+-	/*               fg         bg         border   */
+-	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
+-	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
++static unsigned int borderpx  = 1;        /* border pixel of windows */
++static unsigned int snap      = 32;       /* snap pixel */
++static int showbar            = 1;        /* 0 means no bar */
++static int topbar             = 1;        /* 0 means bottom bar */
++static char font[]            = "monospace:size=10";
++static char dmenufont[]       = "monospace:size=10";
++static const char *fonts[]          = { font };
++static char normbgcolor[]           = "#222222";
++static char normbordercolor[]       = "#444444";
++static char normfgcolor[]           = "#bbbbbb";
++static char selfgcolor[]            = "#eeeeee";
++static char selbordercolor[]        = "#005577";
++static char selbgcolor[]            = "#005577";
++static char *colors[][3] = {
++       /*               fg           bg           border   */
++       [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
++       [SchemeSel]  = { selfgcolor,  selbgcolor,  selbordercolor  },
+ };
+ 
+ /* tagging */
+@@ -32,9 +34,9 @@ static const Rule rules[] = {
+ };
+ 
+ /* layout(s) */
+-static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
+-static const int nmaster     = 1;    /* number of clients in master area */
+-static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
++static float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
++static int nmaster     = 1;    /* number of clients in master area */
++static int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
+ static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
+ 
+ static const Layout layouts[] = {
+@@ -57,9 +59,30 @@ static const Layout layouts[] = {
+ 
+ /* commands */
+ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
+-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
++static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbordercolor, "-sf", selfgcolor, NULL };
+ static const char *termcmd[]  = { "st", NULL };
+ 
++/*
++ * Xresources preferences to load at startup
++ */
++ResourcePref resources[] = {
++		{ "font",               STRING,  &font },
++		{ "dmenufont",          STRING,  &dmenufont },
++		{ "normbgcolor",        STRING,  &normbgcolor },
++		{ "normbordercolor",    STRING,  &normbordercolor },
++		{ "normfgcolor",        STRING,  &normfgcolor },
++		{ "selbgcolor",         STRING,  &selbgcolor },
++		{ "selbordercolor",     STRING,  &selbordercolor },
++		{ "selfgcolor",         STRING,  &selfgcolor },
++		{ "borderpx",          	INTEGER, &borderpx },
++		{ "snap",          		INTEGER, &snap },
++		{ "showbar",          	INTEGER, &showbar },
++		{ "topbar",          	INTEGER, &topbar },
++		{ "nmaster",          	INTEGER, &nmaster },
++		{ "resizehints",       	INTEGER, &resizehints },
++		{ "mfact",      	 	FLOAT,   &mfact },
++};
++
+ static Key keys[] = {
+ 	/* modifier                     key        function        argument */
+ 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
+diff --git a/drw.c b/drw.c
+index 4cdbcbe..8f1059e 100644
+--- a/drw.c
++++ b/drw.c
+@@ -208,7 +208,7 @@ drw_clr_create(Drw *drw, Clr *dest, const char *clrname)
+ /* Wrapper to create color schemes. The caller has to call free(3) on the
+  * returned color scheme when done using it. */
+ Clr *
+-drw_scm_create(Drw *drw, const char *clrnames[], size_t clrcount)
++drw_scm_create(Drw *drw, char *clrnames[], size_t clrcount)
+ {
+ 	size_t i;
+ 	Clr *ret;
+diff --git a/drw.h b/drw.h
+index 4bcd5ad..42b04ce 100644
+--- a/drw.h
++++ b/drw.h
+@@ -39,7 +39,7 @@ void drw_font_getexts(Fnt *font, const char *text, unsigned int len, unsigned in
+ 
+ /* Colorscheme abstraction */
+ void drw_clr_create(Drw *drw, Clr *dest, const char *clrname);
+-Clr *drw_scm_create(Drw *drw, const char *clrnames[], size_t clrcount);
++Clr *drw_scm_create(Drw *drw, char *clrnames[], size_t clrcount);
+ 
+ /* Cursor abstraction */
+ Cur *drw_cur_create(Drw *drw, int shape);
+diff --git a/dwm.c b/dwm.c
+index 5e4d494..2214b19 100644
+--- a/dwm.c
++++ b/dwm.c
+@@ -36,6 +36,7 @@
+ #include <X11/Xlib.h>
+ #include <X11/Xproto.h>
+ #include <X11/Xutil.h>
++#include <X11/Xresource.h>
+ #ifdef XINERAMA
+ #include <X11/extensions/Xinerama.h>
+ #endif /* XINERAMA */
+@@ -141,6 +142,19 @@ typedef struct {
+ 	int monitor;
+ } Rule;
+ 
++/* Xresources preferences */
++enum resource_type {
++	STRING = 0,
++	INTEGER = 1,
++	FLOAT = 2
++};
++
++typedef struct {
++	char *name;
++	enum resource_type type;
++	void *dst;
++} ResourcePref;
++
+ /* function declarations */
+ static void applyrules(Client *c);
+ static int applysizehints(Client *c, int *x, int *y, int *w, int *h, int interact);
+@@ -234,6 +248,8 @@ static int xerror(Display *dpy, XErrorEvent *ee);
+ static int xerrordummy(Display *dpy, XErrorEvent *ee);
+ static int xerrorstart(Display *dpy, XErrorEvent *ee);
+ static void zoom(const Arg *arg);
++static void load_xresources(void);
++static void resource_load(XrmDatabase db, char *name, enum resource_type rtype, void *dst);
+ 
+ /* variables */
+ static const char broken[] = "broken";
+@@ -2127,6 +2143,60 @@ zoom(const Arg *arg)
+ 	pop(c);
+ }
+ 
++void
++resource_load(XrmDatabase db, char *name, enum resource_type rtype, void *dst)
++{
++	char *sdst = NULL;
++	int *idst = NULL;
++	float *fdst = NULL;
++
++	sdst = dst;
++	idst = dst;
++	fdst = dst;
++
++	char fullname[256];
++	char *type;
++	XrmValue ret;
++
++	snprintf(fullname, sizeof(fullname), "%s.%s", "dwm", name);
++	fullname[sizeof(fullname) - 1] = '\0';
++
++	XrmGetResource(db, fullname, "*", &type, &ret);
++	if (!(ret.addr == NULL || strncmp("String", type, 64)))
++	{
++		switch (rtype) {
++		case STRING:
++			strcpy(sdst, ret.addr);
++			break;
++		case INTEGER:
++			*idst = strtoul(ret.addr, NULL, 10);
++			break;
++		case FLOAT:
++			*fdst = strtof(ret.addr, NULL);
++			break;
++		}
++	}
++}
++
++void
++load_xresources(void)
++{
++	Display *display;
++	char *resm;
++	XrmDatabase db;
++	ResourcePref *p;
++
++	display = XOpenDisplay(NULL);
++	resm = XResourceManagerString(display);
++	if (!resm)
++		return;
++
++	db = XrmGetStringDatabase(resm);
++	for (p = resources; p < resources + LENGTH(resources); p++)
++		resource_load(db, p->name, p->type, p->dst);
++	XCloseDisplay(display);
++}
++
+ int
+ main(int argc, char *argv[])
+ {
+@@ -2139,6 +2209,8 @@ main(int argc, char *argv[])
+ 	if (!(dpy = XOpenDisplay(NULL)))
+ 		die("dwm: cannot open display");
+ 	checkotherwm();
++	XrmInitialize();
++	load_xresources();
+ 	setup();
+ #ifdef __OpenBSD__
+ 	if (pledge("stdio rpath proc exec", NULL) == -1)
+-- 
+2.33.0
+

@@ -1,0 +1,101 @@
+# HG changeset patch
+# User Barbu Paul - Gheorghe <barbu.paul.gheorghe@gmail.com>
+# Date 1354650884 -7200
+# Node ID 6c472a21a5887c5295a331c48c4da188ec2c8413
+# Parent  aaab44133a6830c9a00263731d098c01cc1d6fb5
+selfrestart now magically locates the current dwm (no need to hardcode a path)
+
+diff -r aaab44133a68 -r 6c472a21a588 config.def.h
+--- a/config.def.h	Tue Dec 04 21:54:44 2012 +0200
++++ b/config.def.h	Tue Dec 04 21:54:44 2012 +0200
+@@ -54,6 +54,8 @@
+ static const char *termcmd[]  = { "urxvtc", NULL };
+ static const char *filemancmd[]  = { "thunar", NULL };
+ 
++#include "selfrestart.c"
++
+ static Key keys[] = {
+ 	/* modifier                     key        function        argument */
+ 	{ MODKEY,                       XK_r,      spawn,          {.v = dmenucmd } },
+@@ -89,6 +91,7 @@
+ 	TAGKEYS(                        XK_7,                      6)
+ 	TAGKEYS(                        XK_8,                      7)
+ 	TAGKEYS(                        XK_9,                      8)
++    { MODKEY|ShiftMask,             XK_r,      self_restart,   {0} },
+ 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+ };
+ 
+@@ -108,4 +111,3 @@
+ 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
+ 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
+ };
+-
+diff -r aaab44133a68 -r 6c472a21a588 selfrestart.c
+--- /dev/null	Thu Jan 01 00:00:00 1970 +0000
++++ b/selfrestart.c	Tue Dec 04 21:54:44 2012 +0200
+@@ -0,0 +1,65 @@
++#include <unistd.h>
++#include <sys/types.h>
++#include <sys/stat.h>
++#include <stdio.h>
++#include <stdlib.h>
++
++/**
++ * Magically finds the current's executable path
++ *
++ * I'm doing the do{}while(); trick because Linux (what I'm running) is not
++ * POSIX compilant and so lstat() cannot be trusted on /proc entries
++ *
++ * @return char* the path of the current executable
++ */
++char *get_dwm_path(){
++    struct stat s;
++    int r, length, rate = 42;
++    char *path = NULL;
++
++    if(lstat("/proc/self/exe", &s) == -1){
++        perror("lstat:");
++        return NULL;
++    }
++
++    length = s.st_size + 1 - rate;
++
++    do{
++        length+=rate;
++
++        free(path);
++        path = malloc(sizeof(char) * length);
++
++        if(path == NULL){
++            perror("malloc:");
++            return NULL;
++        }
++
++        r = readlink("/proc/self/exe", path, length);
++
++        if(r == -1){
++            perror("readlink:");
++            return NULL;
++        }
++    }while(r >= length);
++
++    path[r] = '\0';
++
++    return path;
++}
++
++/**
++ * self-restart
++ *
++ * Initially inspired by: Yu-Jie Lin
++ * https://sites.google.com/site/yjlnotes/notes/dwm
++ */
++void self_restart(const Arg *arg) {
++    char *const argv[] = {get_dwm_path(), NULL};
++
++    if(argv[0] == NULL){
++        return;
++    }
++
++    execv(argv[0], argv);
++}
