@@ -48,3 +48,5 @@ alias yt-best="yt-dlp --extract-audio --audio-format best "
 alias yt-mp3="yt-dlp --extract-audio --audio-format mp3 "
 alias ytb-best="yt-dlp -f bestvideo+bestaudio "
 upload() { curl -F"file=@$1" https://envs.sh ; }
+
+neofetch

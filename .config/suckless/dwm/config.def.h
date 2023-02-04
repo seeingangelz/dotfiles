@@ -31,7 +31,7 @@ static const unsigned int alphas[][3]      = {
 	/*                     fg       bg        border   */
 	[SchemeNorm]     = { OPAQUE, baralpha, borderalpha },
 	[SchemeSel]      = { OPAQUE, baralpha, borderalpha },
-        [SchemeStatus]   = { OPAQUE, baralpha, borderalpha },
+  [SchemeStatus]   = { OPAQUE, baralpha, borderalpha },
 	[SchemeTagsSel]  = { OPAQUE, baralpha, borderalpha },
 	[SchemeTagsNorm] = { OPAQUE, baralpha, borderalpha },
 	[SchemeInfoSel]  = { OPAQUE, baralpha, borderalpha },
@@ -42,10 +42,10 @@ static const unsigned int alphas[][3]      = {
 //static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 static const char *tags[] = { "", "", "", "", "", "" };
 
-static const unsigned int ulinepad	= 5;	/* horizontal padding between the underline and tag */
-static const unsigned int ulinestroke	= 1;	/* thickness / height of the underline */
+static const unsigned int ulinepad	    = 5;	/* horizontal padding between the underline and tag */
+static const unsigned int ulinestroke	  = 1;	/* thickness / height of the underline */
 static const unsigned int ulinevoffset	= 0;	/* how far above the bottom of the bar the line should appear */
-static const int ulineall 		= 0;	/* 1 to show underline on all tags, 0 for just the active ones */
+static const int ulineall 		          = 0;	/* 1 to show underline on all tags, 0 for just the active ones */
 
 static const Rule rules[] = {
        /* xprop(1):
@@ -75,7 +75,7 @@ static const Layout layouts[] = {
 	{ "[M]",      monocle },
  	{ "[@]",      spiral },
  	{ "[\\]",     dwindle },
-    	{ "|M|",      centeredmaster },
+  { "|M|",      centeredmaster },
 	{ ">M>",      centeredfloatingmaster },
 };
 
@@ -96,32 +96,32 @@ static const char *dmenucmd[]   =  { "dmenu_run", "-l", "20", "-m", dmenumon, "-
 static const char *termcmd[]    =  { "st", NULL };
 static const char *screenshot[]	=  { "screenshot", NULL };
 static const char *fullshot[]   =  { "flameshot", "full", NULL };
-static const char *browser[]	=  { "firefox", NULL };
-static const char *ranger[]	=  { "st", "-e", "ranger", NULL };
-static const char *cmus[]	=  { "st", "-e", "cmus", NULL };
-static const char *slock[] 	=  { "slock", NULL };
-static const char *qalc[] 	=  { "qalculate-gtk", NULL };
-static const char *telegram[]	=  { "telegram-desktop", "-l", NULL };
-static const char *dwall[]	=  { "dwall", NULL };
-static const char *emacs[]	=  { "emacs", NULL };
-static const char *dfiles[]	=  { "dfiles", NULL };
-static const char *pulse[]	=  { "st", "-e", "pulsemixer", NULL };
-static const char *inclight[]	=  { "xbacklight", "-inc", "10", NULL };
-static const char *declight[]	=  { "xbacklight", "-dec", "10", NULL };
-static const char *volup[]	=  { "pulsemixer", "--change", "+5", NULL };
-static const char *voldown[]	=  { "pulsemixer", "--change", "-5", NULL };
-static const char *volmute[]	=  { "togglemute", NULL };
+static const char *browser[]	  =  { "firefox", NULL };
+static const char *ranger[]	    =  { "st", "-e", "ranger", NULL };
+static const char *cmus[]	      =  { "st", "-e", "cmus", NULL };
+static const char *slock[] 	    =  { "slock", NULL };
+static const char *qalc[] 	    =  { "qalculate-gtk", NULL };
+static const char *telegram[]	  =  { "telegram-desktop", "-l", NULL };
+static const char *dwall[]	    =  { "dwall", NULL };
+static const char *emacs[]	    =  { "emacs", NULL };
+static const char *dfiles[]	    =  { "dfiles", NULL };
+static const char *pulse[]	    =  { "st", "-e", "pulsemixer", NULL };
+static const char *inclight[]	  =  { "xbacklight", "-inc", "10", NULL };
+static const char *declight[]	  =  { "xbacklight", "-dec", "10", NULL };
+static const char *volup[]	    =  { "pulsemixer", "--change", "+5", NULL };
+static const char *voldown[]	  =  { "pulsemixer", "--change", "-5", NULL };
+static const char *volmute[]	  =  { "togglemute", NULL };
 
 /* Xresources preferences to load at startup */
 ResourcePref resources[] = {
-	 	{ "color4", 		STRING,  &normbordercolor},
-    		{ "color14", 		STRING,  &selbordercolor},
-    		{ "color0", 		STRING,  &normbgcolor},
-    		{ "color4", 		STRING,  &normfgcolor},
-    		{ "color0", 		STRING,  &selfgcolor},
-    		{ "color4", 		STRING,  &selbgcolor},
-		{ "font",               STRING,  &font },
-		{ "dmenufont",          STRING,  &dmenufont },
+	 	{ "color4", 		        STRING,  &normbordercolor},
+    { "color14", 		        STRING,  &selbordercolor},
+    { "color0", 		        STRING,  &normbgcolor},
+ 		{ "color4", 		        STRING,  &normfgcolor},
+ 		{ "color0", 		        STRING,  &selfgcolor},
+ 		{ "color4", 		        STRING,  &selbgcolor},
+    { "font",               STRING,  &font },
+    { "dmenufont",          STRING,  &dmenufont },
 		{ "normbgcolor",        STRING,  &normbgcolor },
 		{ "normbordercolor",    STRING,  &normbordercolor },
 		{ "normfgcolor",        STRING,  &normfgcolor },
@@ -129,12 +129,12 @@ ResourcePref resources[] = {
 		{ "selbordercolor",     STRING,  &selbordercolor },
 		{ "selfgcolor",         STRING,  &selfgcolor },
 		{ "borderpx",          	INTEGER, &borderpx },
-		{ "snap",          	INTEGER, &snap },
+		{ "snap",          	    INTEGER, &snap },
 		{ "showbar",          	INTEGER, &showbar },
-		{ "topbar",          	INTEGER, &topbar },
+		{ "topbar",          	  INTEGER, &topbar },
 		{ "nmaster",          	INTEGER, &nmaster },
 		{ "resizehints",       	INTEGER, &resizehints },
-		{ "mfact",      	FLOAT,   &mfact },
+		{ "mfact",      	      FLOAT,   &mfact },
 };
 
 #include "selfrestart.c"
@@ -155,11 +155,11 @@ static const Key keys[] = {
 	{ MODKEY,                   XK_F6,         spawn,          {.v = pulse } },
 	{ MODKEY,                   XK_F11,        spawn,          {.v = slock } },
 	{ MODKEY,                   XK_F12,        spawn,          {.v = qalc } },
-	{ 0,			    0x1008ff13,    spawn,          {.v = volup } },
-	{ 0,			    0x1008ff11,    spawn,          {.v = voldown } },
-	{ 0,			    0x1008ff12,    spawn,          {.v = volmute } },
-	{ 0,			    0x1008ff02,    spawn,          {.v = inclight } },
-	{ 0,			    0x1008ff03,    spawn,          {.v = declight } },
+	{ 0,              			    0x1008ff13,    spawn,          {.v = volup } },
+	{ 0,			                  0x1008ff11,    spawn,          {.v = voldown } },
+	{ 0,			                  0x1008ff12,    spawn,          {.v = volmute } },
+	{ 0,			                  0x1008ff02,    spawn,          {.v = inclight } },
+	{ 0,			                  0x1008ff03,    spawn,          {.v = declight } },
 	{ MODKEY|ShiftMask,         XK_e,          spawn,          {.v = dwall} },
 	{ MODKEY|ShiftMask,         XK_s,          spawn,          {.v = dfiles} },
 	{ MODKEY,                   XK_b,          togglebar,      {0} },
@@ -169,7 +169,7 @@ static const Key keys[] = {
 	{ MODKEY,                   XK_d,          incnmaster,     {.i = -1 } },
 	{ MODKEY,                   XK_h,          setmfact,       {.f = -0.05} },
 	{ MODKEY,                   XK_l,          setmfact,       {.f = +0.05} },
-    	{ MODKEY,                   XK_k,          setcfact,       {.f = +0.25} },
+ 	{ MODKEY,                   XK_k,          setcfact,       {.f = +0.25} },
 	{ MODKEY,                   XK_j,          setcfact,       {.f = -0.25} },
 	{ MODKEY|ShiftMask,         XK_o,          setcfact,       {.f =  0.00} },
 	{ MODKEY|ShiftMask,         XK_Right,      movestack,      {.i = +1 } },

@@ -62,6 +62,11 @@ if [ -L $HOME/.config/suckless ]; then
 fi
 ln -sf $path/.config/suckless $HOME/.config/suckless
 
+if [ -L $HOME/.config/nvim ]; then
+  rm $HOME/.config/nvim
+fi
+ln -sf $path/.config/nvim $HOME/.config/nvim
+
 if [ -L $HOME/.config/zsh ]; then
   rm $HOME/.config/zsh
 fi
