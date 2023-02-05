@@ -40,7 +40,7 @@ static const unsigned int alphas[][3]      = {
 
 /* tagging */
 //static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
-static const char *tags[] = { "", "", "", "", "", "" };
+static const char *tags[] = { "", "", "", "", "", "", "", "" };
 
 static const unsigned int ulinepad	    = 5;	/* horizontal padding between the underline and tag */
 static const unsigned int ulinestroke	  = 1;	/* thickness / height of the underline */
@@ -56,9 +56,11 @@ static const Rule rules[] = {
 	{ "Gimp",              NULL,     NULL,       0,         0,          0,           0,        -1 },
 	{ "Emacs",             NULL,     NULL,    1<<2,         0,          0,          -1,        -1 },
 	{ "firefox",           NULL,     NULL,    1<<3,         0,          0,          -1,        -1 },
-	{ "TelegramDesktop",   NULL,     NULL,    1<<4,         0,          0,          -1,        -1 },
+	{ "Steam",             NULL,     NULL,    1<<4,         0,          0,          -1,        -1 },
+	{ "TelegramDesktop",   NULL,     NULL,    1<<5,         0,          0,          -1,        -1 },
 	{ "St",                NULL,     NULL,       0,         0,          1,           1,        -1 },
-	{ "Qalculate-gtk",     NULL,     NULL,       0,         1,          1,           1,        -1 },
+	{ "obs",               NULL,     NULL,    1<<7,         0,          0,           1,        -1 },
+	{ "Qalculate-gtk",     NULL,     NULL,       0,         1,          0,           1,        -1 },
 };
 
 /* layout(s) */
