@@ -1,7 +1,7 @@
 #/bin/bash
 
 dte(){
-	dte="$(date +"%a %d/%m/%y |  %H:%M")"
+	dte="$(date +"%a %d/%m |  %H:%M")"
 	echo -e " $dte"
 }
 
