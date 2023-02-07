@@ -30,6 +30,11 @@ bat(){
     fi
 }
 
+wtr(){
+    wtr=`curl -s "wttr.in/?format=3" | grep -o -E '[0-9]+°C'`
+    echo -e "󰀸 $wtr"
+}
+
 bri(){
     bri=`xbacklight -get`
     echo -e " $bri%"
@@ -120,7 +125,7 @@ while true; do
         song=$(song)
         dwm -s "$song| $(cpu) $(temp) | $(hdd) | $(mem) | $(upd) | $(vol) | $(bat) | $(dte) | $(net) "
     else
-        dwm -s "$(cpu) $(temp) | $(hdd) | $(mem) | $(upd) | $(vol) | $(bat) | $(dte) | $(net) "
+      dwm -s "$(cpu) $(temp) | $(hdd) | $(mem) | $(upd) | $(vol) | $(bat) | $(dte) | $(net) "
     fi
     sleep 1s
 done &
