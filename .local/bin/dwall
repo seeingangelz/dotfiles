@@ -12,6 +12,7 @@ else
   wal-telegram --background $SELECTED -g 
   pywalfox update
   zathura-pywal
+  pkill dunst && dunst &
 	pkill dwm
-    dunstify "Changed wallpaper"
+  dunstify "Enjoy your new colorscheme!"
 fi

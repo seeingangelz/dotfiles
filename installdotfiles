@@ -32,6 +32,17 @@ if [ -L $HOME/.config/neofetch ]; then
 fi
 ln -sf $path/.config/neofetch $HOME/.config/neofetch
 
+if [ -L $HOME/.config/sxiv ]; then
+  rm $HOME/.config/sxiv
+fi
+ln -sf $path/.config/sxiv $HOME/.config/sxiv
+
+if [ -L $HOME/.config/wal ]; then
+  rm $HOME/.config/wal
+fi
+ln -sf $path/.config/wal $HOME/.config/wal
+ln -sfv $HOME/.cache/wal/dunstrc $HOME/.config/dunst/dunstrc
+
 if [ -L $HOME/.config/picom ]; then
   rm $HOME/.config/picom
 fi
@@ -80,6 +91,7 @@ ln -sf $path/.emacs.d/ $HOME/.emacs.d
 
 ln -sf $path/.local/bin/cmus-notify $HOME/.local/bin
 ln -sf $path/.local/bin/dwall $HOME/.local/bin
+ln -sf $path/.local/bin/wg $HOME/.local/bin
 ln -sf $path/.local/bin/dfiles $HOME/.local/bin
 ln -sf $path/.local/bin/emoji $HOME/.local/bin
 ln -sf $path/.local/bin/screenshot $HOME/.local/bin

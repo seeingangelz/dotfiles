@@ -39,7 +39,7 @@ fi
 
 # Run ssh-agent and dwm in an infinite loop
  while :; do
-  ssh-agent dwm
+  ssh-agent dwm 
  done
 
 # Execute dwm
