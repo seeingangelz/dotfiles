@@ -50,7 +50,6 @@ Here are some details about my setup:
     <li><a href="https://dwm.suckless.org/patches/truecenteredtitle/">truecenteredtitle</a> <b>- Center the title with proportion to the area that the title has.</b></li>
     <li><a href="https://dwm.suckless.org/patches/noborder/">noborder</a> <b>- Remove the border when there is only one window visible.</b></li>
     <li><a href="https://dwm.suckless.org/patches/alpha/dwm-fixborders-6.2.diff">fixborders</a> <b>- Fixes dwm bug and allows to make borders opaque.</b></li>
-    <li><a href="https://dwm.suckless.org/patches/underlinetags/">underlinetags</a> <b>- Underlines selected tags.</b></li>
     <li><a href="https://dwm.suckless.org/patches/cfacts/">cfacts</a> <b>- Provides the ability to assign different weights to clients in their respective stack in tiled layout.</b></li>
     <li><a href="https://dwm.suckless.org/patches/centeredmaster/">centeredmaster</a> <b>- Centers the nmaster area on screen.</b></li>
     <li><a href="https://dwm.suckless.org/patches/fibonacci/">fibonacci</a> <b>- Adds two new layouts that arranges all windows in Fibonacci tiles.</b></li>
