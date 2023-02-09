@@ -23,9 +23,10 @@ Here are some details about my setup:
 - **Terminal:** [st](https://st.suckless.org)
 - **Shell:** [zsh](https://www.zsh.org/)
 - **Browser:** [Firefox](https://www.mozilla.org/en-US/) / [qutebrowser](https://www.qutebrowser.org/)
-- **Editor:** [neovim](https://github.com/neovim/neovim)
+- **Editor:** [neovim](https://github.com/neovim/neovim) / [Emacs](https://www.gnu.org/software/emacs/)
 - **Compositor:** [picom (jonaburg)](https://github.com/jonaburg/picom)
 - **Application Laucher:** [dmenu](https://tools.suckless.org/dmenu/)
+- **Notification Daemon:** [dunst](https://github.com/dunst-project/dunst)
 - **Music Player:** [cmus](https://cmus.github.io/)
 
 ## <div align="center">:snowflake: Suckless Patches お</div>
@@ -79,3 +80,9 @@ Here are some details about my setup:
    <li><a href="https://tools.suckless.org/dmenu/patches/xresources/">xresources</a> <b>- Adds the ability to configure dmenu via Xresources.</b></li>
  </ul>
 </details>
+
+## <div align="center">:snowflake: Neovim Config 道</div>
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/123886904/217865294-688ecbc9-21bd-42cb-95b9-e99d940878ad.png" width="1000px" alt="DWM Rice"/>
+</p>
