@@ -10,6 +10,7 @@ ln -sf $path/.zshrc $HOME/.zshrc
 
 # Config directory
 [ ! -d $HOME/.config ] && mkdir $HOME/.config
+[ ! -d $HOME/.local ] && mkdir $HOME/.local
 [ ! -d $HOME/.local/bin ] && mkdir $HOME/.local/bin
 
 if [ -L $HOME/.config/cava ]; then
