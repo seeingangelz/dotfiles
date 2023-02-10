@@ -78,13 +78,50 @@ case $answer in
     ;;
 esac
 
+echo "Alredy have Oh-My-Zsh installed? (y/n)"
+read answer
+sleep 1 && clear
+
+case $answer in
+  "y")
+    if [ -L $HOME/.config/zsh ]; then
+    rm $HOME/.config/zsh
+    fi
+    ln -sfv $path/.config/zsh $HOME/.config/zsh 
+
+    if [ -L $HOME/.zshrc ]; then
+    rm $HOME/.zshrc
+    fi
+    ln -sfv $path/.zshrc $HOME/.zshrc
+    sleep 1 && clear
+    ;;
+  "n")
+    echo "Installing..."
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+    if [ -L $HOME/.config/zsh ]; then
+    rm $HOME/.config/zsh
+    fi
+    ln -sfv $path/.config/zsh $HOME/.config/zsh 
+
+    if [ -L $HOME/.zshrc ]; then
+    rm $HOME/.zshrc
+    fi
+    ln -sfv $path/.zshrc $HOME/.zshrc
+    sleep 1 && clear
+    ;;
+  *)
+    echo "Invalid answer, skipping..."
+    sleep 1 && clear
+    ;;
+esac
+
+
 echo "Creating symbolic links..."
 echo ""
 ln -sfv $path/.Xresources $HOME/.Xresources
 ln -sfv $path/.xinitrc $HOME/.xinitrc
 ln -sfv $path/.Xmodmap $HOME/.Xmodmap
 ln -sfv $path/.zprofile $HOME/.zprofile
-ln -sfv $path/.zshrc $HOME/.zshrc
 
 [ ! -d $HOME/.config ] && mkdir $HOME/.config
 [ ! -d $HOME/.local ] && mkdir $HOME/.local
@@ -156,11 +193,6 @@ if [ -L $HOME/.config/nvim ]; then
 fi
 ln -sfv $path/.config/nvim $HOME/.config/nvim
 
-if [ -L $HOME/.config/zsh ]; then
-  rm $HOME/.config/zsh
-fi
-ln -sfv $path/.config/zsh $HOME/.config/zsh
-
 if [ -L $HOME/.emacs.d ]; then
   rm $HOME/.emacs.d
 fi
@@ -168,9 +200,17 @@ ln -sfv $path/.emacs.d/ $HOME/.emacs.d
 sleep 1 && clear
 
 echo "Installing suckless programs..."
-cd $path/.config/suckless/dwm && sudo make clean install && mv config.h config.def.h
-cd $path/.config/suckless/st && sudo make clean install && mv config.h config.def.h
-cd $path/.config/suckless/dmenu && sudo make clean install && mv config.h config.def.h
-cd $path/.config/suckless/slock && sudo make clean install && mv config.h config.def.h
+cd $path/.config/suckless/dwm && sudo make clean install && mv -f config.h config.def.h
+cd $path/.config/suckless/st && sudo make clean install && mv -f config.h config.def.h
+cd $path/.config/suckless/dmenu && sudo make clean install && mv -f config.h config.def.h
+cd $path/.config/suckless/slock && sudo make clean install && mv -f config.h config.def.h
+
+chmod x $path/.local/bin
+sleep 1 && clear
+
+echo "Changing default shell..."
+chsh -s /usr/bin/zsh
+sleep 1 && clear
 
 echo "All done!"
+echo "Please log out and log back in for the changes to take effect."

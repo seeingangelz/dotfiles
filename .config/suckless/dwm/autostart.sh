@@ -7,7 +7,7 @@ dte(){
 
 upd(){
 	upd=`checkupdates | wc -l`
-	echo -e " $upd"
+	echo -e " $upd"
 }
 
 bat(){
