@@ -88,6 +88,11 @@ hdd(){
 	echo -e " $hdd"
 }
 
+kern(){
+  kern=`uname -r`
+  echo -e " $kern"
+}
+
 cpu(){
 	read cpu a b c previdle rest < /proc/stat
 	prevtotal=$((a+b+c+previdle))
