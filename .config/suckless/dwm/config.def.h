@@ -103,6 +103,7 @@ static const char *slock[] 	    =  { "slock", NULL };
 static const char *qalc[] 	    =  { "qalculate-gtk", NULL };
 static const char *telegram[]	  =  { "telegram-desktop", "-l", NULL };
 static const char *wall[]	      =  { "wg", NULL };
+static const char *emoji[]	    =  { "emoji", NULL };
 static const char *emacs[]	    =  { "emacs", NULL };
 static const char *dfiles[]	    =  { "dfiles", NULL };
 static const char *pulse[]	    =  { "st", "-e", "pulsemixer", NULL };
@@ -161,6 +162,7 @@ static const Key keys[] = {
 	{ 0,			                  0x1008ff02,    spawn,          {.v = inclight } },
 	{ 0,			                  0x1008ff03,    spawn,          {.v = declight } },
 	{ MODKEY|ShiftMask,         XK_e,          spawn,          {.v = wall} },
+	{ MODKEY|ControlMask,       XK_e,          spawn,          {.v = emoji} },
 	{ MODKEY|ShiftMask,         XK_s,          spawn,          {.v = dfiles} },
 	{ MODKEY,                   XK_b,          togglebar,      {0} },
 	{ MODKEY,                   XK_Left,       focusstack,     {.i = +1 } },
