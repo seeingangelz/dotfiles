@@ -49,7 +49,7 @@ case $answer in
     sleep 1 && clear
     
     echo "Installing AUR programs..."
-    yay -S cava devour picom-jonaburg-git cmatrix-git qt5-styleplugins
+    yay -S cava devour picom-jonaburg-git cmatrix-git qt5-styleplugins webtorrent-cli
     sleep 1 && clear
     ;;
   *)
@@ -198,6 +198,15 @@ if [ -L $HOME/.emacs.d ]; then
 fi
 ln -sfv $path/.emacs.d/ $HOME/.emacs.d
 sleep 1 && clear
+
+ln -sfv $path/.local/bin/cmus-notify $HOME/.local/bin
+ln -sfv $path/.local/bin/dwall $HOME/.local/bin
+ln -sfv $path/.local/bin/wg $HOME/.local/bin
+ln -sfv $path/.local/bin/dfiles $HOME/.local/bin
+ln -sfv $path/.local/bin/dstreaming $HOME/.local/bin
+ln -sfv $path/.local/bin/emoji $HOME/.local/bin
+ln -sfv $path/.local/bin/screenshot $HOME/.local/bin
+ln -sfv $path/.local/bin/togglemute $HOME/.local/bin
 
 echo "Installing suckless programs..."
 cd $path/.config/suckless/dwm && sudo make clean install && mv -f config.h config.def.h
