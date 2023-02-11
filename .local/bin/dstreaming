@@ -1,7 +1,7 @@
 #!/bin/sh
 
 #input a movie variable
-search=$(dmenu -p "Search a movie" < /dev/null)
+search=$(dmenu -l 1 -p "Search a movie" < /dev/null)
 # change the search variable spaces with +
 query=$(printf "$search" | tr ' ' '+' )
 #if statement to see if search variable is NULL
@@ -19,7 +19,7 @@ magnetlink=$( curl -s $magnet$movie | grep -Po 'magnet:[^"]*' | head -n 1)
 if [ -z "$magnetlink" ]; then
   exit 0
 elif [ -n "$magnetlink" ]; then
-  choices=$(printf "Watch\nDownload" | dmenu -p 'What to do? ')
+  choices=$(printf "Watch\nDownload" | dmenu -l 2 -p 'What to do? ')
   if [ $choices == "Watch" ]; then
     st -e webtorrent "$magnetlink" --mpv --no-quit
   else
