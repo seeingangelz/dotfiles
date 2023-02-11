@@ -17,7 +17,7 @@ sleep 1 && clear
 case $answer in
   "y")
     echo "Installing dependencies..."
-    sudo pacman -S arandr arc-gtk-theme cmus dbus dunst emacs feh ffmpeg ffmpegthumbnailer firefox flameshot fzf git gnu-free-fonts go htop imagemagick lxappearance mpv neofetch neovim noto-fonts noto-fonts-cjk noto-fonts-emoji numlockx obs-studio openssh perl pulseaudio pulsemixer python-pip python-pywal qalculate-gtk qt5ct qutebrowser ranger syncthing sxiv telegram-desktop tmux tree ttf-jetbrains-mono ttf-nerd-fonts-symbols-common ttf-nerd-fonts-symbols-2048-em-mono ueberzug unzip vim webkit2gtk xclip yt-dlp zathura zathura-pdf-mupdf zip xorg-server xorg-xinit libx11 libxinerama libxft base base-devel
+    sudo pacman -S arandr arc-gtk-theme cmus dbus dunst emacs feh ffmpeg ffmpegthumbnailer firefox flameshot fzf git gnu-free-fonts go htop imagemagick lxappearance mpv neofetch neovim noto-fonts noto-fonts-cjk noto-fonts-emoji numlockx obs-studio openssh perl pulseaudio pulsemixer python-pip python-pywal qalculate-gtk qt5ct qutebrowser ranger syncthing sxiv telegram-desktop tmux tree ttf-jetbrains-mono ttf-nerd-fonts-symbols-common ttf-nerd-fonts-symbols-2048-em-mono ueberzug redshift unzip vim webkit2gtk xclip yt-dlp zathura zathura-pdf-mupdf zip xorg-server xorg-xinit libx11 libxinerama libxft base base-devel
     sleep 1 && clear
     ;;
   "n")
@@ -128,73 +128,78 @@ ln -sfv $path/.zprofile $HOME/.zprofile
 [ ! -d $HOME/.local/bin ] && mkdir $HOME/.local/bin
 
 if [ -L $HOME/.config/cava ]; then
-  rm $HOME/.config/cava
+  rm -rf $HOME/.config/cava
 fi
 ln -sfv $path/.config/cava $HOME/.config/cava
 
+if [ -L $HOME/.config/redshift ]; then
+  rm -rf $HOME/.config/redshift
+fi
+ln -sfv $path/.config/redshift $HOME/.config/redshift
+
 if [ -L $HOME/.config/dunst ]; then
-  rm $HOME/.config/dunst
+  rm -rf $HOME/.config/dunst
 fi
 ln -sfv $path/.config/dunst $HOME/.config/dunst
 
 if [ -L $HOME/.config/mpv ]; then
-  rm $HOME/.config/mpv
+  rm -rf $HOME/.config/mpv
 fi
 ln -sfv $path/.config/mpv $HOME/.config/mpv
 
 if [ -L $HOME/.config/neofetch ]; then
-  rm $HOME/.config/neofetch
+  rm -rf $HOME/.config/neofetch
 fi
 ln -sfv $path/.config/neofetch $HOME/.config/neofetch
 
 if [ -L $HOME/.config/sxiv ]; then
-  rm $HOME/.config/sxiv
+  rm -rf $HOME/.config/sxiv
 fi
 ln -sfv $path/.config/sxiv $HOME/.config/sxiv
 
 if [ -L $HOME/.config/wal ]; then
-  rm $HOME/.config/wal
+  rm -rf $HOME/.config/wal
 fi
 ln -sfv $path/.config/wal $HOME/.config/wal
 ln -sfv $HOME/.cache/wal/dunstrc $HOME/.config/dunst/dunstrc
 
 if [ -L $HOME/.config/picom ]; then
-  rm $HOME/.config/picom
+  rm -rf $HOME/.config/picom
 fi
 ln -sfv $path/.config/picom $HOME/.config/picom
 
 if [ -L $HOME/.config/ranger ]; then
-  rm $HOME/.config/ranger
+  rm -rf $HOME/.config/ranger
 fi
 ln -sfv $path/.config/ranger $HOME/.config/ranger
 
 if [ -L $HOME/.config/zathura ]; then
-  rm $HOME/.config/zathura
+  rm -rf $HOME/.config/zathura
 fi
 ln -sfv $path/.config/zathura $HOME/.config/zathura
 
 if [ -L $HOME/.config/qutebrowser ]; then
-  rm $HOME/.config/qutebrowser
+  rm -rf $HOME/.config/qutebrowser
 fi
 ln -sfv $path/.config/qutebrowser $HOME/.config/qutebrowser
 
 if [ -L $HOME/.config/cmus ]; then
-  rm $HOME/.config/cmus
+  rm -rf $HOME/.config/cmus
 fi
 ln -sfv $path/.config/cmus $HOME/.config/cmus
 
 if [ -L $HOME/.config/suckless ]; then
-  rm $HOME/.config/suckless
+  rm -rf $HOME/.config/suckless
 fi
 ln -sfv $path/.config/suckless $HOME/.config/suckless
 
 if [ -L $HOME/.config/nvim ]; then
-  rm $HOME/.config/nvim
+  rm -rf $HOME/.config/nvim
 fi
 ln -sfv $path/.config/nvim $HOME/.config/nvim
 
 if [ -L $HOME/.emacs.d ]; then
-  rm $HOME/.emacs.d
+  rm -rf $HOME/.emacs.d
 fi
 ln -sfv $path/.emacs.d/ $HOME/.emacs.d
 sleep 1 && clear
@@ -207,6 +212,7 @@ ln -sfv $path/.local/bin/dstreaming $HOME/.local/bin
 ln -sfv $path/.local/bin/emoji $HOME/.local/bin
 ln -sfv $path/.local/bin/screenshot $HOME/.local/bin
 ln -sfv $path/.local/bin/togglemute $HOME/.local/bin
+ln -sfv $path/.local/bin/nightmode $HOME/.local/bin
 
 echo "Installing suckless programs..."
 cd $path/.config/suckless/dwm && sudo make clean install && mv -f config.h config.def.h

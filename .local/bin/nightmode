@@ -1,0 +1,11 @@
+#!/bin/sh
+
+CHOICES="ON
+OFF"
+
+OPTION=$(printf "$CHOICES" | dmenu -l 2 -p "NIGHT MODE:")
+
+case $OPTION in
+    ON) redshift ;;
+    OFF) pkill redshift ;;
+esac
