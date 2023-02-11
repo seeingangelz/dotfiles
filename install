@@ -202,7 +202,6 @@ if [ -L $HOME/.emacs.d ]; then
   rm -rf $HOME/.emacs.d
 fi
 ln -sfv $path/.emacs.d/ $HOME/.emacs.d
-sleep 1 && clear
 
 ln -sfv $path/.local/bin/cmus-notify $HOME/.local/bin
 ln -sfv $path/.local/bin/dwall $HOME/.local/bin
@@ -213,6 +212,8 @@ ln -sfv $path/.local/bin/emoji $HOME/.local/bin
 ln -sfv $path/.local/bin/screenshot $HOME/.local/bin
 ln -sfv $path/.local/bin/togglemute $HOME/.local/bin
 ln -sfv $path/.local/bin/nightmode $HOME/.local/bin
+ln -sfv $path/.local/bin/dwifi $HOME/.local/bin
+sleep 1 && clear
 
 echo "Installing suckless programs..."
 cd $path/.config/suckless/dwm && sudo make clean install && mv -f config.h config.def.h
