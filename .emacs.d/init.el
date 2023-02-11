@@ -68,8 +68,8 @@
   :config
   (dashboard-setup-startup-hook))
 
-(setq dashboard-startup-banner "~/Documents/dotfiles/.emacs.d/logo/gnu.png")
-(setq dashboard-banner-logo-title "Still have vim installed?")
+(setq dashboard-startup-banner "~/Documents/dotfiles/.emacs.d/logo/unix.png")
+(setq dashboard-banner-logo-title nil)
 (setq dashboard-center-content t)
 (setq dashboard-items '((recents  . 4)
                         (bookmarks . 4)))
