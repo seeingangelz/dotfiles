@@ -191,6 +191,11 @@ In development...
         <p title="Adds two new layouts that arranges all windows in Fibonacci tiles."><kbd>fibonacci</kbd></p>
       </a>
     </td>
+    <td>
+      <a href="https://dwm.suckless.org/patches/systray/">
+        <p title="A simple system tray implementation."><kbd>systray</kbd></p>
+      </a>
+    </td>
   </tr>
 </table>
   
@@ -228,6 +233,11 @@ In development...
     <td>
       <a href="https://st.suckless.org/patches/scrollback/st-scrollback-mouse-20220127-2c5edf2.diff">
         <p title="Apply the following patch on top of the previous to allow scrolling using mouse."><kbd>scrollback-mouse</kbd></p>
+      </a>
+    </td>
+    <td>
+      <a href="https://st.suckless.org/patches/anysize">
+        <p title="Allows st to resize to any pixel size."><kbd>anysize</kbd></p>
       </a>
     </td>
   </tr>
@@ -346,3 +356,4 @@ In development...
 </details>
 
 <img src="https://user-images.githubusercontent.com/123886904/218294072-d474a330-7464-430a-b369-91f79373dbca.svg" width="100%" title="Footer">
+
