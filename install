@@ -37,7 +37,7 @@ sleep 1 && clear
 case $answer in
   "y")
     echo "Installing AUR programs..."
-    yay -S cava devour picom-jonaburg-git cmatrix-git qt5-styleplugins checkupdates-aur perl-checkupdates-aur
+    yay -S cava devour picom-jonaburg-git cmatrix-git pipes.sh qt5-styleplugins checkupdates-aur perl-checkupdates-aur wal-telegram-git
     sleep 1 && clear
     ;;
   "n")
@@ -67,7 +67,37 @@ case $answer in
     echo "Installing dependencies..."
     sudo pacman -S acpi acpilight
     sleep 1 && clear
+    echo "Want to enable touchpad tap-to-click? (y/n)"
+    read answer
+    sleep 1 && clear
+
+    case $answer in 
+      "y")
+        echo "Enabling tap-to-click..."
+        sudo mkdir -p /etc/X11/xorg.conf.d && sudo tee <<'EOF' /etc/X11/xorg.conf.d/90-touchpad.conf 1> /dev/null
+Section "InputClass"
+          Identifier "touchpad"
+          MatchIsTouchpad "on"
+          Driver "libinput"
+          Option "Tapping" "on"
+EndSection
+
+EOF
+sleep 1 && clear
+        ;;
+
+      "n")
+        echo "OK, Skipping..."
+        sleep 1 && clear
+        ;;
+
+      "*")
+        echo "Invalid answer, skipping..."
+        sleep 1 && clear
+        ;;
+    esac
     ;;
+
   "n")
     echo "Skipping..."
     sleep 1 && clear
@@ -77,6 +107,7 @@ case $answer in
     sleep 1 && clear
     ;;
 esac
+
 
 echo "Alredy have Oh-My-Zsh installed? (y/n)"
 read answer
