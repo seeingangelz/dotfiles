@@ -326,6 +326,7 @@ In development...
 <i><kbd>Super</kbd> + <kbd>F4</kbd> = Open music player.</i><br>
 <i><kbd>Super</kbd> + <kbd>F5</kbd> = Open code editor.</i><br>
 <i><kbd>Super</kbd> + <kbd>F6</kbd> = Open audio manager.</i><br>
+<i><kbd>Super</kbd> + <kbd>F7</kbd> = Open screen recorder.</i><br>
 <i><kbd>Super</kbd> + <kbd>F11</kbd> = Lockscreen.</i><br>
 <i><kbd>Super</kbd> + <kbd>F12</kbd> = Open calculator.</i><br>
 <i><kbd>Super</kbd> + <kbd>Shift</kbd> + <kbd>N</kbd> = Toggle nightmode.</i><br>
