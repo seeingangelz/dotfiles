@@ -47,28 +47,45 @@ static const unsigned int alphas[][3]      = {
 	[SchemeInfoNorm] = { OPAQUE, baralpha, borderalpha },
 };
 
+typedef struct {
+	const char *name;
+	const void *cmd;
+} Sp;
+const char *spcmd1[] = {"st", "-n", "spterm", "-g", "120x34", NULL };
+const char *spcmd2[] = {"st", "-n", "spmusic", "-g", "120x40", "-e", "cmus", NULL };
+const char *spcmd3[] = {"st", "-n", "spvol", "-g", "144x41", "-e", "pulsemixer", NULL };
+const char *spcmd4[] = {"obs", NULL };
+const char *spcmd5[] = {"qalculate-gtk", NULL };
+static Sp scratchpads[] = {
+	/* name          cmd  */
+	{"spterm",      spcmd1},
+	{"spmusic",     spcmd2},
+	{"spvol",       spcmd3},
+	{"obs",         spcmd4},
+	{"qalc",        spcmd5},
+};
+
 /* tagging */
-//static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
-static const char *tags[] = { "", "", "", "", "", "", "", "" };
-//static const char *tags[] = { "I", "II", "III", "IV", "V", "VI", "VII", "VIII" };
+static const char *tags[] = { "", "", "", "", "", "" };
 
 static const Rule rules[] = {
        /* xprop(1):
 	*	WM_CLASS(STRING) = instance, class
 	*	WM_NAME(STRING) = title
 	*/
-	/* class              instance   title   tags mask  isfloating  isterminal  noswallow  monitor */
-	{ "Gimp",              NULL,     NULL,       0,         0,          0,           0,        -1 },
-	{ "Emacs",             NULL,     NULL,    1<<2,         0,          0,          -1,        -1 },
-	{ "firefox",           NULL,     NULL,    1<<3,         0,          0,          -1,        -1 },
-	{ "qutebrowser",       NULL,     NULL,    1<<3,         0,          0,          -1,        -1 },
-	{ "Steam",             NULL,     NULL,    1<<4,         0,          0,          -1,        -1 },
-	{ "TelegramDesktop",   NULL,     NULL,    1<<5,         0,          0,          -1,        -1 },
-	{ "St",                NULL,     NULL,       0,         0,          1,           0,        -1 },
-	{ "obs",               NULL,     NULL,    1<<7,         0,          0,           1,        -1 },
-	{  NULL,               NULL,   "cmus",    1<<6,         0,          0,           1,        -1 },
-	{  NULL,               NULL, "ranger",    1<<1,         0,          0,           0,        -1 },
-	{ "Qalculate-gtk",     NULL,     NULL,       0,         1,          0,           1,        -1 },
+	/* class                 instance   title      tags mask  isfloating  isterminal  noswallow  monitor */
+	{ "Emacs",                NULL,     NULL,         1<<2,       0,          0,          -1,        -1 },
+	{ "firefox",              NULL,     NULL,         1<<3,       0,          0,          -1,        -1 },
+	{ "qutebrowser",          NULL,     NULL,         1<<3,       0,          0,          -1,        -1 },
+	{ "Steam",                NULL,     NULL,         1<<4,       0,          0,          -1,        -1 },
+	{ "TelegramDesktop",      NULL,     NULL,         1<<5,       0,          0,          -1,        -1 },
+	{ "St",                   NULL,     NULL,            0,       0,          1,           0,        -1 },
+	{ "Qalculate-gtk",        NULL,     NULL,            0,       1,          0,           1,        -1 },
+  { NULL,		            "spterm",	    NULL,		  SPTAG(0),		    1,			    1,           1,        -1 },
+	{ NULL,		           "spmusic",		  NULL,		  SPTAG(1),		    1,	  		  1,           1,        -1 },
+	{ NULL,		             "spvol",	    NULL,		  SPTAG(2),		    1,		      1,           1,        -1 },
+	{ NULL,		               "obs",	    NULL,		  SPTAG(3),		    0,		      0,           1,        -1 },
+	{ NULL,		              "qalc",	    NULL,		  SPTAG(4),		    1,		      0,           1,        -1 },
 };
 
 /* layout(s) */
@@ -112,16 +129,13 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2]         =    "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[]   =  { "dmenu_run", "-l", "20", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbordercolor, "-sf", selfgcolor, NULL };
+static const char *dmenucmd[]   =  { "dmenu_run", "-l", "20", NULL };
 static const char *termcmd[]    =  { "st", NULL };
 static const char *screenshot[]	=  { "screenshot", NULL };
 static const char *fullshot[]   =  { "flameshot", "full", NULL };
 static const char *browser[]	  =  { "firefox", NULL };
-static const char *recorder[]	  =  { "obs", NULL };
 static const char *ranger[]	    =  { "st", "-e", "ranger", NULL };
-static const char *cmus[]	      =  { "st", "-e", "cmus", NULL };
 static const char *slock[] 	    =  { "slock", NULL };
-static const char *qalc[] 	    =  { "qalculate-gtk", NULL };
 static const char *telegram[]	  =  { "telegram-desktop", "-l", NULL };
 static const char *wall[]	      =  { "wg", NULL };
 static const char *emoji[]	    =  { "emoji", NULL };
@@ -129,7 +143,6 @@ static const char *clip[]	      =  { "clipmenu", NULL };
 static const char *emacs[]	    =  { "emacs", NULL };
 static const char *dfiles[]	    =  { "dfiles", NULL };
 static const char *dots[]	      =  { "dots", NULL };
-static const char *pulse[]	    =  { "st", "-e", "pulsemixer", NULL };
 static const char *inclight[]	  =  { "xbacklight", "-inc", "10", NULL };
 static const char *declight[]	  =  { "xbacklight", "-dec", "10", NULL };
 static const char *night[]	    =  { "nightmode", NULL };
@@ -175,12 +188,8 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_F1,         spawn,             {.v = ranger } },
 	{ MODKEY,                       XK_F2,         spawn,             {.v = browser } },
 	{ MODKEY,                       XK_F3,         spawn,             {.v = telegram } },
-	{ MODKEY,                       XK_F4,         spawn,             {.v = cmus } },
 	{ MODKEY,                       XK_F5,         spawn,             {.v = emacs } },
-	{ MODKEY,                       XK_F6,         spawn,             {.v = pulse } },
-	{ MODKEY,                       XK_F7,         spawn,             {.v = recorder } },
 	{ MODKEY,                       XK_F11,        spawn,             {.v = slock } },
-	{ MODKEY,                       XK_F12,        spawn,             {.v = qalc } },
 	{ 0,              			        0x1008ff13,    spawn,             {.v = volup } },
 	{ 0,			                      0x1008ff11,    spawn,             {.v = voldown } },
 	{ 0,			                      0x1008ff12,    spawn,             {.v = volmute } },
@@ -235,6 +244,11 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_period,     focusmon,          {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,      tagmon,            {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period,     tagmon,            {.i = +1 } },
+  { MODKEY|ShiftMask,            	XK_Return,  	 togglescratch,     {.ui = 0 } },
+	{ MODKEY,                       XK_F4,	       togglescratch,     {.ui = 1 } },
+	{ MODKEY,                       XK_F6,	       togglescratch,     {.ui = 2 } },
+	{ MODKEY,                       XK_F7,	       togglescratch,     {.ui = 3 } },
+	{ MODKEY,                       XK_F12,	       togglescratch,     {.ui = 4 } },
 	TAGKEYS(                        XK_1,                             0)
 	TAGKEYS(                        XK_2,                             1)
 	TAGKEYS(                        XK_3,                             2)
