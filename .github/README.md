@@ -196,6 +196,11 @@ In development...
         <p title="A simple system tray implementation."><kbd>systray</kbd></p>
       </a>
     </td>
+    <td>
+      <a href="https://dwm.suckless.org/patches/scratchpads/">
+        <p title="Enables multiple scratchpads."><kbd>scratchpads</kbd></p>
+      </a>
+    </td>
   </tr>
 </table>
   
@@ -311,12 +316,12 @@ In development...
 <i><kbd>Super</kbd> + <kbd>Enter</kbd> = Create a new terminal.</i><br>
 <i><kbd>Super</kbd> + <kbd>Shift</kbd> + <kbd>Q</kbd> = Close a window.</i><br>
 <i><kbd>Super</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd> = Restart DWM.</i><br>
-<i><kbd>Super</kbd> + <kbd>Shift</kbd> + <kbd>C</kbd> = Kill DWM.</i><br>
 <i><kbd>Super</kbd> + <kbd>LeftArrow</kbd> , <kbd>RightArrow</kbd> = Move to another window.</i><br>
 <i><kbd>Super</kbd> + <kbd>M</kbd> = Monocle layout.</i><br>
 <i><kbd>Super</kbd> + <kbd>T</kbd> = Tiled layout.</i><br>
+<i><kbd>Super</kbd> + <kbd>F</kbd> = Spiral layout.</i><br>
 <i><kbd>Super</kbd> + <kbd>U</kbd> = Centered master layout.</i><br>
-<i><kbd>Super</kbd> + <kbd>U</kbd> = Centered floating master layout.</i><br>
+<i><kbd>Super</kbd> + <kbd>O</kbd> = Grid layout.</i><br>
 <i><kbd>Super</kbd> + <kbd>B</kbd> = Toggle the top bar.</i><br>
 <i><kbd>Super</kbd> + <kbd>Shift</kbd> + <kbd>1/9</kbd> = Move a window to another tag.</i><br>
 <i><kbd>Super</kbd> + <kbd>1/9</kbd> = Switch to another tag.</i><br>
@@ -326,12 +331,17 @@ In development...
 <i><kbd>Super</kbd> + <kbd>L</kbd> = Move mfact to the right.</i><br>
 <i><kbd>Super</kbd> + <kbd>K</kbd> = Move cfact down.</i><br>
 <i><kbd>Super</kbd> + <kbd>J</kbd> = Move cfact up.</i><br>
-<i><kbd>Super</kbd> + <kbd>Shift</kbd> + <kbd>O</kbd> = Restore cfact.</i><br>
 <i><kbd>Super</kbd> + <kbd>Space</kbd> = Toggle last layout.</i><br>
 <i><kbd>Super</kbd> + <kbd>Shift</kbd> + <kbd>Space</kbd> = Toggle floating window.</i><br>
 <i><kbd>Super</kbd> + <kbd>=</kbd> = Increment gaps.</i><br>
 <i><kbd>Super</kbd> + <kbd>-</kbd> = Decrement gaps.</i><br>
-<i><kbd>Super</kbd> + <kbd>Shift</kbd> + <kbd>=</kbd> = Restore gaps.</i><br>
+<i><kbd>Super</kbd> + <kbd>Alt</kbd> + <kbd>0</kbd> = Restore gaps.</i><br>
+<i><kbd>Super</kbd> + <kbd>Shift</kbd> + <kbd>=</kbd> = Increment vertical gaps.</i><br>
+<i><kbd>Super</kbd> + <kbd>Shift</kbd> + <kbd>-</kbd> = Decrement vertical gaps.</i><br>
+<i><kbd>Super</kbd> + <kbd>Control</kbd> + <kbd>=</kbd> = Increment horizontal gaps.</i><br>
+<i><kbd>Super</kbd> + <kbd>Control</kbd> + <kbd>-</kbd> = Decrement horizontal gaps.</i><br>
+<i><kbd>Super</kbd> + <kbd>Alt</kbd> + <kbd>=</kbd> = Increment inside gaps.</i><br>
+<i><kbd>Super</kbd> + <kbd>Alt</kbd> + <kbd>-</kbd> = Decrement inside gaps.</i><br>
 <i><kbd>Super</kbd> + <kbd>F1</kbd> = Open file manager.</i><br>
 <i><kbd>Super</kbd> + <kbd>F2</kbd> = Open browser.</i><br>
 <i><kbd>Super</kbd> + <kbd>F3</kbd> = Open messaging application.</i><br>
@@ -345,6 +355,7 @@ In development...
 <i><kbd>Super</kbd> + <kbd>Shift</kbd> + <kbd>E</kbd> = Theme selector.</i><br>
 <i><kbd>Super</kbd> + <kbd>Control</kbd> + <kbd>E</kbd> = Emoji selector.</i><br>
 <i><kbd>Super</kbd> + <kbd>Shift</kbd> + <kbd>S</kbd> = Manage dotfiles.</i><br>
+<i><kbd>Super</kbd> + <kbd>Shift</kbd> + <kbd>Y</kbd> = Manage clipboard.</i><br>
 <i><kbd>Super</kbd> + <kbd>PrtSc</kbd> = Fullscreen screenshot.</i><br>
 <i><kbd>PrtSc</kbd> = Screenshot of the selected area.</i><br>
 <i><kbd>AudioLowerVolume</kbd> = Volume control down.</i><br>
