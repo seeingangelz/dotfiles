@@ -1,0 +1,14 @@
+#!/bin/sh
+
+DIRECTORIES="DOTFILES
+DWM
+ST
+DMENU"
+DMENUCHOICE=$(printf "$DIRECTORIES" | dmenu -l 4 -p "Select directory:")
+
+case $DMENUCHOICE in
+    DOTFILES) st -d ~/Documents/dotfiles/ ;;
+    DWM) st -d ~/Documents/dotfiles/.config/suckless/dwm/ ;;
+    ST) st -d ~/Documents/dotfiles/.config/suckless/st/ ;;
+    DMENU) st -d ~/Documents/dotfiles/.config/suckless/dmenu/ ;;
+esac

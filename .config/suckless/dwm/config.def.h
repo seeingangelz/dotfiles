@@ -128,6 +128,7 @@ static const char *emoji[]	    =  { "emoji", NULL };
 static const char *clip[]	      =  { "clipmenu", NULL };
 static const char *emacs[]	    =  { "emacs", NULL };
 static const char *dfiles[]	    =  { "dfiles", NULL };
+static const char *dots[]	      =  { "dots", NULL };
 static const char *pulse[]	    =  { "st", "-e", "pulsemixer", NULL };
 static const char *inclight[]	  =  { "xbacklight", "-inc", "10", NULL };
 static const char *declight[]	  =  { "xbacklight", "-dec", "10", NULL };
@@ -190,6 +191,7 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_e,          spawn,             {.v = wall} },
 	{ MODKEY|ControlMask,           XK_e,          spawn,             {.v = emoji} },
 	{ MODKEY|ShiftMask,             XK_s,          spawn,             {.v = dfiles} },
+	{ MODKEY|ShiftMask,             XK_d,          spawn,             {.v = dots} },
 	{ MODKEY,                       XK_b,          togglebar,         {0} },
 	{ MODKEY,                       XK_Left,       focusstack,        {.i = +1 } },
 	{ MODKEY,                       XK_Right,      focusstack,        {.i = -1 } },
@@ -242,7 +244,7 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_7,                             6)
 	TAGKEYS(                        XK_8,                             7)
 	TAGKEYS(                        XK_9,                             8)
-	{ MODKEY|ShiftMask,             XK_c,          quit,              {0} },
+	{ MODKEY|ShiftMask,             XK_r,          quit,              {0} },
 	{ MODKEY|ShiftMask,             XK_p,          exitdwm,           {0} },
 };
 

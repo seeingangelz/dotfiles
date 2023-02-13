@@ -96,8 +96,8 @@ In development...
       </a>
     </td>
     <td>
-      <a href="https://dwm.suckless.org/patches/fullgaps/">
-        <p title="Adds gaps between client windows."><kbd>fullgaps</kbd></p>
+      <a href="https://dwm.suckless.org/patches/vanitygaps/">
+        <p title="Adds gaps between client windows."><kbd>vanitygaps</kbd></p>
       </a>
     </td>
     <td>
@@ -204,7 +204,6 @@ In development...
 > Hover over the patch to receive information about it.
   
 </details>
-
 <details>
 <summary><b>ST Patches 水</b></summary>
 <br>  
@@ -240,13 +239,17 @@ In development...
         <p title="Allows st to resize to any pixel size."><kbd>anysize</kbd></p>
       </a>
     </td>
+    <td>
+      <a href="https://st.suckless.org/patches/workingdir">
+        <p title="Allows user to specify the initial path st should use as working directory."><kbd>workingdir</kbd></p>
+      </a>
+    </td>
   </tr>
 </table>
 
 > **Note**
 >
 > Hover over the patch to receive information about it.
-
 </details>
 
 <details>
@@ -300,7 +303,6 @@ In development...
 > **Note**
 >
 > Hover over the patch to receive information about it.
-
 </details>
 
 <details>
@@ -356,4 +358,3 @@ In development...
 </details>
 
 <img src="https://user-images.githubusercontent.com/123886904/218294072-d474a330-7464-430a-b369-91f79373dbca.svg" width="100%" title="Footer">
-

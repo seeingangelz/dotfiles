@@ -246,6 +246,7 @@ ln -sfv $path/.local/bin/screenshot $HOME/.local/bin
 ln -sfv $path/.local/bin/togglemute $HOME/.local/bin
 ln -sfv $path/.local/bin/nightmode $HOME/.local/bin
 ln -sfv $path/.local/bin/dwifi $HOME/.local/bin
+ln -sfv $path/.local/bin/dots $HOME/.local/bin
 sleep 1 && clear
 
 echo "Installing suckless programs..."
