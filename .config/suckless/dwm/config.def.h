@@ -125,6 +125,7 @@ static const char *qalc[] 	    =  { "qalculate-gtk", NULL };
 static const char *telegram[]	  =  { "telegram-desktop", "-l", NULL };
 static const char *wall[]	      =  { "wg", NULL };
 static const char *emoji[]	    =  { "emoji", NULL };
+static const char *clip[]	      =  { "clipmenu", NULL };
 static const char *emacs[]	    =  { "emacs", NULL };
 static const char *dfiles[]	    =  { "dfiles", NULL };
 static const char *pulse[]	    =  { "st", "-e", "pulsemixer", NULL };
@@ -185,6 +186,7 @@ static const Key keys[] = {
 	{ 0,			                      0x1008ff02,    spawn,             {.v = inclight } },
 	{ 0,			                      0x1008ff03,    spawn,             {.v = declight } },
 	{ MODKEY|ShiftMask,             XK_n,          spawn,             {.v = night} },
+	{ MODKEY|ShiftMask,             XK_y,          spawn,             {.v = clip} },
 	{ MODKEY|ShiftMask,             XK_e,          spawn,             {.v = wall} },
 	{ MODKEY|ControlMask,           XK_e,          spawn,             {.v = emoji} },
 	{ MODKEY|ShiftMask,             XK_s,          spawn,             {.v = dfiles} },
@@ -208,10 +210,10 @@ static const Key keys[] = {
 	{ MODKEY|Mod1Mask,              XK_minus,      incrigaps,         {.i = -1 } },
 	{ MODKEY|Mod1Mask|ShiftMask,    XK_equal,      incrgaps,          {.i = +1 } },
 	{ MODKEY|Mod1Mask|ShiftMask,    XK_minus,      incrgaps,          {.i = -1 } },
-	{ MODKEY|Mod1Mask,              XK_6,          incrihgaps,        {.i = +1 } },
-	{ MODKEY|Mod1Mask|ShiftMask,    XK_6,          incrihgaps,        {.i = -1 } },
-	{ MODKEY|Mod1Mask,              XK_7,          incrivgaps,        {.i = +1 } },
-	{ MODKEY|Mod1Mask|ShiftMask,    XK_7,          incrivgaps,        {.i = -1 } },
+	{ MODKEY|Mod1Mask,              XK_8,          incrihgaps,        {.i = +1 } },
+	{ MODKEY|Mod1Mask|ShiftMask,    XK_8,          incrihgaps,        {.i = -1 } },
+	{ MODKEY|Mod1Mask,              XK_9,          incrivgaps,        {.i = +1 } },
+	{ MODKEY|Mod1Mask|ShiftMask,    XK_9,          incrivgaps,        {.i = -1 } },
 	{ MODKEY|Mod1Mask,              XK_0,          togglegaps,        {0} },
 	{ MODKEY|Mod1Mask|ShiftMask,    XK_0,          defaultgaps,       {0} },
 	{ MODKEY|ShiftMask,             XK_Right,      movestack,         {.i = +1 } },
@@ -222,8 +224,8 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_t,          setlayout,         {.v = &layouts[0]} },
 	{ MODKEY,                       XK_m,          setlayout,         {.v = &layouts[1]} },
 	{ MODKEY,                       XK_f,          setlayout,         {.v = &layouts[2]} },
+	{ MODKEY,                       XK_o,          setlayout,         {.v = &layouts[7]} },
 	{ MODKEY,                       XK_u,          setlayout,         {.v = &layouts[11]} },
-	{ MODKEY,                       XK_o,          setlayout,         {.v = &layouts[12]} },
 	{ MODKEY,                       XK_space,      setlayout,         {0} },
 	{ MODKEY|ShiftMask,             XK_space,      togglefloating,    {0} },
 	{ MODKEY|ShiftMask,             XK_0,          tag,               {.ui = ~0 } },

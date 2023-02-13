@@ -13,6 +13,9 @@ picom --experimental-backends &
 # Start dunst
 dunst &
 
+# Start clipmenud
+clipmenud &
+
 # Enable numlock
 numlockx on &
 
