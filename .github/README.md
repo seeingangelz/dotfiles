@@ -1,8 +1,10 @@
 <div align=center>
   
-```ocaml
-Aeon's Dotfiles
-```
+![aeondotfiles](https://user-images.githubusercontent.com/123886904/218887856-642bd803-653b-4f06-8db6-0fd1bfa7646c.gif)
+  
+![](https://img.shields.io/github/last-commit/seeingangelz/dotfiles?&style=for-the-badge&color=06071c&logoColor=D9E0EE&labelColor=302D41)
+[![](https://img.shields.io/github/repo-size/seeingangelz/dotfiles?color=06071c&style=for-the-badge&labelColor=302D41)](https://github.com/seeingangelz/dotfiles)
+
 </div>
 
 <img align="right" src="https://user-images.githubusercontent.com/123886904/218275015-4d58f266-84b4-4c8b-bc35-25a9c972e977.png" alt="Rice Preview" width="363px"/>
