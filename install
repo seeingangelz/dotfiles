@@ -211,10 +211,14 @@ if [ -L $HOME/.config/nvim ]; then
 fi
 ln -sfv $path/.config/nvim $HOME/.config/nvim
 
-if [ -L $HOME/.emacs.d ]; then
+if [ -d $HOME/.emacs.d ]; then
   rm -rf $HOME/.emacs.d
 fi
-ln -sfv $path/.emacs.d/ $HOME/.emacs.d
+
+if [ -L $HOME/.config/emacs ]; then
+  rm -rf $HOME/.config/emacs
+fi
+ln -sfv $path/.config/emacs $HOME/.config/emacs
 
 ln -sfv $path/.local/bin/cmus-notify $HOME/.local/bin
 ln -sfv $path/.local/bin/dwall $HOME/.local/bin
