@@ -2,8 +2,8 @@
   
 ![aeondotfiles](https://user-images.githubusercontent.com/123886904/218887856-642bd803-653b-4f06-8db6-0fd1bfa7646c.gif)
   
-![](https://img.shields.io/github/last-commit/seeingangelz/dotfiles?&style=for-the-badge&color=06071c&logoColor=D9E0EE&labelColor=302D41)
-[![](https://img.shields.io/github/repo-size/seeingangelz/dotfiles?color=06071c&style=for-the-badge&labelColor=302D41)](https://github.com/seeingangelz/dotfiles)
+![](https://img.shields.io/github/last-commit/seeingangelz/dotfiles?&logo=github&style=for-the-badge&color=06071c&logoColor=D9E0EE&labelColor=302D41)
+[![](https://img.shields.io/github/repo-size/seeingangelz/dotfiles?color=06071c&logo=hackthebox&logoColor=D9E0EE&style=for-the-badge&labelColor=302D41)](https://github.com/seeingangelz/dotfiles)
 
 </div>
 
