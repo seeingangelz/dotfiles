@@ -27,24 +27,24 @@ static const unsigned int baralpha = 0xd0;
 static const unsigned int borderalpha = OPAQUE;
 static const char *colors[][3] = {
        /*                       fg           bg           border      */
-       [SchemeNorm]     = { normfgcolor, normbgcolor, normbordercolor },
-       [SchemeSel]      = { selfgcolor,  selbgcolor,  selbordercolor  },
-       [SchemeStatus]   = { normfgcolor, normbgcolor, normbordercolor },
-       [SchemeTagsSel]  = { selfgcolor,  selbgcolor,  normbordercolor },
-       [SchemeTagsNorm] = { normfgcolor, normbgcolor, normbordercolor },
-       [SchemeInfoSel]  = { normfgcolor, normbgcolor, normbordercolor },
-       [SchemeInfoNorm] = { normfgcolor, normbgcolor, normbordercolor },
+        [SchemeNorm]     = { normfgcolor, normbgcolor, normbordercolor },
+        [SchemeSel]      = { selfgcolor,  selbgcolor,  selbordercolor  },
+        [SchemeStatus]   = { normfgcolor, normbgcolor, normbordercolor },
+        [SchemeTagsSel]  = { selfgcolor,  selbgcolor,  normbordercolor },
+        [SchemeTagsNorm] = { normfgcolor, normbgcolor, normbordercolor },
+        [SchemeInfoSel]  = { normfgcolor, normbgcolor, normbordercolor },
+        [SchemeInfoNorm] = { normfgcolor, normbgcolor, normbordercolor },
 };
 
 static const unsigned int alphas[][3]      = {
 	/*                     fg       bg        border   */
-	[SchemeNorm]     = { OPAQUE, baralpha, borderalpha },
-	[SchemeSel]      = { OPAQUE, baralpha, borderalpha },
+  [SchemeNorm]     = { OPAQUE, baralpha, borderalpha },
+  [SchemeSel]      = { OPAQUE, baralpha, borderalpha },
   [SchemeStatus]   = { OPAQUE, baralpha, borderalpha },
-	[SchemeTagsSel]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeTagsNorm] = { OPAQUE, baralpha, borderalpha },
-	[SchemeInfoSel]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeInfoNorm] = { OPAQUE, baralpha, borderalpha },
+  [SchemeTagsSel]  = { OPAQUE, baralpha, borderalpha },
+  [SchemeTagsNorm] = { OPAQUE, baralpha, borderalpha },
+  [SchemeInfoSel]  = { OPAQUE, baralpha, borderalpha },
+  [SchemeInfoNorm] = { OPAQUE, baralpha, borderalpha },
 };
 
 typedef struct {
@@ -73,20 +73,20 @@ static const Rule rules[] = {
   *	WM_CLASS(STRING) = instance, class
   *	WM_NAME(STRING) = title
   */
-  /* class                instance       title      tags mask  isfloating  isterminal  noswallow  monitor */
-  { NULL,                   NULL,     "ranger",         1<<1,       0,          1,          -1,        -1 },
-  { "Emacs",                NULL,         NULL,         1<<2,       0,          0,          -1,        -1 },
-  { "firefox",              NULL,         NULL,         1<<3,       0,          0,          -1,        -1 },
-  { "qutebrowser",          NULL,         NULL,         1<<3,       0,          0,          -1,        -1 },
-  { "Steam",                NULL,         NULL,         1<<4,       0,          0,          -1,        -1 },
-  { "TelegramDesktop",      NULL,         NULL,         1<<5,       0,          0,          -1,        -1 },
-  { "St",                   NULL,         NULL,            0,       0,          1,           0,        -1 },
-  { "Qalculate-gtk",        NULL,         NULL,            0,       1,          0,           1,        -1 },
-  { NULL,               "spterm",	        NULL,		  SPTAG(0),		    1,			    1,           1,        -1 },
-  { NULL,              "spmusic",		      NULL,		  SPTAG(1),		    1,	  		  1,           1,        -1 },
-  { NULL,                "spvol",	        NULL,		  SPTAG(2),		    1,		      1,           1,        -1 },
-  { NULL,                  "obs",	        NULL,		  SPTAG(3),		    0,		      0,           1,        -1 },
-  { NULL,                 "qalc",	        NULL,		  SPTAG(4),		    1,		      0,           1,        -1 },
+  /* class                instance       title        tags mask   isfloating  isterminal  noswallow  monitor */
+  { NULL,                   NULL,     "ranger",          1<<1,        0,          1,         -1,        -1 },
+  { "Emacs",                NULL,         NULL,          1<<2,        0,          0,         -1,        -1 },
+  { "firefox",              NULL,         NULL,          1<<3,        0,          0,         -1,        -1 },
+  { "qutebrowser",          NULL,         NULL,          1<<3,        0,          0,         -1,        -1 },
+  { "Steam",                NULL,         NULL,          1<<4,        0,          0,         -1,        -1 },
+  { "TelegramDesktop",      NULL,         NULL,          1<<5,        0,          0,         -1,        -1 },
+  { "St",                   NULL,         NULL,             0,        0,          1,          0,        -1 },
+  { "Qalculate-gtk",        NULL,         NULL,             0,        1,          0,          1,        -1 },
+  { NULL,               "spterm",         NULL,      SPTAG(0),        1,          1,          1,        -1 },
+  { NULL,              "spmusic",         NULL,      SPTAG(1),        1,          1,          1,        -1 },
+  { NULL,                "spvol",         NULL,      SPTAG(2),        1,          1,          1,        -1 },
+  { NULL,                  "obs",         NULL,      SPTAG(3),        0,          0,          1,        -1 },
+  { NULL,                 "qalc",         NULL,      SPTAG(4),        1,          0,          1,        -1 },
 };
 
 /* layout(s) */
