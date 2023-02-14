@@ -131,10 +131,10 @@ esac
 
 echo "Organizing dotfiles..."
 echo ""
-ln -sfv $path/.Xresources $HOME/.Xresources
-ln -sfv $path/.xinitrc $HOME/.xinitrc
-ln -sfv $path/.Xmodmap $HOME/.Xmodmap
-ln -sfv $path/.zprofile $HOME/.zprofile
+ln -sf $path/.Xresources $HOME/.Xresources
+ln -sf $path/.xinitrc $HOME/.xinitrc
+ln -sf $path/.Xmodmap $HOME/.Xmodmap
+ln -sf $path/.zprofile $HOME/.zprofile
 
 [ ! -d $HOME/.config ] && mkdir $HOME/.config
 [ ! -d $HOME/.local ] && mkdir $HOME/.local
@@ -143,73 +143,73 @@ ln -sfv $path/.zprofile $HOME/.zprofile
 if [ -L $HOME/.config/cava ]; then
   rm -rf $HOME/.config/cava
 fi
-ln -sfv $path/.config/cava $HOME/.config/cava
+ln -sf $path/.config/cava $HOME/.config/cava
 
 if [ -L $HOME/.config/redshift ]; then
   rm -rf $HOME/.config/redshift
 fi
-ln -sfv $path/.config/redshift $HOME/.config/redshift
+ln -sf $path/.config/redshift $HOME/.config/redshift
 
 if [ -L $HOME/.config/dunst ]; then
   rm -rf $HOME/.config/dunst
 fi
-ln -sfv $path/.config/dunst $HOME/.config/dunst
+ln -sf $path/.config/dunst $HOME/.config/dunst
 
 if [ -L $HOME/.config/mpv ]; then
   rm -rf $HOME/.config/mpv
 fi
-ln -sfv $path/.config/mpv $HOME/.config/mpv
+ln -sf $path/.config/mpv $HOME/.config/mpv
 
 if [ -L $HOME/.config/neofetch ]; then
   rm -rf $HOME/.config/neofetch
 fi
-ln -sfv $path/.config/neofetch $HOME/.config/neofetch
+ln -sf $path/.config/neofetch $HOME/.config/neofetch
 
 if [ -L $HOME/.config/sxiv ]; then
   rm -rf $HOME/.config/sxiv
 fi
-ln -sfv $path/.config/sxiv $HOME/.config/sxiv
+ln -sf $path/.config/sxiv $HOME/.config/sxiv
 
 if [ -L $HOME/.config/wal ]; then
   rm -rf $HOME/.config/wal
 fi
-ln -sfv $path/.config/wal $HOME/.config/wal
-ln -sfv $HOME/.cache/wal/dunstrc $HOME/.config/dunst/dunstrc
+ln -sf $path/.config/wal $HOME/.config/wal
+ln -sf $HOME/.cache/wal/dunstrc $HOME/.config/dunst/dunstrc
 
 if [ -L $HOME/.config/picom ]; then
   rm -rf $HOME/.config/picom
 fi
-ln -sfv $path/.config/picom $HOME/.config/picom
+ln -sf $path/.config/picom $HOME/.config/picom
 
 if [ -L $HOME/.config/ranger ]; then
   rm -rf $HOME/.config/ranger
 fi
-ln -sfv $path/.config/ranger $HOME/.config/ranger
+ln -sf $path/.config/ranger $HOME/.config/ranger
 
 if [ -L $HOME/.config/zathura ]; then
   rm -rf $HOME/.config/zathura
 fi
-ln -sfv $path/.config/zathura $HOME/.config/zathura
+ln -sf $path/.config/zathura $HOME/.config/zathura
 
 if [ -L $HOME/.config/qutebrowser ]; then
   rm -rf $HOME/.config/qutebrowser
 fi
-ln -sfv $path/.config/qutebrowser $HOME/.config/qutebrowser
+ln -sf $path/.config/qutebrowser $HOME/.config/qutebrowser
 
 if [ -L $HOME/.config/cmus ]; then
   rm -rf $HOME/.config/cmus
 fi
-ln -sfv $path/.config/cmus $HOME/.config/cmus
+ln -sf $path/.config/cmus $HOME/.config/cmus
 
 if [ -L $HOME/.config/suckless ]; then
   rm -rf $HOME/.config/suckless
 fi
-ln -sfv $path/.config/suckless $HOME/.config/suckless
+ln -sf $path/.config/suckless $HOME/.config/suckless
 
 if [ -L $HOME/.config/nvim ]; then
   rm -rf $HOME/.config/nvim
 fi
-ln -sfv $path/.config/nvim $HOME/.config/nvim
+ln -sf $path/.config/nvim $HOME/.config/nvim
 
 if [ -d $HOME/.emacs.d ]; then
   rm -rf $HOME/.emacs.d
@@ -218,19 +218,19 @@ fi
 if [ -L $HOME/.config/emacs ]; then
   rm -rf $HOME/.config/emacs
 fi
-ln -sfv $path/.config/emacs $HOME/.config/emacs
+ln -sf $path/.config/emacs $HOME/.config/emacs
 
-ln -sfv $path/.local/bin/cmus-notify $HOME/.local/bin
-ln -sfv $path/.local/bin/dwall $HOME/.local/bin
-ln -sfv $path/.local/bin/wg $HOME/.local/bin
-ln -sfv $path/.local/bin/dfiles $HOME/.local/bin
-ln -sfv $path/.local/bin/dstreaming $HOME/.local/bin
-ln -sfv $path/.local/bin/emoji $HOME/.local/bin
-ln -sfv $path/.local/bin/screenshot $HOME/.local/bin
-ln -sfv $path/.local/bin/togglemute $HOME/.local/bin
-ln -sfv $path/.local/bin/nightmode $HOME/.local/bin
-ln -sfv $path/.local/bin/dwifi $HOME/.local/bin
-ln -sfv $path/.local/bin/dots $HOME/.local/bin
+ln -sf $path/.local/bin/cmus-notify $HOME/.local/bin
+ln -sf $path/.local/bin/dwall $HOME/.local/bin
+ln -sf $path/.local/bin/wg $HOME/.local/bin
+ln -sf $path/.local/bin/dfiles $HOME/.local/bin
+ln -sf $path/.local/bin/dstreaming $HOME/.local/bin
+ln -sf $path/.local/bin/emoji $HOME/.local/bin
+ln -sf $path/.local/bin/screenshot $HOME/.local/bin
+ln -sf $path/.local/bin/togglemute $HOME/.local/bin
+ln -sf $path/.local/bin/nightmode $HOME/.local/bin
+ln -sf $path/.local/bin/dwifi $HOME/.local/bin
+ln -sf $path/.local/bin/dots $HOME/.local/bin
 sleep 1 && clear
 
 echo "Installing suckless programs..."

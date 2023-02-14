@@ -12,7 +12,7 @@
 (electric-pair-mode t)
 (setq-default cursor-type 'bar)
 (global-hl-line-mode t)
-(setq backup-directory-alist '(("." . "~/.saves")))
+(setq backup-directory-alist '(("." . "~/.cache/.saves")))
 (delete-selection-mode t)
 (global-visual-line-mode t)
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -68,7 +68,7 @@
   :config
   (dashboard-setup-startup-hook))
 
-(setq dashboard-startup-banner "~/.emacs.d/logo/unix.png")
+(setq dashboard-startup-banner "~/.config/emacs/logo/unix.png")
 (setq dashboard-banner-logo-title nil)
 (setq dashboard-center-content t)
 (setq dashboard-items '((recents  . 4)

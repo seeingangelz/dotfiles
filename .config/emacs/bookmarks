@@ -3,7 +3,7 @@
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
 (("EMACS"
- (filename . "~/Documents/dotfiles/.emacs.d/init.el")
+ (filename . "~/Documents/dotfiles/.config/emacs/init.el")
  (front-context-string . "(setq inhibit-st")
  (rear-context-string)
  (position . 1))

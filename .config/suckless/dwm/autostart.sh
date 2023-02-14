@@ -79,7 +79,7 @@ net(){
 }
 
 mem(){
-    mem=`free | awk '/Mem/ {printf "%.2f/%.2f GB\n", $3 / 1024 / 1024, $2 / 1024 / 1024 }'`
+    mem=`free | awk '/Mem/ {printf "%.2f/%.2fG\n", $3 / 1024 / 1024, $2 / 1024 / 1024 }'`
     echo -e " $mem"
 }
 
@@ -124,15 +124,15 @@ while true; do
     upd=`checkupdates | wc -l`
     if pgrep -x "cmus" > /dev/null; then
       if [[ $upd -gt 0 ]]; then
-        dwm -s "$(song)| $(cpu) $(temp) | $(hdd) | $(mem) |   $upd | $(vol) | $(bat) | $(dte) | $(net)"
+        dwm -s "$(song)| $(cpu) | $(hdd) | $(mem) |  $upd | $(vol) | $(bat) | $(dte) | $(net)"
       else
-        dwm -s "$(song)| $(cpu) $(temp) | $(hdd) | $(mem) | $(vol) | $(bat) | $(dte) | $(net)"
+        dwm -s "$(song)| $(cpu) | $(hdd) | $(mem) | $(vol) | $(bat) | $(dte) | $(net)"
       fi
     else
       if [[ $upd -gt 0 ]]; then
-        dwm -s "$(cpu) $(temp) | $(hdd) | $(mem) |  $upd | $(vol) | $(bat) | $(dte) | $(net)"
+        dwm -s "$(cpu) | $(hdd) | $(mem) |  $upd | $(vol) | $(bat) | $(dte) | $(net)"
       else
-        dwm -s "$(cpu) $(temp) | $(hdd) | $(mem) | $(vol) | $(bat) | $(dte) | $(net)"
+        dwm -s "$(cpu) | $(hdd) | $(mem) | $(vol) | $(bat) | $(dte) | $(net)"
       fi
     fi
     sleep 1s
