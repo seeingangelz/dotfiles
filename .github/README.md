@@ -64,8 +64,9 @@ yay -S cava devour tty-clock-git picom-jonaburg-git cmatrix-git pipes.sh qt5-sty
 ```
 ```sh
 git clone https://github.com/seeingangelz/dotfiles.git
-Create symbolic links to the files/directories you need.
 ```
+
+<b>Create symbolic links to the files/directories you need.</b>
 
 </details>
 
