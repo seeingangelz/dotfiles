@@ -68,7 +68,7 @@
   :config
   (dashboard-setup-startup-hook))
 
-(setq dashboard-startup-banner "~/Documents/dotfiles/.emacs.d/logo/unix.png")
+(setq dashboard-startup-banner "~/.emacs.d/logo/unix.png")
 (setq dashboard-banner-logo-title nil)
 (setq dashboard-center-content t)
 (setq dashboard-items '((recents  . 4)
