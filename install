@@ -10,47 +10,27 @@ echo " / ___ |/ /___/ /_/ / /|  /  ___/ /  / /_/ / /_/ / / / / __/ _/ // /___/ /
 echo "/_/  |_/_____/\____/_/ |_/  /____/  /_____/\____/ /_/ /_/   /___/_____/_____//____/"
 echo ""
 echo ""
-echo "Install programs and dependencies? (y/n)"
+echo "Installing programs..."
+echo "Already have yay installed? (y/n)"
 read answer
 sleep 1 && clear
 
 case $answer in
   "y")
-    echo "Installing dependencies..."
-    sudo pacman -S arandr arc-gtk-theme clipmenu zsh cmus dbus dunst emacs feh btop ffmpeg ffmpegthumbnailer firefox flameshot fzf git gnu-free-fonts go htop imagemagick lxappearance mpv neofetch neovim noto-fonts noto-fonts-cjk noto-fonts-emoji numlockx obs-studio openssh perl pulseaudio pulsemixer python-pip python-pywal qalculate-gtk qt5ct qutebrowser ranger syncthing sxiv telegram-desktop tmux tree ttf-jetbrains-mono ttf-nerd-fonts-symbols-common ttf-nerd-fonts-symbols-2048-em-mono ueberzug redshift unzip vim webkit2gtk xclip yt-dlp zathura zathura-pdf-mupdf zip xorg-server xorg-xinit libx11 libxinerama libxft base base-devel
-    sleep 1 && clear
-    ;;
-  "n")
-    echo "Skipping..."
-    sleep 1 && clear
-    ;;
-  *)
-    echo "Invalid answer, skipping..."
-    sleep 1 && clear
-    ;;
-esac
-
-echo "Installing AUR programs, already have yay installed? (y/n)"
-read answer
-sleep 1 && clear
-
-case $answer in
-  "y")
-    echo "Installing AUR programs..."
-    yay -S cava devour tty-clock-git picom-jonaburg-git cmatrix-git pipes.sh qt5-styleplugins checkupdates-aur perl-checkupdates-aur wal-telegram-git webtorrent-cli python-pywalfox
+    echo "Installing programs..."
+    yay -S cava devour tty-clock-git picom-jonaburg-git cmatrix-git pipes.sh qt5-styleplugins checkupdates-aur perl-checkupdates-aur wal-telegram-git webtorrent-cli python-pywalfox arandr arc-gtk-theme clipmenu zsh cmus dbus dunst emacs feh btop ffmpeg ffmpegthumbnailer firefox flameshot fzf git gnu-free-fonts go htop imagemagick lxappearance mpv neofetch neovim noto-fonts noto-fonts-cjk noto-fonts-emoji numlockx obs-studio openssh perl pulseaudio pulsemixer python-pip python-pywal qalculate-gtk qt5ct qutebrowser ranger syncthing sxiv telegram-desktop tmux tree ttf-jetbrains-mono ttf-nerd-fonts-symbols-common ttf-nerd-fonts-symbols-2048-em-mono ueberzug redshift unzip vim webkit2gtk xclip yt-dlp zathura zathura-pdf-mupdf zip xorg-server xorg-xinit libx11 libxinerama libxft base base-devel --noconfirm
     sudo pywalfox install
     sleep 1 && clear
     ;;
   "n")
     echo "Installing yay..."
-    git clone https://aur.archlinux.org/yay.git ~/.yay
-    cd ~/.yay
+    git clone https://aur.archlinux.org/yay.git /tmp/yay
+    cd /tmp/yay
     makepkg -si 
-    sudo rm -rf ~/.yay
     sleep 1 && clear
     
-    echo "Installing AUR programs..."
-    yay -S cava devour tty-clock-git picom-jonaburg-git cmatrix-git pipes.sh qt5-styleplugins checkupdates-aur perl-checkupdates-aur wal-telegram-git webtorrent-cli python-pywalfox
+    echo "Installing programs..."
+    yay -S cava devour tty-clock-git picom-jonaburg-git cmatrix-git pipes.sh qt5-styleplugins checkupdates-aur perl-checkupdates-aur wal-telegram-git webtorrent-cli python-pywalfox arandr arc-gtk-theme clipmenu zsh cmus dbus dunst emacs feh btop ffmpeg ffmpegthumbnailer firefox flameshot fzf git gnu-free-fonts go htop imagemagick lxappearance mpv neofetch neovim noto-fonts noto-fonts-cjk noto-fonts-emoji numlockx obs-studio openssh perl pulseaudio pulsemixer python-pip python-pywal qalculate-gtk qt5ct qutebrowser ranger syncthing sxiv telegram-desktop tmux tree ttf-jetbrains-mono ttf-nerd-fonts-symbols-common ttf-nerd-fonts-symbols-2048-em-mono ueberzug redshift unzip vim webkit2gtk xclip yt-dlp zathura zathura-pdf-mupdf zip xorg-server xorg-xinit libx11 libxinerama libxft base base-devel --noconfirm
     sudo pywalfox install
     sleep 1 && clear
     ;;
@@ -67,7 +47,7 @@ sleep 1 && clear
 case $answer in
   "y")
     echo "Installing dependencies..."
-    sudo pacman -S acpi acpilight
+    yay -S acpi acpilight
     sleep 1 && clear
     echo "Want to enable touchpad tap-to-click? (y/n)"
     read answer

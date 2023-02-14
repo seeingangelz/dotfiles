@@ -56,14 +56,17 @@ Aeon's Dotfiles
 <details>
 <summary><b>Manual</b></summary>
 <br>
+<b>Using<b> <kbd>yay</kbd>
+<br>
 
 ```sh
-sudo pacman -Syu git
-git clone https://github.com/seeingangelz/dotfiles.git
-cd dotfiles/
-chmod +x install
-./install
+yay -S cava devour tty-clock-git picom-jonaburg-git cmatrix-git pipes.sh qt5-styleplugins checkupdates-aur perl-checkupdates-aur wal-telegram-git webtorrent-cli python-pywalfox arandr arc-gtk-theme clipmenu zsh cmus dbus dunst emacs feh btop ffmpeg ffmpegthumbnailer firefox flameshot fzf git gnu-free-fonts go htop imagemagick lxappearance mpv neofetch neovim noto-fonts noto-fonts-cjk noto-fonts-emoji numlockx obs-studio openssh perl pulseaudio pulsemixer python-pip python-pywal qalculate-gtk qt5ct qutebrowser ranger syncthing sxiv telegram-desktop tmux tree ttf-jetbrains-mono ttf-nerd-fonts-symbols-common ttf-nerd-fonts-symbols-2048-em-mono ueberzug redshift unzip vim webkit2gtk xclip yt-dlp zathura zathura-pdf-mupdf zip xorg-server xorg-xinit libx11 libxinerama libxft base base-devel
 ```
+```sh
+git clone https://github.com/seeingangelz/dotfiles.git
+Create symbolic links to the files/directories you need.
+```
+
 </details>
 
 <details>
@@ -71,7 +74,11 @@ chmod +x install
 <br>
 
 ```sh
-In development...
+sudo pacman -Syu git
+git clone https://github.com/seeingangelz/dotfiles.git
+cd dotfiles/
+chmod +x install
+./install
 ```
 
 </details>
