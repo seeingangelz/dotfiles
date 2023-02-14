@@ -26,14 +26,14 @@ static char selbgcolor[]                  = "#005577";
 static const unsigned int baralpha = 0xd0;
 static const unsigned int borderalpha = OPAQUE;
 static const char *colors[][3] = {
-       /*                       fg           bg           border      */
-        [SchemeNorm]     = { normfgcolor, normbgcolor, normbordercolor },
-        [SchemeSel]      = { selfgcolor,  selbgcolor,  selbordercolor  },
-        [SchemeStatus]   = { normfgcolor, normbgcolor, normbordercolor },
-        [SchemeTagsSel]  = { selfgcolor,  selbgcolor,  normbordercolor },
-        [SchemeTagsNorm] = { normfgcolor, normbgcolor, normbordercolor },
-        [SchemeInfoSel]  = { normfgcolor, normbgcolor, normbordercolor },
-        [SchemeInfoNorm] = { normfgcolor, normbgcolor, normbordercolor },
+  /*                       fg           bg           border      */
+  [SchemeNorm]     = { normfgcolor, normbgcolor, normbordercolor },
+  [SchemeSel]      = { selfgcolor,  selbgcolor,  selbordercolor  },
+  [SchemeStatus]   = { normfgcolor, normbgcolor, normbordercolor },
+  [SchemeTagsSel]  = { selfgcolor,  selbgcolor,  normbordercolor },
+  [SchemeTagsNorm] = { normfgcolor, normbgcolor, normbordercolor },
+  [SchemeInfoSel]  = { normfgcolor, normbgcolor, normbordercolor },
+  [SchemeInfoNorm] = { normfgcolor, normbgcolor, normbordercolor },
 };
 
 static const unsigned int alphas[][3]      = {
