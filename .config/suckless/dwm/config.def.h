@@ -69,24 +69,24 @@ static Sp scratchpads[] = {
 static const char *tags[] = { "", "", "", "", "", "" };
 
 static const Rule rules[] = {
-       /* xprop(1):
-	*	WM_CLASS(STRING) = instance, class
-	*	WM_NAME(STRING) = title
-	*/
-	/* class                 instance       title      tags mask  isfloating  isterminal  noswallow  monitor */
-	{ NULL,                   NULL,     "ranger",         1<<1,       0,          1,          -1,        -1 },
-	{ "Emacs",                NULL,         NULL,         1<<2,       0,          0,          -1,        -1 },
-	{ "firefox",              NULL,         NULL,         1<<3,       0,          0,          -1,        -1 },
-	{ "qutebrowser",          NULL,         NULL,         1<<3,       0,          0,          -1,        -1 },
-	{ "Steam",                NULL,         NULL,         1<<4,       0,          0,          -1,        -1 },
-	{ "TelegramDesktop",      NULL,         NULL,         1<<5,       0,          0,          -1,        -1 },
-	{ "St",                   NULL,         NULL,            0,       0,          1,           0,        -1 },
-	{ "Qalculate-gtk",        NULL,         NULL,            0,       1,          0,           1,        -1 },
-  { NULL,		            "spterm",	        NULL,		  SPTAG(0),		    1,			    1,           1,        -1 },
-	{ NULL,		           "spmusic",		      NULL,		  SPTAG(1),		    1,	  		  1,           1,        -1 },
-	{ NULL,		             "spvol",	        NULL,		  SPTAG(2),		    1,		      1,           1,        -1 },
-	{ NULL,		               "obs",	        NULL,		  SPTAG(3),		    0,		      0,           1,        -1 },
-	{ NULL,		              "qalc",	        NULL,		  SPTAG(4),		    1,		      0,           1,        -1 },
+      /* xprop(1):
+  *	WM_CLASS(STRING) = instance, class
+  *	WM_NAME(STRING) = title
+  */
+  /* class                instance       title      tags mask  isfloating  isterminal  noswallow  monitor */
+  { NULL,                   NULL,     "ranger",         1<<1,       0,          1,          -1,        -1 },
+  { "Emacs",                NULL,         NULL,         1<<2,       0,          0,          -1,        -1 },
+  { "firefox",              NULL,         NULL,         1<<3,       0,          0,          -1,        -1 },
+  { "qutebrowser",          NULL,         NULL,         1<<3,       0,          0,          -1,        -1 },
+  { "Steam",                NULL,         NULL,         1<<4,       0,          0,          -1,        -1 },
+  { "TelegramDesktop",      NULL,         NULL,         1<<5,       0,          0,          -1,        -1 },
+  { "St",                   NULL,         NULL,            0,       0,          1,           0,        -1 },
+  { "Qalculate-gtk",        NULL,         NULL,            0,       1,          0,           1,        -1 },
+  { NULL,               "spterm",	        NULL,		  SPTAG(0),		    1,			    1,           1,        -1 },
+  { NULL,              "spmusic",		      NULL,		  SPTAG(1),		    1,	  		  1,           1,        -1 },
+  { NULL,                "spvol",	        NULL,		  SPTAG(2),		    1,		      1,           1,        -1 },
+  { NULL,                  "obs",	        NULL,		  SPTAG(3),		    0,		      0,           1,        -1 },
+  { NULL,                 "qalc",	        NULL,		  SPTAG(4),		    1,		      0,           1,        -1 },
 };
 
 /* layout(s) */
@@ -99,81 +99,81 @@ static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen win
 #include "vanitygaps.c"
 
 static const Layout layouts[] = {
-	/* symbol     arrange function */
-	{ "[]=",      tile },    /* first entry is default */
-	{ "[M]",      monocle },
-	{ "[@]",      spiral },
-	{ "[\\]",     dwindle },
-	{ "H[]",      deck },
-	{ "TTT",      bstack },
-	{ "===",      bstackhoriz },
-	{ "HHH",      grid },
-	{ "###",      nrowgrid },
-	{ "---",      horizgrid },
-	{ ":::",      gaplessgrid },
-	{ "|M|",      centeredmaster },
-	{ ">M>",      centeredfloatingmaster },
-	{ "><>",      NULL },    /* no layout function means floating behavior */
-	{ NULL,       NULL },
+  /* symbol     arrange function */
+  { "[]=",      tile },    /* first entry is default */
+  { "[M]",      monocle },
+  { "[@]",      spiral },
+  { "[\\]",     dwindle },
+  { "H[]",      deck },
+  { "TTT",      bstack },
+  { "===",      bstackhoriz },
+  { "HHH",      grid },
+  { "###",      nrowgrid },
+  { "---",      horizgrid },
+  { ":::",      gaplessgrid },
+  { "|M|",      centeredmaster },
+  { ">M>",      centeredfloatingmaster },
+  { "><>",      NULL },    /* no layout function means floating behavior */
+  { NULL,       NULL },
 };
 
 /* key definitions */
 #define MODKEY Mod4Mask
 #define TAGKEYS(KEY,TAG) \
-	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
-	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
-	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
-	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
+  { MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
+  { MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
+  { MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
+  { MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
-static char dmenumon[2]         =    "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[]   =  { "dmenu_run", "-l", "20", NULL };
-static const char *termcmd[]    =  { "st", NULL };
-static const char *screenshot[]	=  { "screenshot", NULL };
-static const char *fullshot[]   =  { "flameshot", "full", NULL };
-static const char *browser[]	  =  { "firefox", NULL };
-static const char *ranger[]	    =  { "st", "-e", "ranger", NULL };
-static const char *slock[] 	    =  { "slock", NULL };
-static const char *telegram[]	  =  { "telegram-desktop", "-l", NULL };
-static const char *wall[]	      =  { "wg", NULL };
-static const char *emoji[]	    =  { "emoji", NULL };
-static const char *clip[]	      =  { "clipmenu", NULL };
-static const char *emacs[]	    =  { "emacs", NULL };
-static const char *dfiles[]	    =  { "dfiles", NULL };
-static const char *dots[]	      =  { "dots", NULL };
-static const char *inclight[]	  =  { "xbacklight", "-inc", "10", NULL };
-static const char *declight[]	  =  { "xbacklight", "-dec", "10", NULL };
-static const char *night[]	    =  { "nightmode", NULL };
-static const char *volup[]	    =  { "pulsemixer", "--change", "+5", NULL };
-static const char *voldown[]	  =  { "pulsemixer", "--change", "-5", NULL };
-static const char *volmute[]	  =  { "togglemute", NULL };
+static char dmenumon[2]         =   "0"; /* component of dmenucmd, manipulated in spawn() */
+static const char *dmenucmd[]   =   { "dmenu_run", "-l", "20", NULL };
+static const char *termcmd[]    =   { "st", NULL };
+static const char *screenshot[] =   { "screenshot", NULL };
+static const char *fullshot[]   =   { "flameshot", "full", NULL };
+static const char *browser[]    =   { "firefox", NULL };
+static const char *ranger[]     =   { "st", "-e", "ranger", NULL };
+static const char *slock[]      =   { "slock", NULL };
+static const char *telegram[]   =   { "telegram-desktop", "-l", NULL };
+static const char *wall[]       =   { "wg", NULL };
+static const char *emoji[]      =   { "emoji", NULL };
+static const char *clip[]       =   { "clipmenu", NULL };
+static const char *emacs[]      =   { "emacs", NULL };
+static const char *dfiles[]     =   { "dfiles", NULL };
+static const char *dots[]       =   { "dots", NULL };
+static const char *inclight[]   =   { "xbacklight", "-inc", "10", NULL };
+static const char *declight[]   =   { "xbacklight", "-dec", "10", NULL };
+static const char *night[]      =   { "nightmode", NULL };
+static const char *volup[]      =   { "pulsemixer", "--change", "+5", NULL };
+static const char *voldown[]    =   { "pulsemixer", "--change", "-5", NULL };
+static const char *volmute[]    =   { "togglemute", NULL };
 
 /* Xresources preferences to load at startup */
 ResourcePref resources[] = {
-    { "color4", 		        STRING,  &normbordercolor},
-    { "color14", 		        STRING,  &selbordercolor},
-    { "color0", 		        STRING,  &normbgcolor},
-    { "color4", 		        STRING,  &normfgcolor},
-    { "color0", 		        STRING,  &selfgcolor},
-    { "color4", 		        STRING,  &selbgcolor},
-    { "font",               STRING,  &font },
-    { "dmenufont",          STRING,  &dmenufont },
-    { "normbgcolor",        STRING,  &normbgcolor },
-    { "normbordercolor",    STRING,  &normbordercolor },
-    { "normfgcolor",        STRING,  &normfgcolor },
-    { "selbgcolor",         STRING,  &selbgcolor },
-    { "selbordercolor",     STRING,  &selbordercolor },
-    { "selfgcolor",         STRING,  &selfgcolor },
-    { "borderpx",          	INTEGER, &borderpx },
-    { "snap",          	    INTEGER, &snap },
-    { "showbar",          	INTEGER, &showbar },
-    { "topbar",          	  INTEGER, &topbar },
-    { "nmaster",          	INTEGER, &nmaster },
-    { "resizehints",       	INTEGER, &resizehints },
-    { "mfact",      	      FLOAT,   &mfact },
+    { "color4",             STRING,   &normbordercolor},
+    { "color14",            STRING,   &selbordercolor},
+    { "color0",             STRING,   &normbgcolor},
+    { "color4",             STRING,   &normfgcolor},
+    { "color0",             STRING,   &selfgcolor},
+    { "color4",             STRING,   &selbgcolor},
+    { "font",               STRING,   &font },
+    { "dmenufont",          STRING,   &dmenufont },
+    { "normbgcolor",        STRING,   &normbgcolor },
+    { "normbordercolor",    STRING,   &normbordercolor },
+    { "normfgcolor",        STRING,   &normfgcolor },
+    { "selbgcolor",         STRING,   &selbgcolor },
+    { "selbordercolor",     STRING,   &selbordercolor },
+    { "selfgcolor",         STRING,   &selfgcolor },
+    { "borderpx",           INTEGER,  &borderpx },
+    { "snap",               INTEGER,  &snap },
+    { "showbar",            INTEGER,  &showbar },
+    { "topbar",             INTEGER,  &topbar },
+    { "nmaster",            INTEGER,  &nmaster },
+    { "resizehints",        INTEGER,  &resizehints },
+    { "mfact",              FLOAT,    &mfact },
 };
 
 #include "selfrestart.c"
@@ -181,7 +181,7 @@ ResourcePref resources[] = {
 #include "exitdwm.c"
 
 static const Key keys[] = {
-	/* modifier                     key            function           argument */
+  /* modifier                     key            function           argument */
   { MODKEY,                       XK_p,          spawn,             {.v = dmenucmd } },
   { MODKEY,                       XK_Return,     spawn,             {.v = termcmd } },
   { 0,                            XK_Print,      spawn,             {.v = screenshot } },
