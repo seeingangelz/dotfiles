@@ -20,8 +20,8 @@ c.url.searchengines = {'DEFAULT': 'https://google.com/search?q={}',
                        'yt': 'https://www.youtube.com/results?search_query={}',
                        'aw': 'https://wiki.archlinux.org/?search={}',
                        're': 'https://www.reddit.com/r/{}',}
-c.url.start_pages = ["https://search.femboy.hu/"] 
-c.url.default_page = "https://search.femboy.hu/"
+c.url.start_pages = ["https://seeingangelz.neocities.org/"] 
+c.url.default_page = "https://seeingangelz.neocities.org/"
 
 c.fonts.default_family = "JetBrainsMono"
 c.fonts.default_size = '8pt'
