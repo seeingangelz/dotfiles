@@ -183,7 +183,7 @@ ResourcePref resources[] = {
 static const Key keys[] = {
 	/* modifier                     key            function           argument */
   { MODKEY,                       XK_p,          spawn,             {.v = dmenucmd } },
-  { MODKEY,             	        XK_Return,     spawn,             {.v = termcmd } },
+  { MODKEY,                       XK_Return,     spawn,             {.v = termcmd } },
   { 0,                            XK_Print,      spawn,             {.v = screenshot } },
   { MODKEY,                       XK_Print,      spawn,             {.v = fullshot } },
   { MODKEY,                       XK_F1,         spawn,             {.v = ranger } },
@@ -191,11 +191,11 @@ static const Key keys[] = {
   { MODKEY,                       XK_F3,         spawn,             {.v = telegram } },
   { MODKEY,                       XK_F5,         spawn,             {.v = emacs } },
   { MODKEY,                       XK_F11,        spawn,             {.v = slock } },
-  { 0,              			        0x1008ff13,    spawn,             {.v = volup } },
-  { 0,			                      0x1008ff11,    spawn,             {.v = voldown } },
-  { 0,			                      0x1008ff12,    spawn,             {.v = volmute } },
-  { 0,			                      0x1008ff02,    spawn,             {.v = inclight } },
-  { 0,			                      0x1008ff03,    spawn,             {.v = declight } },
+  { 0,                            0x1008ff13,    spawn,             {.v = volup } },
+  { 0,                            0x1008ff11,    spawn,             {.v = voldown } },
+  { 0,                            0x1008ff12,    spawn,             {.v = volmute } },
+  { 0,                            0x1008ff02,    spawn,             {.v = inclight } },
+  { 0,                            0x1008ff03,    spawn,             {.v = declight } },
   { MODKEY|ShiftMask,             XK_n,          spawn,             {.v = night} },
   { MODKEY|ShiftMask,             XK_y,          spawn,             {.v = clip} },
   { MODKEY|ShiftMask,             XK_e,          spawn,             {.v = wall} },
@@ -245,11 +245,11 @@ static const Key keys[] = {
   { MODKEY,                       XK_period,     focusmon,          {.i = +1 } },
   { MODKEY|ShiftMask,             XK_comma,      tagmon,            {.i = -1 } },
   { MODKEY|ShiftMask,             XK_period,     tagmon,            {.i = +1 } },
-  { MODKEY|ShiftMask,             XK_Return,     togglescratch,     {.ui = 0 } },
-  { MODKEY,                       XK_F4,	       togglescratch,     {.ui = 1 } },
-  { MODKEY,                       XK_F6,	       togglescratch,     {.ui = 2 } },
-  { MODKEY,                       XK_F7,	       togglescratch,     {.ui = 3 } },
-  { MODKEY,                       XK_F12,	       togglescratch,     {.ui = 4 } },
+  { MODKEY|ShiftMask,             XK_Return,      togglescratch,     {.ui = 0 } },
+  { MODKEY,                       XK_F4,          togglescratch,     {.ui = 1 } },
+  { MODKEY,                       XK_F6,          togglescratch,     {.ui = 2 } },
+  { MODKEY,                       XK_F7,          togglescratch,     {.ui = 3 } },
+  { MODKEY,                       XK_F12,         togglescratch,     {.ui = 4 } },
   TAGKEYS(                        XK_1,                             0)
   TAGKEYS(                        XK_2,                             1)
   TAGKEYS(                        XK_3,                             2)
