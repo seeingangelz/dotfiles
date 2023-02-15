@@ -105,7 +105,6 @@ case $answer in
     if [ -L $HOME/.zshrc ]; then
     rm $HOME/.zshrc
     fi
-    ln -sfv $path/.zshrc $HOME/.zshrc
     sleep 1 && clear
     ;;
   "n")
