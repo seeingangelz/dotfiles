@@ -112,6 +112,7 @@ case $answer in
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
     if [ -L $HOME/.config/zsh ]; then
     rm $HOME/.config/zsh
+    mv $path/.config/zsh/.zshrc.pre-oh-my-zsh $path/.config/zsh/.zshrc
     fi
     ln -sfv $path/.config/zsh $HOME/.config/zsh 
 
