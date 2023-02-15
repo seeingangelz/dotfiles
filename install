@@ -116,10 +116,9 @@ case $answer in
     fi
     ln -sfv $path/.config/zsh $HOME/.config/zsh 
 
-    if [ -L $HOME/.zshrc ]; then
+    if [ -f $HOME/.zshrc ]; then
     rm $HOME/.zshrc
     fi
-    ln -sfv $path/.zshrc $HOME/.zshrc
     sleep 1 && clear
     ;;
   *)
@@ -134,7 +133,7 @@ echo ""
 ln -sf $path/.Xresources $HOME/.Xresources
 ln -sf $path/.xinitrc $HOME/.xinitrc
 ln -sf $path/.Xmodmap $HOME/.Xmodmap
-ln -sf $path/.zprofile $HOME/.zprofile
+ln -sf $path/.zshenv $HOME/.zshenv
 
 [ ! -d $HOME/.config ] && mkdir $HOME/.config
 [ ! -d $HOME/.local ] && mkdir $HOME/.local

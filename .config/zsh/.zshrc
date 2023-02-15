@@ -24,7 +24,7 @@ source $ZSH/oh-my-zsh.sh
 export DISPLAY=:0
 
 # Set the path of the history file for Zsh
-export HISTFILE=~/.zsh_history
+export HISTFILE=~/.cache/.zsh_history
 
 # Set the maximum size of the history file
 export HISTSIZE=10000
@@ -33,7 +33,7 @@ export HISTSIZE=10000
 export SAVEHIST=10000
 
 # Set the list of commands to be ignored in the history
-export HISTORY_IGNORE="(ls|ls -a|cd|pwd|exit|cd -|cd ..)"
+export HISTORY_IGNORE="(ls|ls -a|cd|clear|pwd|exit|cd -|cd ..)"
 
 # Enable ignoring duplicate commands in the history
 setopt HIST_IGNORE_ALL_DUPS
