@@ -14,5 +14,5 @@ else
   zathura-pywal
   pkill dunst && dunst &
 	pkill dwm
-  dunstify "Enjoy your new colorscheme!"
+  notify-send "Enjoy your new colorscheme!"
 fi

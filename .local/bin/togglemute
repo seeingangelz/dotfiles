@@ -3,9 +3,9 @@
 status=$(pulsemixer --get-mute)
 if [ $status == "1" ]; then
     pulsemixer --unmute
-    dunstify "Sound enabled"
+    notify-send "Sound enabled"
 else
     pulsemixer --mute
-    dunstify "Sound disabled"
+    notify-send "Sound disabled"
 fi
 
