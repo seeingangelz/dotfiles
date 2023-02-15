@@ -140,6 +140,10 @@ ln -sf $path/.zprofile $HOME/.zprofile
 [ ! -d $HOME/.local ] && mkdir $HOME/.local
 [ ! -d $HOME/.local/bin ] && mkdir $HOME/.local/bin
 
+if [ -d ~/.oh-my-zsh ]; then
+    mv ~/.oh-my-zsh ~/.config/
+fi
+
 if [ -L $HOME/.config/cava ]; then
   rm -rf $HOME/.config/cava
 fi
