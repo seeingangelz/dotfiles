@@ -223,6 +223,11 @@ if [ -L $HOME/.config/emacs ]; then
 fi
 ln -sf $path/.config/emacs $HOME/.config/emacs
 
+if [ -L $HOME/.local/bin/statusbar ]; then
+  rm -rf $HOME/.local/bin/statusbar
+fi
+ln -sf $path/.local/bin/statusbar $HOME/.local/bin
+
 ln -sf $path/.local/bin/cmus-notify $HOME/.local/bin
 ln -sf $path/.local/bin/dwall $HOME/.local/bin
 ln -sf $path/.local/bin/wg $HOME/.local/bin
@@ -241,6 +246,7 @@ cd $path/.config/suckless/dwm && sudo make clean install && mv -f config.h confi
 cd $path/.config/suckless/st && sudo make clean install && mv -f config.h config.def.h
 cd $path/.config/suckless/dmenu && sudo make clean install && mv -f config.h config.def.h
 cd $path/.config/suckless/slock && sudo make clean install && mv -f config.h config.def.h
+cd $path/.config/suckless/dwmblocks && sudo make clean install && mv -f blocks.h blocks.def.h
 
 chmod +x $path/.local/bin
 sleep 1 && clear

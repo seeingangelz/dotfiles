@@ -13,6 +13,9 @@ picom --experimental-backends &
 # Start dunst
 dunst &
 
+# Start dwmblocks
+dwmblocks &
+
 # Start clipmenud
 clipmenud &
 

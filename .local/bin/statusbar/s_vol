@@ -1,0 +1,15 @@
+status=$(pulsemixer --get-mute)
+    if [ $status == "1" ]; then
+        echo -e "婢"
+    else
+        vol=$(pulsemixer --get-volume | awk '{print ($1+$2)/2}')
+        if [ $(echo "$vol >= 1 && $vol <= 49" | bc) -eq 1 ]; then
+            echo -e "奔 $vol%"
+        else
+            if [ $(echo "$vol == 0" | bc) -eq 1 ]; then
+                echo -e "ﱝ"
+            else
+                echo -e "墳 $vol%"
+            fi
+        fi
+    fi

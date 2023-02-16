@@ -147,9 +147,6 @@ static const char *dots[]       =   { "dots", NULL };
 static const char *inclight[]   =   { "xbacklight", "-inc", "10", NULL };
 static const char *declight[]   =   { "xbacklight", "-dec", "10", NULL };
 static const char *night[]      =   { "nightmode", NULL };
-static const char *volup[]      =   { "pulsemixer", "--change", "+5", NULL };
-static const char *voldown[]    =   { "pulsemixer", "--change", "-5", NULL };
-static const char *volmute[]    =   { "togglemute", NULL };
 
 /* Xresources preferences to load at startup */
 ResourcePref resources[] = {
@@ -191,9 +188,9 @@ static const Key keys[] = {
   { MODKEY,                       XK_F3,         spawn,             {.v = telegram } },
   { MODKEY,                       XK_F5,         spawn,             {.v = emacs } },
   { MODKEY,                       XK_F11,        spawn,             {.v = slock } },
-  { 0,                            0x1008ff13,    spawn,             {.v = volup } },
-  { 0,                            0x1008ff11,    spawn,             {.v = voldown } },
-  { 0,                            0x1008ff12,    spawn,             {.v = volmute } },
+  { 0,                            0x1008ff13,    spawn,             SHCMD("pulsemixer --change +5; pkill -RTMIN+5 dwmblocks") },
+  { 0,                            0x1008ff11,    spawn,             SHCMD("pulsemixer --change -5; pkill -RTMIN+5 dwmblocks") },
+  { 0,                            0x1008ff12,    spawn,             SHCMD("togglemute; pkill -RTMIN+5 dwmblocks") },
   { 0,                            0x1008ff02,    spawn,             {.v = inclight } },
   { 0,                            0x1008ff03,    spawn,             {.v = declight } },
   { MODKEY|ShiftMask,             XK_n,          spawn,             {.v = night} },

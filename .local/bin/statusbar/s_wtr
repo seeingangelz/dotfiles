@@ -1,0 +1,2 @@
+wtr=`curl -s "wttr.in/?format=3" | grep -o -E '[0-9]+°C'`
+echo -e "󰀸 $wtr"

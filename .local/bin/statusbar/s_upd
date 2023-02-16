@@ -1,0 +1,5 @@
+NUM_UPDATES=$(checkupdates | wc -l)
+if [ $NUM_UPDATES -gt 0 ]; then
+    echo " $NUM_UPDATES"
+    notify-send "PACMAN" "$NUM_UPDATES updates avaliable"
+fi
