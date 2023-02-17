@@ -132,7 +132,6 @@ echo "Organizing dotfiles..."
 echo ""
 ln -sf $path/.Xresources $HOME/.Xresources
 ln -sf $path/.xinitrc $HOME/.xinitrc
-ln -sf $path/.Xmodmap $HOME/.Xmodmap
 ln -sf $path/.zshenv $HOME/.zshenv
 
 [ ! -d $HOME/.config ] && mkdir $HOME/.config
