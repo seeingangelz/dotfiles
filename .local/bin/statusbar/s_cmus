@@ -9,3 +9,8 @@ if pgrep -x "cmus" > /dev/null
             echo -e " $artist- $title"
   fi
 fi
+
+case $BUTTON in
+	  1) cmus-remote -u ;;
+	  6) st -e nvim "$0" ;;
+esac

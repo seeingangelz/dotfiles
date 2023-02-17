@@ -57,7 +57,7 @@ alias mv='mv -iv'
 alias rm='rm -iv'
 alias rmrf='rm -rfiv'
 alias c="clear"
-alias syu="sudo pacman -Syu && pkill -RTMIN+6 dwmblocks"
+alias syu="sudo pacman -Syu && pkill -RTMIN+8 dwmblocks"
 alias s="sudo pacman -S"
 alias ss="pacman -Ss"
 alias r="sudo pacman -Rsn"
@@ -74,6 +74,3 @@ alias ytb-best="yt-dlp -f bestvideo+bestaudio "
 
 # Define a function to upload files
 upload() { curl -F"file=@$1" https://envs.sh ; }
-
-# Display system information
-neofetch

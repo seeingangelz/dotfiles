@@ -3,3 +3,7 @@ if [ $NUM_UPDATES -gt 0 ]; then
     echo " $NUM_UPDATES"
     notify-send "PACMAN" "$NUM_UPDATES updates avaliable"
 fi
+
+case $BUTTON in
+	  6) st -e nvim "$0" ;;
+esac

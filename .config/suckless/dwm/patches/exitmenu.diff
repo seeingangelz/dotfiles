@@ -49,7 +49,7 @@ index 0000000..74c514f
 +# endif
 +
 +# define S_LOCK "Lock"
-+# define S_RESTART_DWM "Restart Dwm"
++# define S_RESTART_DWM "restart Dwm"
 +# define S_OFFSCREEN "Off-screen"
 +# define S_EXIT "Exit"
 +# define S_REBOOT "Reboot"

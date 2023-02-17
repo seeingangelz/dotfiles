@@ -18,4 +18,3 @@ case $DMENUCHOICE in
     ZSH) st -e nvim $HOME/.zshrc ;;
     PICOM) st -e nvim $HOME/.config/picom/picom.conf ;;
 esac
-

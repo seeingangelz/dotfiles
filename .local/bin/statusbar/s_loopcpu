@@ -1,0 +1,1 @@
+kill -46 $(pidof dwmblocks) 

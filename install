@@ -91,7 +91,7 @@ sleep 1 && clear
 esac
 
 
-echo "Alredy have Oh-My-Zsh installed? (y/n)"
+echo "Already have Oh-My-Zsh installed? (y/n)"
 read answer
 sleep 1 && clear
 
