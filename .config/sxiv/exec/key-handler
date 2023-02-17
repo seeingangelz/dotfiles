@@ -11,6 +11,7 @@ do
     zathura-pywal
     pkill dunst && dunst &
     pkill dwm
+    dwmblocks &
     notify-send "Enjoy your new colorscheme!" ;;
 
   "y")
