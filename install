@@ -18,7 +18,7 @@ sleep 1 && clear
 case $answer in
   "y")
     echo "Installing programs..."
-    yay -S cava devour tty-clock-git picom-jonaburg-git cmatrix-git pipes.sh qt5-styleplugins checkupdates-aur perl-checkupdates-aur wal-telegram-git webtorrent-cli python-pywalfox arandr arc-gtk-theme clipmenu zsh cmus dbus dunst emacs feh btop ffmpeg ffmpegthumbnailer firefox flameshot fzf git gnu-free-fonts go htop imagemagick lxappearance mpv neofetch neovim noto-fonts noto-fonts-cjk noto-fonts-emoji numlockx obs-studio openssh perl pulseaudio pulsemixer python-pip python-pywal qalculate-gtk qt5ct qutebrowser ranger syncthing sxiv telegram-desktop tmux tree ttf-jetbrains-mono ttf-nerd-fonts-symbols-common ttf-nerd-fonts-symbols-2048-em-mono ueberzug redshift unzip vim webkit2gtk xclip yt-dlp zathura zathura-pdf-mupdf zip xorg-server xorg-xinit libx11 libxinerama libxft base base-devel --noconfirm
+    yay -S cava devour tty-clock-git picom-jonaburg-git cmatrix-git pipes.sh qt5-styleplugins checkupdates-aur perl-checkupdates-aur wal-telegram-git webtorrent-cli python-pywalfox arandr arc-gtk-theme clipmenu zsh cmus dbus dunst emacs feh ffmpeg ffmpegthumbnailer firefox flameshot fzf git gnu-free-fonts go htop imagemagick lxappearance mpv neofetch neovim noto-fonts noto-fonts-cjk noto-fonts-emoji numlockx obs-studio openssh perl pulseaudio pulsemixer python-pip python-pywal qalculate-gtk qt5ct qutebrowser ranger syncthing sxiv telegram-desktop tmux tree ttf-jetbrains-mono ttf-nerd-fonts-symbols-common ttf-nerd-fonts-symbols-2048-em-mono ueberzug redshift unzip vim webkit2gtk xclip yt-dlp zathura zathura-pdf-mupdf zip xorg-server xorg-xinit libx11 libxinerama libxft base base-devel --noconfirm
     sudo pywalfox install
     sleep 1 && clear
     ;;
@@ -30,7 +30,7 @@ case $answer in
     sleep 1 && clear
     
     echo "Installing programs..."
-    yay -S cava devour tty-clock-git picom-jonaburg-git cmatrix-git pipes.sh qt5-styleplugins checkupdates-aur perl-checkupdates-aur wal-telegram-git webtorrent-cli python-pywalfox arandr arc-gtk-theme clipmenu zsh cmus dbus dunst emacs feh btop ffmpeg ffmpegthumbnailer firefox flameshot fzf git gnu-free-fonts go htop imagemagick lxappearance mpv neofetch neovim noto-fonts noto-fonts-cjk noto-fonts-emoji numlockx obs-studio openssh perl pulseaudio pulsemixer python-pip python-pywal qalculate-gtk qt5ct qutebrowser ranger syncthing sxiv telegram-desktop tmux tree ttf-jetbrains-mono ttf-nerd-fonts-symbols-common ttf-nerd-fonts-symbols-2048-em-mono ueberzug redshift unzip vim webkit2gtk xclip yt-dlp zathura zathura-pdf-mupdf zip xorg-server xorg-xinit libx11 libxinerama libxft base base-devel --noconfirm
+    yay -S cava devour tty-clock-git picom-jonaburg-git cmatrix-git pipes.sh qt5-styleplugins checkupdates-aur perl-checkupdates-aur wal-telegram-git webtorrent-cli python-pywalfox arandr arc-gtk-theme clipmenu zsh cmus dbus dunst emacs feh ffmpeg ffmpegthumbnailer firefox flameshot fzf git gnu-free-fonts go htop imagemagick lxappearance mpv neofetch neovim noto-fonts noto-fonts-cjk noto-fonts-emoji numlockx obs-studio openssh perl pulseaudio pulsemixer python-pip python-pywal qalculate-gtk qt5ct qutebrowser ranger syncthing sxiv telegram-desktop tmux tree ttf-jetbrains-mono ttf-nerd-fonts-symbols-common ttf-nerd-fonts-symbols-2048-em-mono ueberzug redshift unzip vim webkit2gtk xclip yt-dlp zathura zathura-pdf-mupdf zip xorg-server xorg-xinit libx11 libxinerama libxft base base-devel --noconfirm
     sudo pywalfox install
     sleep 1 && clear
     ;;
