@@ -74,3 +74,6 @@ alias ytb-best="yt-dlp -f bestvideo+bestaudio "
 
 # Define a function to upload files
 upload() { curl -F"file=@$1" https://envs.sh ; }
+
+# Display system info
+neofetch
