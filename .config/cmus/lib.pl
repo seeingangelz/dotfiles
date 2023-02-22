@@ -61,8 +61,6 @@
 /home/aeon/Music/songs/guccihighwaters - highschool.mp3
 /home/aeon/Music/songs/Gun Boi Kaz, Binxx - Too Bad, So Sad.mp3
 /home/aeon/Music/songs/H8 Music, KillVill, LIL HEARTY - Work Right Back.mp3
-/home/aeon/Music/songs/Haarper, Freddie Dredd - Wtf U Mean.mp3
-/home/aeon/Music/songs/Haarper, Luga - Drop It Like It's Hot!.mp3
 /home/aeon/Music/songs/hahapoison, Brother - Spiders.mp3
 /home/aeon/Music/songs/heffy - It All Feels the Same.mp3
 /home/aeon/Music/songs/Hensonn - Prey.mp3
@@ -75,7 +73,6 @@
 /home/aeon/Music/songs/Ion - Hollywood Party.mp3
 /home/aeon/Music/songs/IVOXYGEN - Young Kid.mp3
 /home/aeon/Music/songs/Jack Prince - CLOUT.mp3
-/home/aeon/Music/songs/jasper dean - Stargazer.mp3
 /home/aeon/Music/songs/JEFFREY OLIVER - One Call Away.mp3
 /home/aeon/Music/songs/Josh A, iamjakehill - Suicidal Thoughts.mp3
 /home/aeon/Music/songs/Josh A, Lil Revive - Darkness.mp3
@@ -95,7 +92,6 @@
 /home/aeon/Music/songs/Lewis Blissett - Killing Butterflies.mp3
 /home/aeon/Music/songs/lilbubblegum, Letoa - guap.mp3
 /home/aeon/Music/songs/lilbubblegum - man down.mp3
-/home/aeon/Music/songs/Lil Rae, SadBoyCrush - Philophobia.mp3
 /home/aeon/Music/songs/Lil Rae - Pick Me Up Then Let Me Fall.mp3
 /home/aeon/Music/songs/Lil Revive - Grim Peaks.mp3
 /home/aeon/Music/songs/Lil Revive - Tell the Reaper I'm Sorry.mp3
@@ -130,7 +126,6 @@
 /home/aeon/Music/songs/Paradoxx - Hell and Back.mp3
 /home/aeon/Music/songs/Paycheck - INSOMNIA.mp3
 /home/aeon/Music/songs/✦ pink cig ✦ - Dare I Say Love.mp3
-/home/aeon/Music/songs/PlayaPhonk - Phonky Town.mp3
 /home/aeon/Music/songs/Promoting Sounds, 7ru7h - Save Me.mp3
 /home/aeon/Music/songs/Promoting Sounds, Rxseboy, SadBoyProlific - Memory.mp3
 /home/aeon/Music/songs/Prompto - Ed, Edd N Eddy.mp3
@@ -151,7 +146,6 @@
 /home/aeon/Music/songs/s0cliché - Fifty Shades.mp3
 /home/aeon/Music/songs/s0cliché, Sepha. - Messages.mp3
 /home/aeon/Music/songs/sadeyes - don't cry.mp3
-/home/aeon/Music/songs/S-BEATS MUSIC, BLAZZE BEATZ - Act a Fool - Remix.mp3
 /home/aeon/Music/songs/screwyounick, Lil Skele - back 2 bed.mp3
 /home/aeon/Music/songs/Sean Quincy - Villainesque.mp3
 /home/aeon/Music/songs/Sg603 - Shroom Walk.mp3
