@@ -1,7 +1,2 @@
 hdd=`df -h --output=used,pcent / | awk 'NR==2{print $1" "$2}'`
 echo -e " $hdd"
-
-case $BUTTON in
-	  1) st -e htop ;;
-	  6) st -e nvim "$0" ;;
-esac

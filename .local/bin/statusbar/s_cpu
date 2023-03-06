@@ -5,8 +5,3 @@ read cpu a b c idle rest < /proc/stat
 total=$((a+b+c+idle))
 cpu=$((100*( (total-prevtotal) - (idle-previdle) ) / (total-prevtotal) ))
 echo -e " $cpu%"
-
-case $BUTTON in
-	  1) st -e htop ;;
-	  6) st -e nvim "$0" ;;
-esac

@@ -13,14 +13,3 @@ status=$(pulsemixer --get-mute)
             fi
         fi
     fi
-
-case $BUTTON in
-	  1) st -e pulsemixer ;;
-	  2) togglemute; kill -41 $(pidof dwmblocks) ;;
-	  4) pulsemixer --change +1; kill -41 $(pidof dwmblocks) ;;
-	  5) pulsemixer --change -1; kill -41 $(pidof dwmblocks) ;;
-	  3) notify-send " Volume module" "\- Shows volume  , 󰖁 if muted.
-    - Middle click to mute.
-    - Scroll to change." ;;
-	  6) st -e nvim "$0" ;;
-esac

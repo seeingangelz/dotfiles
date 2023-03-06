@@ -3,8 +3,3 @@ if ping -c 1 "9.9.9.9" > /dev/null; then
  else
  echo -e "睊"
 fi
-
-case $BUTTON in
-	  1) st -e nmtui ;;
-    6) st -e nvim "$0" ;;
-esac

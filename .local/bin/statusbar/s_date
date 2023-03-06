@@ -1,6 +1,2 @@
 dte="$(date +"%a %d/%m |  %H:%M")"
 echo -e " $dte"
-
-case $BUTTON in
-	1) setsid -f st -e sh -c "cal 2023; exec zsh" ;;
-esac

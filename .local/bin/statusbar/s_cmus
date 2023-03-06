@@ -1,13 +1,12 @@
-if pgrep -x "cmus" > /dev/null
- then
-  output=$(cmus-remote -Q)
-  artist=$(echo "$output" | awk '/artist/ { if (found != 1) { found=1; for (i=3; i<=NF; i++) { printf "%s ", $i } } }')
-  title=$(echo "$output" | awk '/title/ { for (i=3; i<=NF; i++) { printf "%s ", $i } }')
-  if [ -z "$artist" ] && [ -z "$title" ]; then
-            echo ""
-        else
-            echo -e " $artist- $title"
-  fi
+if pgrep -x "cmus" > /dev/null; then
+    output=$(cmus-remote -Q)
+    artist=$(echo "$output" | awk '/artist/ { if (found != 1) { found=1; for (i=3; i<=NF; i++) { printf "%s ", $i } } }')
+    title=$(echo "$output" | awk '/title/ { for (i=3; i<=NF; i++) { printf "%s ", $i } }')
+    if [ -z "$artist" ] && [ -z "$title" ]; then
+        echo ""
+    else
+        echo -e " $artist- $title" | sed 's/.$//'
+    fi
 fi
 
 case $BUTTON in
