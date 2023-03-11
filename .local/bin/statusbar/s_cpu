@@ -1,7 +1,23 @@
-read cpu a b c previdle rest < /proc/stat
-prevtotal=$((a+b+c+previdle))
-sleep 0.5
-read cpu a b c idle rest < /proc/stat
-total=$((a+b+c+idle))
-cpu=$((100*( (total-prevtotal) - (idle-previdle) ) / (total-prevtotal) ))
-echo -e " $cpu%"
+cpu(){
+	read cpu a b c previdle rest < /proc/stat
+	prevtotal=$((a+b+c+previdle))
+	sleep 0.5
+	read cpu a b c idle rest < /proc/stat
+	total=$((a+b+c+idle))
+	cpu=$((100*( (total-prevtotal) - (idle-previdle) ) / (total-prevtotal) ))
+	echo -e " $cpu%"
+}
+
+temp(){
+    output=$(sensors)
+    echo "$output" | while read line
+    do
+        if echo "$line" | grep -q "Core"; then
+            temp=$(echo "$line" | awk '{print $3}' | tr -d '+°C' | cut -c1-2)
+            echo "$tempºC"
+            break
+        fi
+    done
+}
+
+echo "$(cpu) $(temp)"

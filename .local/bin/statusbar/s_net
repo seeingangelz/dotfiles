@@ -1,5 +1,5 @@
 if ping -c 1 "9.9.9.9" > /dev/null; then
- echo -e "直"
+ echo -e "直 "
  else
- echo -e "睊"
+ echo -e "睊 "
 fi
