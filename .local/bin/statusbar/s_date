@@ -1,0 +1,7 @@
+dte="$(date +"%d/%m  %H:%M")"
+echo -e "󰸗 $dte"
+
+case $BLOCK_BUTTON in
+    1) calendar ;;
+    6) st -e nvim "$0" ;;
+esac

@@ -1,0 +1,18 @@
+if pgrep -x "cmus" > /dev/null; then
+    output=$(cmus-remote -Q)
+    artist=$(echo "$output" | awk '/artist/ { if (found != 1) { found=1; for (i=3; i<=NF; i++) { printf "%s ", $i } } }')
+    title=$(echo "$output" | awk '/title/ { for (i=3; i<=NF; i++) { printf "%s ", $i } }')
+    if [ -z "$artist" ] && [ -z "$title" ]; then
+        echo ""
+    else
+        echo -e " $artist- $title" | sed 's/.$//'
+    fi
+fi
+
+case $BLOCK_BUTTON in
+    1) xdotool key --clearmodifiers "Super_L+F4" ;;
+    3) cmus-remote -u ;;
+    4) statusvolume up ;;
+    5) statusvolume down ;;
+    6) st -e nvim "$0" ;;
+esac

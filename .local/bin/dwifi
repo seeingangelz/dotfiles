@@ -1,0 +1,9 @@
+#!/bin/sh
+
+ssid=$(nmcli dev wifi list | dmenu -l 30 -p 'Connect:' | awk '{print $2}')
+
+[ -n "$ssid" ] && passwd=$(printf '' | dmenu -P -p 'Password?')
+
+[ -n "$passwd" ] && status=$(nmcli dev wifi connect "$ssid" password "$passwd")
+
+[ -n "$status" ] && notify-send "wificli" "$status"

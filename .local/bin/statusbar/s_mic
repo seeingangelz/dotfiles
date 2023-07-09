@@ -1,0 +1,23 @@
+pctlHead=$(pactl list sources | grep -v monitor | grep -A 7 -e 'Name: .\+analog-stereo')
+isMute=$(echo "$pctlHead" | grep Mute | awk '{print $2}')
+vol=$(echo "$pctlHead" | grep -m 1 Volume | awk '{print $5}' | sed 's/%$//')
+
+if [[ $isMute = "yes" ]]; then
+    echo -en ""
+else
+    if [[ $vol -eq 0 ]]; then
+        echo -en ""
+    else
+        echo -en " $vol%"
+    fi
+fi
+
+ case $BLOCK_BUTTON in
+    1) xdotool key --clearmodifiers "Super_L+F6"; kill -41 $(pidof dwmblocks) ;;
+    2) statusmic mute ;;
+    3) notify-send " Microphone module" "\- Shows volume ,  if muted.
+    - Middle click to mute." ;;
+    4) statusmic up ;;
+    5) statusmic down ;;
+    6) st -e nvim "$0" ;;
+esac

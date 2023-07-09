@@ -1,0 +1,29 @@
+#!/bin/bash
+
+music_dir="$HOME/Music/seeingangelz"
+
+mpc_file="$(mpc --format "$music_dir/%file%" current)"
+
+cover_path="/tmp/album_cover.png"
+
+ffmpeg -i "$mpc_file" -an -vcodec copy "$cover_path" >/dev/null 2>&1
+
+case $1 in
+    info)
+	notify-send --icon="$cover_path" "Now Playing ♫" "$(mpc current)"
+	;;
+    toggle)
+        mpc toggle
+        mpc_status="$(mpc status | awk 'NR==2 {print $1}')"
+        case "$mpc_status" in
+            "[paused]")
+                notify-send --icon="$cover_path" "Paused" "$(mpc current)"
+                ;;
+            "[playing]")
+                notify-send --icon="$cover_path" "Resume" "$(mpc current)"
+                ;;
+        esac
+        ;;
+esac
+
+rm -f "$cover_path"

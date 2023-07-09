@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+bar_color="#ffffff"
+hi_bar_color="#ffffff"
+brightness_step=10
+
+# Uses regex to get brightness from xbacklight
+function get_brightness {
+    xbacklight -get
+}
+
+# Always returns the same icon - I couldn't get the brightness-low icon to work with fontawesome
+function get_brightness_icon {
+    brightness_icon=""
+}
+
+# Displays a brightness notification using dunstify
+function show_brightness_notif {
+    brightness=$(get_brightness)
+    get_brightness_icon
+    dunstify -i brightness -t 1000 -r 2593 -u normal "$brightness_icon  $brightness%" -h int:value:$brightness -h string:hlcolor:$bar_color
+}
+
+# Main function - Takes user input, "up", or "down"
+case $1 in
+    up)
+    # Increases brightness and displays the notification
+    xbacklight -inc $brightness_step -time 0
+    show_brightness_notif
+    kill -51 $(pidof dwmblocks)
+    ;;
+
+    down)
+    # Decreases brightness and displays the notification
+    xbacklight -dec $brightness_step -time 0
+    show_brightness_notif
+    kill -51 $(pidof dwmblocks)
+    ;;
+esac

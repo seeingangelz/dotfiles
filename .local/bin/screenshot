@@ -1,0 +1,5 @@
+filename="$(mktemp).png"
+flameshot gui -r -c > "$filename" && [ -s "$filename" ] && {
+xclip -selection clipboard -t image/png < "$filename"
+notify-send -i "$filename" "Screenshot captured!"
+}

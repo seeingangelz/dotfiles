@@ -1,0 +1,40 @@
+#!/bin/sh
+
+is_process_running() {
+  pgrep -x "$1" >/dev/null
+}
+
+if is_process_running "dwm"; then
+  window_manager="dwm"
+elif is_process_running "awesome"; then
+  window_manager="awesome"
+else
+  window_manager="unknown"
+fi
+
+set -e
+WALLPAPER_PATH="$HOME/Pictures/wallpapers/"
+DMENU="$(ls $WALLPAPER_PATH | dmenu -p "Set Wallpaper:" -l 20)"
+SELECTED="$WALLPAPER_PATH$DMENU"
+if [ -z "$DMENU"]; then
+	exit 0
+else
+    wal -i $SELECTED
+    sed -i ~/.Xresources -re '1,1000d'
+    cat ~/.cache/wal/colors.Xresources >> ~/.Xresources
+    oomox-cli /opt/oomox/scripted_colors/xresources/xresources-reverse
+    wal-telegram -t
+    pywalfox update
+    killall dunst && dunst &
+
+    if [ "$window_manager" = "dwm" ]; then
+      killall dwm
+      dwmblocks &
+    elif [ "$window_manager" = "awesome" ]; then
+      pkill -HUP awesome
+	  picom --experimental-backends
+    fi
+
+    pkill sxiv
+    notify-send "Enjoy your new colorscheme!"
+fi

@@ -1,0 +1,8 @@
+mem=`free -h | awk '/^Mem/ { print $3"/"$2 }' | sed 's/i//g'`
+echo -e " $mem"
+
+case $BLOCK_BUTTON in
+    1) xdotool key --clearmodifiers "Super_L+F8"; ;;
+    3) notify-send "RAM usage" "$(ps axch -o cmd,rss | awk '{printf "%-30s %s\n", $1, $2/1024}' | sort -k2 -n -r | head | awk '{printf "%-30s %s\n", $1, $2}')" ;;
+    6) st -e nvim "$0" ;;
+esac

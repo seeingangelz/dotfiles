@@ -1,0 +1,42 @@
+From 54acbdf72083a5eae5783eed42e162424ab2cec2 Mon Sep 17 00:00:00 2001
+From: Kim Torgersen <kim@torgersen.se>
+Date: Sat, 23 May 2020 14:48:28 +0200
+Subject: [PATCH] case-insensitive item matching default, case-sensitive option
+ (-s)
+
+---
+ dmenu.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
+
+diff --git a/dmenu.c b/dmenu.c
+index 65f25ce..855df59 100644
+--- a/dmenu.c
++++ b/dmenu.c
+@@ -55,8 +55,9 @@ static Clr *scheme[SchemeLast];
+ 
+ #include "config.h"
+ 
+-static int (*fstrncmp)(const char *, const char *, size_t) = strncmp;
+-static char *(*fstrstr)(const char *, const char *) = strstr;
++static char * cistrstr(const char *s, const char *sub);
++static int (*fstrncmp)(const char *, const char *, size_t) = strncasecmp;
++static char *(*fstrstr)(const char *, const char *) = cistrstr;
+ 
+ static void
+ appenditem(struct item *item, struct item **list, struct item **last)
+@@ -709,9 +710,9 @@ main(int argc, char *argv[])
+ 			topbar = 0;
+ 		else if (!strcmp(argv[i], "-f"))   /* grabs keyboard before reading stdin */
+ 			fast = 1;
+-		else if (!strcmp(argv[i], "-i")) { /* case-insensitive item matching */
+-			fstrncmp = strncasecmp;
+-			fstrstr = cistrstr;
++		else if (!strcmp(argv[i], "-s")) { /* case-sensitive item matching */
++			fstrncmp = strncmp;
++			fstrstr = strstr;
+ 		} else if (i + 1 == argc)
+ 			usage();
+ 		/* these options take one argument */
+-- 
+2.26.2
+

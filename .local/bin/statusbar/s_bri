@@ -1,0 +1,8 @@
+bri=`xbacklight -get`
+echo -e " $bri%"
+
+case $BLOCK_BUTTON in
+    4) statusbrightness up ;;
+    5) statusbrightness down ;;
+    6) st -e nvim "$0" ;;
+esac

@@ -1,0 +1,26 @@
+status=$(pulsemixer --get-mute)
+if [ -n "$status" ] && [ "$status" == "1" ]; then
+    echo -e "󰖁"
+else
+    vol=$(pulsemixer --get-volume | awk '{print ($1+$2)/2}')
+    if [ $(echo "$vol >= 1 && $vol <= 49" | bc) -eq 1 ]; then
+        echo -e "󰖀 $vol%"
+    else
+        if [ $(echo "$vol == 0" | bc) -eq 1 ]; then
+            echo -e "󰝟"
+        else
+            echo -e "󰕾 $vol%"
+        fi
+    fi
+fi
+
+case $BLOCK_BUTTON in
+    1) xdotool key --clearmodifiers "Super_L+F6"; kill -41 $(pidof dwmblocks) ;;
+    2) statusvolume mute ;;
+    4) statusvolume up ;;
+    5) statusvolume down ;;
+    3) notify-send " Volume module" "\- Shows volume  , 󰖁 if muted.
+    - Middle click to mute.
+    - Scroll to change." ;;
+    6) st -e nvim "$0" ;;
+esac

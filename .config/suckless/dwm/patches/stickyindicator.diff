@@ -1,0 +1,65 @@
+diff -pu dwm.fancybarpatch/config.def.h dwm.stickyindicator-fancybarfix/config.def.h
+--- dwm.fancybarpatch/config.def.h	2021-03-01 20:52:06.470291172 -0600
++++ dwm.stickyindicator-fancybarfix/config.def.h	2021-03-15 21:12:57.823301478 -0500
+@@ -17,6 +17,8 @@ static const char *colors[][3]      = {
+ 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
+ 	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
+ };
++static const XPoint stickyicon[]    = { {0,0}, {4,0}, {4,8}, {2,6}, {0,8}, {0,0} }; /* represents the icon as an array of vertices */
++static const XPoint stickyiconbb    = {4,8};	/* defines the bottom right corner of the polygon's bounding box (speeds up scaling) */
+ 
+ /* tagging */
+ static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+diff -pu dwm.fancybarpatch/drw.c dwm.stickyindicator-fancybarfix/drw.c
+--- dwm.fancybarpatch/drw.c	2021-03-01 20:39:31.890253915 -0600
++++ dwm.stickyindicator-fancybarfix/drw.c	2021-03-15 21:13:39.643301192 -0500
+@@ -248,6 +248,26 @@ drw_rect(Drw *drw, int x, int y, unsigne
+ 		XDrawRectangle(drw->dpy, drw->drawable, drw->gc, x, y, w - 1, h - 1);
+ }
+ 
++void
++drw_polygon(Drw *drw, int x, int y, int ow, int oh, int sw, int sh, const XPoint *points, int npoints, int shape, int filled) /* wrapper function to scale and draw a polygon with X11 */
++{
++	if (!drw || !drw->scheme)
++		return;
++	XSetForeground(drw->dpy, drw->gc, drw->scheme[ColFg].pixel);
++	if (!filled) { /* reduces the scaled width and height by 1 when drawing the outline to compensate for X11 drawing the line 1 pixel over */
++		sw -= 1;
++		sh -= 1;
++	}
++	XPoint scaledpoints[npoints];
++	memcpy(scaledpoints, points, npoints);
++	for (int v = 0; v < npoints; v++)
++		scaledpoints[v] = (XPoint){ .x = points[v].x * sw / ow + x, .y = points[v].y * sh / oh + y };
++	if (filled)
++		XFillPolygon(drw->dpy, drw->drawable, drw->gc, scaledpoints, npoints, shape, CoordModeOrigin); /* Change shape to 'Convex' or 'Complex' in dwm.c if the shape is not 'Nonconvex' */
++	else
++		XDrawLines(drw->dpy, drw->drawable, drw->gc, scaledpoints, npoints, CoordModeOrigin);
++}
++
+ int
+ drw_text(Drw *drw, int x, int y, unsigned int w, unsigned int h, unsigned int lpad, const char *text, int invert)
+ {
+diff -pu dwm.fancybarpatch/drw.h dwm.stickyindicator-fancybarfix/drw.h
+--- dwm.fancybarpatch/drw.h	2021-03-01 20:39:31.890253915 -0600
++++ dwm.stickyindicator-fancybarfix/drw.h	2021-03-15 21:14:04.169967692 -0500
+@@ -51,6 +51,7 @@ void drw_setscheme(Drw *drw, Clr *scm);
+ 
+ /* Drawing functions */
+ void drw_rect(Drw *drw, int x, int y, unsigned int w, unsigned int h, int filled, int invert);
++void drw_polygon(Drw *drw, int x, int y, int ow, int oh, int sw, int sh, const XPoint *points, int npoints, int shape, int filled);
+ int drw_text(Drw *drw, int x, int y, unsigned int w, unsigned int h, unsigned int lpad, const char *text, int invert);
+ 
+ /* Map functions */
+diff -pu dwm.fancybarpatch/dwm.c dwm.stickyindicator-fancybarfix/dwm.c
+--- dwm.fancybarpatch/dwm.c	2021-03-01 20:52:06.470291172 -0600
++++ dwm.stickyindicator-fancybarfix/dwm.c	2021-03-15 21:16:48.056633227 -0500
+@@ -760,6 +760,8 @@ drawbar(Monitor *m)
+ 					drw_text(drw, x, 0, tw, bh, lrpad / 2, c->name, 0);
+ 				if (c->isfloating)
+ 					drw_rect(drw, x + boxs, boxs, boxw, boxw, c->isfixed, 0);
++				if (c->issticky)
++					drw_polygon(drw, x + boxs, c->isfloating ? boxs * 2 + boxw : boxs, stickyiconbb.x, stickyiconbb.y, boxw, boxw * stickyiconbb.y / stickyiconbb.x, stickyicon, LENGTH(stickyicon), Nonconvex, c->tags & c->mon->tagset[c->mon->seltags]);
+ 				x += tw;
+ 				w -= tw;
+ 			}

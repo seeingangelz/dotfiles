@@ -1,0 +1,10 @@
+NUM_UPDATES=$(checkupdates | wc -l ) > /dev/null
+if [ $NUM_UPDATES -gt 0 ]; then
+    echo " $NUM_UPDATES"
+fi
+
+case $BLOCK_BUTTON in
+    1) setsid -f st -n spterm -g 90x20 -e sh -c "sudo pacman -Syu && kill -42 $(pidof dwmblocks) && setxkbmap br; exec zsh" ;;
+    3) notify-send "UPDATES AVALIABLE:" "$(checkupdates | awk '{print $1}')" ;;
+    6) st -e nvim "$0" ;;
+esac

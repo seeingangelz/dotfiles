@@ -1,0 +1,31 @@
+From efa326b2c71f0df1d097fd52a17684f5ccc5df6c Mon Sep 17 00:00:00 2001
+From: Rizqi Nur Assyaufi <bandithijo@gmail.com>
+Date: Sat, 7 Aug 2021 00:24:01 +0800
+Subject: [PATCH] [dwm][patch][togglefloatingcenter] centered togglefloating
+ window
+
+Default behaviour when togglefloating() is floating from top-left corner.
+This patch will allows you to toggle floating window client will be centered
+position.
+---
+ dwm.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/dwm.c b/dwm.c
+index 5e4d494..cbedb09 100644
+--- a/dwm.c
++++ b/dwm.c
+@@ -1719,6 +1719,10 @@ togglefloating(const Arg *arg)
+ 	if (selmon->sel->isfloating)
+ 		resize(selmon->sel, selmon->sel->x, selmon->sel->y,
+ 			selmon->sel->w, selmon->sel->h, 0);
++
++    selmon->sel->x = selmon->sel->mon->mx + (selmon->sel->mon->mw - WIDTH(selmon->sel)) / 2;
++    selmon->sel->y = selmon->sel->mon->my + (selmon->sel->mon->mh - HEIGHT(selmon->sel)) / 2;
++
+ 	arrange(selmon);
+ }
+ 
+-- 
+2.31.1
+

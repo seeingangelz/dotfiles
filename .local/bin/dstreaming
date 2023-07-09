@@ -1,0 +1,30 @@
+#!/bin/sh
+
+#input a movie variable
+search=$(dmenu -l 1 -p "Search a movie" < /dev/null)
+# change the search variable spaces with +
+query=$(printf "$search" | tr ' ' '+' )
+#if statement to see if search variable is NULL
+if [ -z "$search" ]; then
+  exit 0
+fi
+site="https://1337x.to/search/$query/1/"
+magnet="https://1337x.to/"
+# search the movie on 1337x and send output to dmenu prompt
+movie=$(curl -s $site | grep -o 'torrent/[^"]*' | dmenu -l 20 -p 'which movie?')
+magnetlink=$( curl -s $magnet$movie | grep -Po 'magnet:[^"]*' | head -n 1)
+
+#if statement to see if magnetlink variable is NULL
+
+if [ -z "$magnetlink" ]; then
+  exit 0
+elif [ -n "$magnetlink" ]; then
+  choices=$(printf "Watch\nDownload" | dmenu -l 2 -p 'What to do? ')
+  if [ $choices == "Watch" ]; then
+    st -e webtorrent "$magnetlink" --mpv --no-quit
+  else
+    format=$(printf "$query" | tr '+' ' ') 
+    transmission-remote -a "$magnetlink" -w ~/
+    notify-send "$format adicionado para download"
+  fi
+fi

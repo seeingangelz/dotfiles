@@ -1,0 +1,21 @@
+cpu(){
+    read cpu a b c previdle rest < /proc/stat
+    prevtotal=$((a+b+c+previdle))
+    sleep 0.5
+    read cpu a b c idle rest < /proc/stat
+    total=$((a+b+c+idle))
+    cpu=$((100*( (total-prevtotal) - (idle-previdle) ) / (total-prevtotal) ))
+    echo -e " $cpu%"
+}
+
+temp(){
+  sensors | grep Tctl | awk '{print $2}'
+}
+
+echo "$(cpu)"
+
+case $BLOCK_BUTTON in
+    1) xdotool key --clearmodifiers "Super_L+F8"; ;;
+    3) notify-send "CPU usage" "$(ps axch -o cmd,%cpu --sort=-%cpu | head)" ;;
+    6) st -e nvim "$0" ;;
+esac

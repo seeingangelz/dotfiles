@@ -1,0 +1,290 @@
+.TH XMENU 1
+.SH NAME
+xmenu \- menu utility for X
+.SH SYNOPSIS
+.B xmenu
+.RB [ \-irw ]
+.RB [ -p
+.IR position ]
+.RB [ -x|-X
+.RI [ modifier- ] button ]
+.RI [ title ]
+.SH DESCRIPTION
+.B xmenu
+is a menu for X,
+it reads a list of newline-separated items from stdin,
+shows a menu for the user to select one of the items,
+and outputs the item selected to stdout.
+.PP
+The options are as follows:
+.TP
+.B -i
+Disable icons.
+This makes xmenu loading faster when not using icons.
+.TP
+.BI -p " position"
+Set the position to spawn xmenu.
+Without this option, xmenu spawns next to the cursor.
+.I position
+is a string of the form
+.BR INTxINT[:MONITOR] ,
+where the first INT is the x position and the second INT is the y position.
+The monitor part between brackets is optional.
+.B MONITOR
+can be a number from 0 to the number of monitors minus 1;
+or it can be a string like
+.B current
+or
+.BR cursor .
+If present, the monitor specifies that the position is relative to the upper left corner
+of that monitor.
+If
+.B monitor
+is
+.B current
+or
+.BR cursor ,
+the monitor to be used is that where the cursor is in.
+For example,
+.B -p 0x0:cursor
+specifies that
+.B xmenu
+must spawn at the position 0x0 of the monitor where the cursor is in.
+And
+.B -p 100x500:0
+specifies that
+.B xmenu
+must spawn at the position 100x500 of the monitor 0.
+.TP
+.B -r
+If this option is set, the right mouse button is disabled;
+so pressing it will not trigger any menu item.
+.TP
+.B -w
+Asks the window manager to draw a border around the menus.
+This option may be buggy in some window managers,
+specially tiled ones that do not respect window hints.
+.TP
+\fB\-x\fP [\fImod\fP-]\fIbutton\fP
+This option requires an argument of the form
+\fImod\fP-\fIbutton\fP or \fIbutton\fP; where
+.I mod
+is
+.B Mod1
+to
+.BR Mod5 ,
+or
+.B Alt
+(equivalent to
+.BR Mod1 ),
+or
+.B Super
+(equivalent to
+.BR Mod4 );
+and
+.I button
+is the number of a mouse button.
+When this option is used,
+.B xmenu
+listens to button presses on the root window,
+and shows the pie menu when the given button is pressed,
+together with the given modifier,
+on the root window.
+For example, invoking
+.B xmenu
+with the option
+.B -x Super-3
+makes a menu open when clicking with the third mouse button on the root window,
+or when clicking with the third mouse button together with the Super (Mod4) modifier on any window.
+This option makes
+.B xmenu
+run continuously;
+so it should be used when
+.B xmenu
+is invoked in background on a X startup file (like
+.BR "~/.xinitrc" ).
+.TP
+\fB\-X\fP [\fImod\fP-]\fIbutton\fP
+Just like
+.BR \-x ,
+but also pass the click to the root window
+(for the window manager to use it, for example).
+This option is incompatible with
+.BR \-x .
+.PP
+Each item read from stdin has the following format:
+.IP
+.EX
+ITEM := [TABS] [[IMAGE TABS] LABEL [TABS OUTPUT]] NEWLINE
+.EE
+.PP
+That means that each item is composed by
+tabs, followed by an optional image specification, followed by tabs
+followed by a label, followed by more tabs, followed by an output,
+and ended by a newline.  Brackets group optional elements.
+.IP
+The initial tabs indicate the menu hierarchy:
+items indented with a tab is shown in a submenu of the preceding item not indented.
+An item without initial tabs is a top-level item.
+.IP
+The image is a string of the form "IMG:/path/to/image.png".
+It specifies the path to a image file to be shown as icon at the left of the entry.
+If the path does not begin with "/", "./" or "../",
+the file is searched on the paths specified in the
+.B ICONPATH
+environment variable.
+.IP
+The label is the string that will be shown as a item in the menu.
+An item without label is considered a separator and is drawn as a thin line in the menu
+separating the item above from the item below.
+.IP
+The output is the string that will be output after selecting the item.
+If an item does not have an output, its label is used as its output.
+.IP
+The newline terminates the item specification.
+.PP
+If the argument
+.I title
+is given, the title of the menu window is set to it.
+.SH USAGE
+.B xmenu
+is controlled by the mouse,
+but can also be controlled by the keyboard.
+Items can be selected using the arrow keys,
+Tab (with and without Shift),
+Home, End,
+Enter and Esc, and 1-9 keys.
+Items can also be selected by typing the first several characters in it.
+.TP
+.BR Home
+Select the first item in the menu.
+.TP
+.BR End
+Select the last item in the menu.
+.TP
+.BR Down
+Cycle through the items in the regular direction.
+.TP
+.BR Tab
+Cycle through the items in the regular direction.
+When the type\-to\-select feature is active, cycle through matching items instead.
+.TP
+.BR Up
+Cycle through the items in the reverse direction.
+.TP
+.BR Shift-Tab
+Cycle through the items in the reverse direction.
+When the type\-to\-select feature is active, cycle through matching items instead.
+.TP
+.BR Right ", " Enter
+Select the highlighted item.
+.TP
+.B Left
+Go to the menu above.
+.TP
+.B Esc
+Go to the menu above or exit xmenu.
+.PP
+.B xmenu
+features the type\-to\-select selecting style,
+where typing a string will select the first item matching it.
+.PP
+Additional key bindings can be set at compile time by changing the
+.B config.h
+file.
+.SH RESOURCES
+.B
+xmenu
+understands the following X resources.
+.TP
+.B xmenu.font
+The font in which the labels should be drawn.
+Multiple fonts can be added as fallback fonts;
+they must be separated by a comma.
+.TP
+.B xmenu.background
+The background color of non-selected items in the menu.
+.TP
+.B xmenu.foreground
+The color of the label text of non-selected items in the menu.
+.TP
+.B xmenu.selbackground
+The background color of selected items in the menu.
+.TP
+.B xmenu.selforeground
+The color of the label text of selected items in the menu.
+.TP
+.B xmenu.border
+The color of the border around the menu.
+.TP
+.B xmenu.separator
+The color of the separator between items in the menu.
+.TP
+.B xmenu.gap
+The gap, in pixels, between the menus.
+.TP
+.B xmenu.width
+The minimum width, in pixels, of the items in the menu.
+.TP
+.B xmenu.height
+The size in pixels of the height of a single menu item.
+.TP
+.B xmenu.borderWidth
+The size in pixels of the border around the menu.
+.TP
+.B xmenu.separatorWidth
+The size in pixels of the item separator.
+.TP
+.B xmenu.alignment
+If set to
+.BR "\(dqleft\(dq" ,
+.BR "\(dqcenter\(dq" ,
+or
+.BR "\(dqright\(dq" ,
+text is aligned to the left, center, or right of the menu, respectively.
+By default, text is aligned to the left.
+.TP
+.B xmenu.maxItems
+Maximum number of items to be displayed in a menu.
+If more a menu has more than this number of items,
+they will be scrolled with arrow buttons.
+.SH ENVIRONMENT
+The following environment variables affect the execution of
+.BR xmenu .
+.TP
+.B DISPLAY
+The display to start
+.B xmenu
+on.
+.TP
+.B ICONPATH
+A colon-separated list of directories used to search for the location of image files.
+.SH EXAMPLES
+The following script illustrates the use of
+.BR xmenu .
+The output is redirected to
+.IR sh (1),
+creating a command to be run by the shell.
+.IP
+.EX
+#!/bin/sh
+
+xmenu <<EOF | sh &
+Applications
+	IMG:./web.png	Web Browser	firefox
+	IMG:./gimp.png	Image editor	gimp
+Terminal (xterm)				xterm
+Terminal (urxvt)				urxvt
+Terminal (st)					st
+
+Shutdown						poweroff
+Reboot						reboot
+EOF
+.EE
+.PP
+For example, by selecting \(lqApplications\(rq, a new menu will appear.
+Selecting \(lqWeb Browser\(rq in the new menu opens firefox.
+.SH SEE ALSO
+.IR dmenu (1),
+.IR 9menu (1),
+.IR thingmenu (1)

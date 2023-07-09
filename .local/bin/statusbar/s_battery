@@ -1,0 +1,29 @@
+acpi=`acpi -b`
+    if echo $acpi | grep -q "Charging"; then
+        bat=`echo $acpi | awk '{print $4}' | sed s/,//`
+        echo -e " $bat"
+    else
+        bat=`echo $acpi | awk '{print $4}' | sed s/,//`
+        charge=`echo $bat | sed -e 's/%//g'`
+        if [ $charge -gt 75 ]; then
+            echo -e "  $bat"
+        elif [ $charge -gt 50 ]; then
+            echo -e "  $bat"
+        elif [ $charge -gt 25 ]; then
+            echo -e "  $bat"
+        else
+            echo -e "  $bat"
+        fi
+    fi
+
+case $BLOCK_BUTTON in
+    3) notify-send "Battery module" " : discharging
+ : charging
+ : charged
+ : battery very low!
+
+- Scroll to change adjust xbacklight." ;;
+    4) statusbrightness up ;;
+    5) statusbrightness down ;;
+    6) st -e nvim "$0" ;;
+esac

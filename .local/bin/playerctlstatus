@@ -1,0 +1,35 @@
+#!/bin/bash
+
+if pgrep -x "cmus" > /dev/null; then
+    case $1 in
+        play-pause)
+            playerctl play-pause
+            ;;
+        next)
+            playerctl next
+            ;;
+        previous)
+            playerctl previous
+            ;;
+    esac
+else
+    case $1 in
+        play-pause)
+            status=$(playerctl status)
+            playerctl play-pause
+            if [ "$status" = "Paused" ]; then
+                notify-send "Playing" -i "$(playerctl metadata --format '{{mpris:artUrl}}')" "$(playerctl metadata --format '{{xesam:title}}')"
+            else
+                notify-send "Paused" -i "$(playerctl metadata --format '{{mpris:artUrl}}')" "$(playerctl metadata --format '{{xesam:title}}')"
+            fi
+            ;;
+        next)
+            playerctl next
+            notify-send "Playing" -i "$(playerctl metadata --format '{{mpris:artUrl}}')" "$(playerctl metadata --format '{{xesam:title}}')"
+            ;;
+        previous)
+            playerctl previous
+            notify-send "Playing" -i "$(playerctl metadata --format '{{mpris:artUrl}}')" "$(playerctl metadata --format '{{xesam:title}}')"
+            ;;
+    esac
+fi

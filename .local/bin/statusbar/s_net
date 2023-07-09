@@ -1,0 +1,16 @@
+if ping -c 1 "9.9.9.9" > /dev/null; then
+ echo -e "󰖩 "
+ else
+ echo -e "󱛅 "
+fi
+
+case $BLOCK_BUTTON in
+    1) setsid -f st -n spterm -g 120x34 -e sh -c "nmtui; exec zsh" ;;
+    1) st -e nmtui ;;
+    3) notify-send " Internet module" "\- Click to connect
+
+󰖩  internet connection
+󱛅  no internet connection
+" ;;
+    6) st -e nvim "$0" ;;
+esac

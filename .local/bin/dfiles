@@ -1,0 +1,22 @@
+#!/bin/sh
+
+ARCHIVE="DWM
+ST
+DMENU
+DWMBLOCKS
+ZSH
+NEOVIM
+PACKER
+PICOM"
+DMENUCHOICE=$(printf "$ARCHIVE" | dmenu -l 8 -p "EDIT:")
+
+case $DMENUCHOICE in
+     DWM) st -e nvim $HOME/.config/suckless/dwm/config.def.h ;;
+     ST) st -e nvim $HOME/.config/suckless/st/config.def.h ;;
+     DMENU) st -e nvim $HOME/.config/suckless/dmenu/config.def.h ;;
+     DWMBLOCKS) st -e nvim $HOME/.config/suckless/dwmblocks-async/config.c ;;
+     NEOVIM) st -e nvim $HOME/.config/nvim/init.lua ;;
+     PACKER) st -e nvim $HOME/.config/nvim/lua/aeon/plugins.lua ;;
+     ZSH) st -e nvim $HOME/.config/zsh/.zshrc ;;
+     PICOM) st -e nvim $HOME/.config/picom/picom.conf ;;
+esac

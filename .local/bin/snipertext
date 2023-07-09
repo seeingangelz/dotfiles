@@ -1,0 +1,11 @@
+#!/bin/sh
+
+flameshot gui -p /tmp/screenshot.png > /dev/null 2>&1
+
+if [ -f /tmp/screenshot.png ]; then
+  tesseract /tmp/screenshot.png stdout -l eng+por | xclip -selection clipboard;
+  rm /tmp/screenshot.png;
+  notify-send "Text copied to clipboard"
+else
+  true
+fi

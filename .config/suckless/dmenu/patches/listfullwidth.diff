@@ -1,0 +1,48 @@
+From 7a045242afac6db70a4aee6e3ac0146cdb264277 Mon Sep 17 00:00:00 2001
+From: Alex Cole <ajzcole@airmail.cc>
+Date: Sun, 4 Oct 2020 19:58:32 +1300
+Subject: [PATCH] listfullwidth patch changes
+
+---
+ config.def.h | 1 +
+ dmenu.c      | 5 +++--
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/config.def.h b/config.def.h
+index 1edb647..221db00 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -2,6 +2,7 @@
+ /* Default settings; can be overriden by command line. */
+ 
+ static int topbar = 1;                      /* -b  option; if 0, dmenu appears at bottom     */
++static int colorprompt = 1;                /* -p  option; if 1, prompt uses SchemeSel, otherwise SchemeNorm */
+ /* -fn option overrides fonts[0]; default X11 font or font set */
+ static const char *fonts[] = {
+ 	"monospace:size=10"
+diff --git a/dmenu.c b/dmenu.c
+index 65f25ce..f73f299 100644
+--- a/dmenu.c
++++ b/dmenu.c
+@@ -137,7 +137,8 @@ drawmenu(void)
+ 	drw_rect(drw, 0, 0, mw, mh, 1, 1);
+ 
+ 	if (prompt && *prompt) {
+-		drw_setscheme(drw, scheme[SchemeSel]);
++		if (colorprompt)
++			drw_setscheme(drw, scheme[SchemeSel]);
+ 		x = drw_text(drw, x, 0, promptw, bh, lrpad / 2, prompt, 0);
+ 	}
+ 	/* draw input field */
+@@ -154,7 +155,7 @@ drawmenu(void)
+ 	if (lines > 0) {
+ 		/* draw vertical list */
+ 		for (item = curr; item != next; item = item->right)
+-			drawitem(item, x, y += bh, mw - x);
++			drawitem(item, 0, y += bh, mw - x);
+ 	} else if (matches) {
+ 		/* draw horizontal list */
+ 		x += inputw;
+-- 
+2.28.0
+

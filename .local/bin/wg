@@ -1,0 +1,17 @@
+#!/bin/bash
+
+wallpaper_dir="$HOME/Pictures/wallpapers"
+
+if [ ! -d "$wallpaper_dir" ]; then
+  notify-send "Wallpaper directory not found"
+  exit 1
+fi
+
+sxiv -t -b "$wallpaper_dir" &
+sxiv_pid=$!
+
+while ! ps -p $sxiv_pid > /dev/null; do
+  sleep 1
+done
+
+notify-send "Select your wallpaper!"

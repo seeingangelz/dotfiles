@@ -1,0 +1,13 @@
+#!/bin/bash
+
+  current_song=$(mpc current)
+
+  echo "$(if [ -n "$current_song" ]; then echo " $current_song"; fi)"
+
+  case $BLOCK_BUTTON in
+    1) mpdnotify toggle ;;
+    4) statusvolume up ;;
+    5) statusvolume down ;;
+    6) st -e nvim "$0" ;;
+  esac
+fi

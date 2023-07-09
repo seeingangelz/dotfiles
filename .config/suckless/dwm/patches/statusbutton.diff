@@ -1,0 +1,92 @@
+From 63515eaf23d3f32f12d159c5e84af09f3a2d3323 Mon Sep 17 00:00:00 2001
+From: Christopher Drelich <cd@cdrakka.com>
+Date: Thu, 24 May 2018 20:26:42 -0400
+Subject: [PATCH] Added left-hand side statusbar button.
+
+---
+ config.def.h |  2 ++
+ dwm.c        | 34 +++++++++++++++++++++-------------
+ 2 files changed, 23 insertions(+), 13 deletions(-)
+
+diff --git a/config.def.h b/config.def.h
+index a9ac303..63ff917 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -5,6 +5,7 @@ static const unsigned int borderpx  = 1;        /* border pixel of windows */
+ static const unsigned int snap      = 32;       /* snap pixel */
+ static const int showbar            = 1;        /* 0 means no bar */
+ static const int topbar             = 1;        /* 0 means bottom bar */
++static const char buttonbar[]       = "<O>";
+ static const char *fonts[]          = { "monospace:size=10" };
+ static const char dmenufont[]       = "monospace:size=10";
+ static const char col_gray1[]       = "#222222";
+@@ -100,6 +101,7 @@ static Key keys[] = {
+ /* click can be ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
+ static Button buttons[] = {
+ 	/* click                event mask      button          function        argument */
++	{ ClkButton,		0,		Button1,	spawn,		{.v = dmenucmd } },
+ 	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
+ 	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
+ 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
+diff --git a/dwm.c b/dwm.c
+index bb95e26..689cb01 100644
+--- a/dwm.c
++++ b/dwm.c
+@@ -64,7 +64,7 @@ enum { NetSupported, NetWMName, NetWMState, NetWMCheck,
+        NetWMFullscreen, NetActiveWindow, NetWMWindowType,
+        NetWMWindowTypeDialog, NetClientList, NetLast }; /* EWMH atoms */
+ enum { WMProtocols, WMDelete, WMState, WMTakeFocus, WMLast }; /* default atoms */
+-enum { ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle,
++enum { ClkTagBar, ClkLtSymbol, ClkStatusText, ClkButton, ClkWinTitle,
+        ClkClientWin, ClkRootWin, ClkLast }; /* clicks */
+ 
+ typedef union {
+@@ -431,18 +431,23 @@ buttonpress(XEvent *e)
+ 	}
+ 	if (ev->window == selmon->barwin) {
+ 		i = x = 0;
+-		do
+-			x += TEXTW(tags[i]);
+-		while (ev->x >= x && ++i < LENGTH(tags));
+-		if (i < LENGTH(tags)) {
+-			click = ClkTagBar;
+-			arg.ui = 1 << i;
+-		} else if (ev->x < x + blw)
+-			click = ClkLtSymbol;
+-		else if (ev->x > selmon->ww - TEXTW(stext))
+-			click = ClkStatusText;
+-		else
+-			click = ClkWinTitle;
++		x += TEXTW(buttonbar);
++		if(ev->x < x) {
++			click = ClkButton;
++		} else {
++			do
++				x += TEXTW(tags[i]);
++			while (ev->x >= x && ++i < LENGTH(tags));
++			if (i < LENGTH(tags)) {
++				click = ClkTagBar;
++				arg.ui = 1 << i;
++			} else if (ev->x < x + blw)
++				click = ClkLtSymbol;
++			else if (ev->x > selmon->ww - TEXTW(stext))
++				click = ClkStatusText;
++			else
++				click = ClkWinTitle;
++		}
+ 	} else if ((c = wintoclient(ev->window))) {
+ 		focus(c);
+ 		restack(selmon);
+@@ -714,6 +719,9 @@ drawbar(Monitor *m)
+ 			urg |= c->tags;
+ 	}
+ 	x = 0;
++	w = blw = TEXTW(buttonbar);
++	drw_setscheme(drw, scheme[SchemeNorm]);
++	x = drw_text(drw, x, 0, w, bh, lrpad / 2, buttonbar, 0);
+ 	for (i = 0; i < LENGTH(tags); i++) {
+ 		w = TEXTW(tags[i]);
+ 		drw_setscheme(drw, scheme[m->tagset[m->seltags] & 1 << i ? SchemeSel : SchemeNorm]);
+-- 
+2.7.4
+

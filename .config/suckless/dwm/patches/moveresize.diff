@@ -1,0 +1,212 @@
+From 7ac106cad72c909fbb05d302f84191cdec8f2ac0 Mon Sep 17 00:00:00 2001
+From: oxinosg <oxinosg@gmail.com>
+Date: Sat, 10 Dec 2022 15:24:14 +0100
+Subject: [PATCH] [dwm][moveresize]: fix for resize to edge
+
+---
+ config.def.h |  16 ++++++
+ dwm.c        | 154 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 170 insertions(+)
+
+diff --git a/config.def.h b/config.def.h
+index 9efa774..99049e7 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -79,6 +79,22 @@ static const Key keys[] = {
+ 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
+ 	{ MODKEY,                       XK_space,  setlayout,      {0} },
+ 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
++	{ MODKEY,                       XK_Down,   moveresize,     {.v = "0x 25y 0w 0h" } },
++	{ MODKEY,                       XK_Up,     moveresize,     {.v = "0x -25y 0w 0h" } },
++	{ MODKEY,                       XK_Right,  moveresize,     {.v = "25x 0y 0w 0h" } },
++	{ MODKEY,                       XK_Left,   moveresize,     {.v = "-25x 0y 0w 0h" } },
++	{ MODKEY|ShiftMask,             XK_Down,   moveresize,     {.v = "0x 0y 0w 25h" } },
++	{ MODKEY|ShiftMask,             XK_Up,     moveresize,     {.v = "0x 0y 0w -25h" } },
++	{ MODKEY|ShiftMask,             XK_Right,  moveresize,     {.v = "0x 0y 25w 0h" } },
++	{ MODKEY|ShiftMask,             XK_Left,   moveresize,     {.v = "0x 0y -25w 0h" } },
++	{ MODKEY|ControlMask,           XK_Up,     moveresizeedge, {.v = "t"} },
++	{ MODKEY|ControlMask,           XK_Down,   moveresizeedge, {.v = "b"} },
++	{ MODKEY|ControlMask,           XK_Left,   moveresizeedge, {.v = "l"} },
++	{ MODKEY|ControlMask,           XK_Right,  moveresizeedge, {.v = "r"} },
++	{ MODKEY|ControlMask|ShiftMask, XK_Up,     moveresizeedge, {.v = "T"} },
++	{ MODKEY|ControlMask|ShiftMask, XK_Down,   moveresizeedge, {.v = "B"} },
++	{ MODKEY|ControlMask|ShiftMask, XK_Left,   moveresizeedge, {.v = "L"} },
++	{ MODKEY|ControlMask|ShiftMask, XK_Right,  moveresizeedge, {.v = "R"} },
+ 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
+ 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
+ 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
+diff --git a/dwm.c b/dwm.c
+index 03baf42..89ec70d 100644
+--- a/dwm.c
++++ b/dwm.c
+@@ -183,6 +183,8 @@ static void mappingnotify(XEvent *e);
+ static void maprequest(XEvent *e);
+ static void monocle(Monitor *m);
+ static void motionnotify(XEvent *e);
++static void moveresize(const Arg *arg);
++static void moveresizeedge(const Arg *arg);
+ static void movemouse(const Arg *arg);
+ static Client *nexttiled(Client *c);
+ static void pop(Client *c);
+@@ -1203,6 +1205,158 @@ movemouse(const Arg *arg)
+ 	}
+ }
+ 
++void
++moveresize(const Arg *arg) {
++	/* only floating windows can be moved */
++	Client *c;
++	c = selmon->sel;
++	int x, y, w, h, nx, ny, nw, nh, ox, oy, ow, oh;
++	char xAbs, yAbs, wAbs, hAbs;
++	int msx, msy, dx, dy, nmx, nmy;
++	unsigned int dui;
++	Window dummy;
++
++	if (!c || !arg)
++		return;
++	if (selmon->lt[selmon->sellt]->arrange && !c->isfloating)
++		return;
++	if (sscanf((char *)arg->v, "%d%c %d%c %d%c %d%c", &x, &xAbs, &y, &yAbs, &w, &wAbs, &h, &hAbs) != 8)
++		return;
++
++	/* compute new window position; prevent window from be positioned outside the current monitor */
++	nw = c->w + w;
++	if (wAbs == 'W')
++		nw = w < selmon->mw - 2 * c->bw ? w : selmon->mw - 2 * c->bw;
++
++	nh = c->h + h;
++	if (hAbs == 'H')
++		nh = h < selmon->mh - 2 * c->bw ? h : selmon->mh - 2 * c->bw;
++
++	nx = c->x + x;
++	if (xAbs == 'X') {
++		if (x < selmon->mx)
++			nx = selmon->mx;
++		else if (x > selmon->mx + selmon->mw)
++			nx = selmon->mx + selmon->mw - nw - 2 * c->bw;
++		else
++			nx = x;
++	}
++
++	ny = c->y + y;
++	if (yAbs == 'Y') {
++		if (y < selmon->my)
++			ny = selmon->my;
++		else if (y > selmon->my + selmon->mh)
++			ny = selmon->my + selmon->mh - nh - 2 * c->bw;
++		else
++			ny = y;
++	}
++
++	ox = c->x;
++	oy = c->y;
++	ow = c->w;
++	oh = c->h;
++
++	XRaiseWindow(dpy, c->win);
++	Bool xqp = XQueryPointer(dpy, root, &dummy, &dummy, &msx, &msy, &dx, &dy, &dui);
++	resize(c, nx, ny, nw, nh, True);
++
++	/* move cursor along with the window to avoid problems caused by the sloppy focus */
++	if (xqp && ox <= msx && (ox + ow) >= msx && oy <= msy && (oy + oh) >= msy)
++	{
++		nmx = c->x - ox + c->w - ow;
++		nmy = c->y - oy + c->h - oh;
++		/* make sure the cursor stays inside the window */
++		if ((msx + nmx) > c->x && (msy + nmy) > c->y)
++			XWarpPointer(dpy, None, None, 0, 0, 0, 0, nmx, nmy);
++	}
++}
++
++void
++moveresizeedge(const Arg *arg) {
++	/* move or resize floating window to edge of screen */
++	Client *c;
++	c = selmon->sel;
++	char e;
++	int nx, ny, nw, nh, ox, oy, ow, oh, bp;
++	int msx, msy, dx, dy, nmx, nmy;
++	int starty;
++	unsigned int dui;
++	Window dummy;
++
++	nx = c->x;
++	ny = c->y;
++	nw = c->w;
++	nh = c->h;
++
++	starty = selmon->showbar && topbar ? bh : 0;
++	bp = selmon->showbar && !topbar ? bh : 0;
++
++	if (!c || !arg)
++		return;
++	if (selmon->lt[selmon->sellt]->arrange && !c->isfloating)
++		return;
++	if(sscanf((char *)arg->v, "%c", &e) != 1)
++		return;
++
++	if(e == 't')
++		ny = starty;
++
++	if(e == 'b')
++		ny = c->h > selmon->mh - 2 * c->bw ? c->h - bp : selmon->mh - c->h - 2 * c->bw - bp;
++
++	if(e == 'l')
++		nx = selmon->mx;
++
++	if(e == 'r')
++		nx = c->w > selmon->mw - 2 * c->bw ? selmon->mx + c->w : selmon->mx + selmon->mw - c->w - 2 * c->bw;
++
++	if(e == 'T') {
++		/* if you click to resize again, it will return to old size/position */
++		if(c->h + starty == c->oldh + c->oldy) {
++			nh = c->oldh;
++			ny = c->oldy;
++		} else {
++			nh = c->h + c->y - starty;
++			ny = starty;
++		}
++	}
++
++	if(e == 'B')
++		nh = c->h + c->y + 2 * c->bw + bp == selmon->mh ? c->oldh : selmon->mh - c->y - 2 * c->bw - bp;
++
++	if(e == 'L') {
++		if(selmon->mx + c->w == c->oldw + c->oldx) {
++			nw = c->oldw;
++			nx = c->oldx;
++		} else {
++			nw = c->w + c->x - selmon->mx;
++			nx = selmon->mx;
++		}
++	}
++
++	if(e == 'R')
++		nw = c->w + c->x + 2 * c->bw == selmon->mx + selmon->mw ? c->oldw : selmon->mx + selmon->mw - c->x - 2 * c->bw;
++
++	ox = c->x;
++	oy = c->y;
++	ow = c->w;
++	oh = c->h;
++
++	XRaiseWindow(dpy, c->win);
++	Bool xqp = XQueryPointer(dpy, root, &dummy, &dummy, &msx, &msy, &dx, &dy, &dui);
++	resizeclient(c, nx, ny, nw, nh);
++
++	/* move cursor along with the window to avoid problems caused by the sloppy focus */
++	if (xqp && ox <= msx && (ox + ow) >= msx && oy <= msy && (oy + oh) >= msy) {
++		nmx = c->x - ox + c->w - ow;
++		nmy = c->y - oy + c->h - oh;
++		/* make sure the cursor stays inside the window */
++		if ((msx + nmx) > c->x && (msy + nmy) > c->y)
++			XWarpPointer(dpy, None, None, 0, 0, 0, 0, nmx, nmy);
++	}
++}
++
+ Client *
+ nexttiled(Client *c)
+ {
+-- 
+2.34.1
+

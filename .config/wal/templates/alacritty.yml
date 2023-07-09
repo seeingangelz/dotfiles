@@ -1,0 +1,100 @@
+env:
+  TERM: xterm-256color
+
+window:
+  #  columns: 0
+  #  lines: 0
+  opacity: 0.85
+
+  #position:
+  #  x: 0
+  #  y: 0
+
+  padding:
+    x: 10
+    y: 10
+
+  # Spread additional padding evenly around the terminal content.
+  dynamic_padding: false
+
+  # Window title
+  title: Alacritty
+
+  # Window class (Linux/BSD only):
+  class:
+    # Application instance name
+    instance: Alacritty
+    # General application class
+    general: Alacritty
+
+font:
+  # Normal (roman) font face
+  normal:
+    # Font family
+    family: JetBrainsMono Nerd Font
+    style: Regular
+
+  # Bold font face
+  bold:
+    family: JetBrainsMono Nerd Font
+    style: Bold
+
+  # Italic font face
+  italic:
+    family: JetBrainsMono Nerd Font
+    style: Italic
+
+  # Bold italic font face
+  bold_italic:
+    family: JetBrainsMono Nerd Font
+    style: Bold Italic
+
+  # Point size
+  size: 9.0
+
+  # Offset is the extra space around each character. `offset.y` can be thought of
+  # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
+  offset:
+    x: 0
+    y: 0
+
+
+# If `true`, bold text is drawn using the bright color variants.
+draw_bold_text_with_bright_colors: true
+
+colors:
+  primary:
+    background: "{background}"
+    foreground: "{foreground}"
+  cursor:
+    text:       "{color0}"
+    cursor:     "{color7}"
+  normal:
+    black:      "{color0}"
+    red:        "{color1}"
+    green:      "{color2}"
+    yellow:     "{color3}"
+    blue:       "{color4}"
+    magenta:    "{color5}"
+    cyan:       "{color6}"
+    white:      "{color7}"
+  bright:
+    black:      "{color8}"
+    red:        "{color9}"
+    green:      "{color10}"
+    yellow:     "{color11}"
+    blue:       "{color12}"
+    magenta:    "{color13}"
+    cyan:       "{color14}"
+    white:      "{color15}"
+
+# Allow terminal applications to change Alacritty's window title.
+dynamic_title: true
+
+cursor:
+  style: Beam
+
+scrolling:
+  # Maximum number of lines in the scrollback buffer.
+  # Specifying '0' will disable scrolling.
+  history: 5000
