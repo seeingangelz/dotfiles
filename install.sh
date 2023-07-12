@@ -51,56 +51,57 @@ case $answer in
     ;;
 esac
 
-echo "Is this installation on a laptop? (y/n)"
-read answer
-sleep 1 && clear
+if [ -d "/sys/class/power_supply" ] && [ "$(ls -A /sys/class/power_supply)" ]; then
+  echo "Is this installation on a laptop? (y/n)"
+  read answer
+  sleep 1 && clear
 
-case $answer in
-  [Yy]*)
-    echo "Installing dependencies..."
-    yay -S acpi acpilight
-	sudo chown $user /sys/class/backlight/intel_backlight/brightness
-    sleep 1 && clear
-    echo "Want to enable touchpad tap-to-click? (y/n)"
-    read answer
-    sleep 1 && clear
+  case $answer in
+    [Yy]*)
+      echo "Installing dependencies..."
+      yay -S acpi acpilight
+      sudo chown $USER /sys/class/backlight/intel_backlight/brightness
+      sleep 1 && clear
+      echo "Want to enable touchpad tap-to-click? (y/n)"
+      read answer
+      sleep 1 && clear
 
-    case $answer in 
-      [Yy]*)
-        echo "Enabling tap-to-click..."
-        sudo mkdir -p /etc/X11/xorg.conf.d && sudo tee <<'EOF' /etc/X11/xorg.conf.d/90-touchpad.conf 1> /dev/null
+      case $answer in 
+        [Yy]*)
+          echo "Enabling tap-to-click..."
+          sudo mkdir -p /etc/X11/xorg.conf.d && sudo tee <<'EOF' /etc/X11/xorg.conf.d/90-touchpad.conf 1> /dev/null
 Section "InputClass"
-          Identifier "touchpad"
-          MatchIsTouchpad "on"
-          Driver "libinput"
-          Option "Tapping" "on"
+    Identifier "touchpad"
+    MatchIsTouchpad "on"
+    Driver "libinput"
+    Option "Tapping" "on"
 EndSection
-
 EOF
-sleep 1 && clear
-        ;;
+          sleep 1 && clear
+          ;;
 
-      [Nn]*)
-        echo "Skipping..."
-        sleep 1 && clear
-        ;;
+        [Nn]*)
+          echo "Skipping..."
+          sleep 1 && clear
+          ;;
 
-      "*")
-        echo "Invalid answer, skipping..."
-        sleep 1 && clear
-        ;;
-    esac
-    ;;
+        *)
+          echo "Invalid answer, skipping..."
+          sleep 1 && clear
+          ;;
+      esac
+      ;;
 
-  [Nn]*)
-    echo "Skipping..."
-    sleep 1 && clear
-    ;;
-  *)
-    echo "Invalid answer, skipping..."
-    sleep 1 && clear
-    ;;
-esac
+    [Nn]*)
+      echo "Skipping..."
+      sleep 1 && clear
+      ;;
+    *)
+      echo "Invalid answer, skipping..."
+      sleep 1 && clear
+      ;;
+  esac
+fi
 
 echo "Already have Oh-My-Zsh installed? (y/n)"
 read answer
