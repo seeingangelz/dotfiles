@@ -1,9 +1,6 @@
 #!/bin/bash
-# Verificar se o yad está em execução
 if pgrep yad >/dev/null 2>&1; then
-    # Se estiver em execução, fechar o yad
     pkill yad
 else
-    # Se não estiver em execução, abrir o yad
-    yad --title='Calendar' --calendar --no-buttons --undecorated --posx=1070 --posy=25 &
+    yad --title='Calendar' --calendar --no-buttons --undecorated --posx=1070 --posy=43 &
 fi
