@@ -1,0 +1,15 @@
+#!/bin/bash
+while true; do
+    player_status=$(playerctl status 2> /dev/null)
+    if [[ "$player_status" == "Playing" ]]; then
+        if ps -C xautolock >/dev/null; then
+            pkill -f "xautolock -detectsleep"
+        fi
+    else
+        if ! ps -C xautolock >/dev/null; then
+            xautolock -detectsleep -time 10 -locker "(xset dpms force off; slock)" \
+                -notify 15 -notifier "notify-send 'SLOCK' 'Screen will be locked in 15 seconds.\nPress any key to cancel.'" &
+        fi
+    fi
+    sleep 10
+done

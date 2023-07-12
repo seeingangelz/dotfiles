@@ -29,6 +29,9 @@ xsettingsd &
 # Set the keyboard layout to brazilian portuguese
 setxkbmap br &
 
+# Start xautolock
+alwayslock &
+
 # Check if sysresources and sysmodmap exist
 if [ -f $sysresources ]; then
   xrdb -merge $sysresources
