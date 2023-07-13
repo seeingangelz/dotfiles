@@ -561,7 +561,7 @@ attachbelow(Client *c)
 	c->next = c->mon->sel->next;
 	c->mon->sel->next = c;
 }
- 
+
 void
 attachbottom(Client *c)
 {
@@ -1286,9 +1286,9 @@ geticonprop(Window win, unsigned int *picw, unsigned int *pich)
 	unsigned long n, extra, *p = NULL;
 	Atom real;
 
-	if (XGetWindowProperty(dpy, win, netatom[NetWMIcon], 0L, LONG_MAX, False, AnyPropertyType, 
+	if (XGetWindowProperty(dpy, win, netatom[NetWMIcon], 0L, LONG_MAX, False, AnyPropertyType,
 						   &real, &format, &n, &extra, (unsigned char **)&p) != Success)
-		return None; 
+		return None;
 	if (n == 0 || format != 32) { XFree(p); return None; }
 
 	unsigned long *bstp = NULL;
@@ -1662,32 +1662,33 @@ motionnotify(XEvent *e)
 
 	if (ev->window == selmon->barwin) {
 		i = x = 0;
+        x = TEXTW(buttonbar);
 		do
 			x += TEXTW(tags[i]);
-		while (ev->x >= x && ++i < LENGTH(tags));
-	/* FIXME when hovering the mouse over the tags and we view the tag,
-	 *       the preview window get's in the preview shot */
+            while (ev->x >= x && ++i < LENGTH(tags));
+            /* FIXME when hovering the mouse over the tags and we view the tag,
+             *       the preview window get's in the preview shot */
 
-	     	if (i < LENGTH(tags)) {
-			if (selmon->previewshow != (i + 1)
-			&& !(selmon->tagset[selmon->seltags] & 1 << i)) {
-				selmon->previewshow = i + 1;
-				showtagpreview(i);
-			} else if (selmon->tagset[selmon->seltags] & 1 << i) {
-				selmon->previewshow = 0;
-				XUnmapWindow(dpy, selmon->tagwin);
-			}
-		} else if (selmon->previewshow) {
-			selmon->previewshow = 0;
-			XUnmapWindow(dpy, selmon->tagwin);
-		}
-	} else if (ev->window == selmon->tagwin) {
-		selmon->previewshow = 0;
-		XUnmapWindow(dpy, selmon->tagwin);
-	} else if (selmon->previewshow) {
-		selmon->previewshow = 0;
-		XUnmapWindow(dpy, selmon->tagwin);
-	}
+                if (i < LENGTH(tags)) {
+                if (selmon->previewshow != (i + 1)
+                && !(selmon->tagset[selmon->seltags] & 1 << i)) {
+                    selmon->previewshow = i + 1;
+                    showtagpreview(i);
+                } else if (selmon->tagset[selmon->seltags] & 1 << i) {
+                    selmon->previewshow = 0;
+                    XUnmapWindow(dpy, selmon->tagwin);
+                }
+            } else if (selmon->previewshow) {
+                selmon->previewshow = 0;
+                XUnmapWindow(dpy, selmon->tagwin);
+            }
+        } else if (ev->window == selmon->tagwin) {
+            selmon->previewshow = 0;
+            XUnmapWindow(dpy, selmon->tagwin);
+        } else if (selmon->previewshow) {
+            selmon->previewshow = 0;
+            XUnmapWindow(dpy, selmon->tagwin);
+    }
 
 	if (ev->window != root)
 		return;
@@ -2650,18 +2651,16 @@ takepreview(void)
 		}
 		imlib_context_set_image(image);
 		imlib_context_set_display(dpy);
-		/* uncomment if using alpha patch */
 		imlib_image_set_has_alpha(1);
 		imlib_context_set_blend(0);
 		imlib_context_set_visual(visual);
-		imlib_context_set_visual(DefaultVisual(dpy, screen));
 		imlib_context_set_drawable(root);
 
 		if (previewbar)
 			imlib_copy_drawable_to_image(0, selmon->wx, selmon->wy, selmon->ww, selmon->wh, 0, 0, 1);
 		else
 			imlib_copy_drawable_to_image(0, selmon->mx, selmon->my, selmon->mw ,selmon->mh, 0, 0, 1);
-		selmon->tagmap[i] = XCreatePixmap(dpy, selmon->tagwin, selmon->mw / scalepreview, selmon->mh / scalepreview, DefaultDepth(dpy, screen));
+		selmon->tagmap[i] = XCreatePixmap(dpy, selmon->tagwin, selmon->mw / scalepreview, selmon->mh / scalepreview, depth);
 		imlib_context_set_drawable(selmon->tagmap[i]);
 		imlib_render_image_part_on_drawable_at_size(0, 0, selmon->mw, selmon->mh, 0, 0, selmon->mw / scalepreview, selmon->mh / scalepreview);
 		imlib_free_image();
@@ -3084,9 +3083,8 @@ updatebars(void)
 	XClassHint ch = {"dwm", "dwm"};
 	for (m = mons; m; m = m->next) {
         if (!m->tagwin) {
-            m->tagwin = XCreateWindow(dpy, root, m->wx, m->by + bh, m->mw / scalepreview,
-                m->mh / scalepreview, 0, DefaultDepth(dpy, screen), CopyFromParent,
-                DefaultVisual(dpy, screen), CWOverrideRedirect|CWBackPixmap|CWEventMask, &wa);
+            m->tagwin = XCreateWindow(dpy, root, m->wx + sp, m->by + vp + bh, m->mw / scalepreview - 2 * sp,
+                m->mh / scalepreview, 0, depth, CopyFromParent, visual, CWOverrideRedirect|CWBackPixel|CWBorderPixel|CWColormap|CWEventMask, &wa);
             XDefineCursor(dpy, m->tagwin, cursor[CurNormal]->cursor);
             XUnmapWindow(dpy, m->tagwin);
         }
