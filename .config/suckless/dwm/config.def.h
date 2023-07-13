@@ -12,7 +12,7 @@ static int topbar                         = 1;   /* 0 means bottom bar */
 static const int user_bh                  = 10;  /* 2 is the default spacing around the bar's font */
 static const int vertpad                  = 10;  /* vertical padding of bar */
 static const int sidepad                  = 10;  /* horizontal padding of bar */
-static const int scalepreview             = 4;   /* preview scaling (display w and h / scalepreview) */
+static const int scalepreview             = 6;   /* preview scaling (display w and h / scalepreview) */
 static const int previewbar               = 1;   /* show the bar in the preview window */
 static const char buttonbar[]             = "";
 #define ICONSIZE                            10   /* icon size */
@@ -32,8 +32,6 @@ static const char *colors[][3] = {
   [SchemeSel]      = { selfgcolor,  selbgcolor,  normbordercolor },
   [SchemeHid]      = { normfgcolor, normbgcolor, normbordercolor },
 };
-static const XPoint stickyicon[]    = { {0,0}, {4,0}, {4,8}, {2,6}, {0,8}, {0,0} }; /* represents the icon as an array of vertices */
-static const XPoint stickyiconbb    = {4,8};	/* defines the bottom right corner of the polygon's bounding box (speeds up scaling) */
 
 static const unsigned int alphas[][3]      = {
   /*                     fg      bg        border    */
@@ -41,6 +39,9 @@ static const unsigned int alphas[][3]      = {
   [SchemeSel]      = { OPAQUE, baralpha, borderalpha },
   [SchemeHid]      = { OPAQUE, baralpha, borderalpha },
 };
+
+static const XPoint stickyicon[]    = { {0,0}, {4,0}, {4,8}, {2,6}, {0,8}, {0,0} }; /* represents the icon as an array of vertices */
+static const XPoint stickyiconbb    = {4,8};	/* defines the bottom right corner of the polygon's bounding box (speeds up scaling) */
 
 typedef struct {
   const char *name;
