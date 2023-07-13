@@ -1,0 +1,315 @@
+From 841ad7d5767f945ee9da6c5afc8cff98ca2f8231 Mon Sep 17 00:00:00 2001
+From: explosion-mental <explosion0mental@gmail.com>
+Date: Thu, 1 Sep 2022 16:21:58 -0500
+Subject: [PATCH] [PATCH] tag previews: free() tagmap and add previewtag func
+
+Allows you to see the contents of an already viewed tag. So a more
+accurate description would be to re-view a tag.
+
+Allows you to see the contents of an already viewed tag. So a more
+accurate description would be to re-view a tag.
+
+Compatibility with the alpha patch (replacing DefaultDepth() and
+DefaultVisual() with depth and visual + window masks) and hide vacants can be
+achieved, I left some lines to uncomment.
+
+added:
+* more compact structure, more probable to patch on top of other patches
+  or easier to patch manually (like not moving the Monitor struct..)
+* create the window preview in updatebars()
+* renamed switchtag() -> takepreview(), makes more sense since it's
+  "taking" the preview (basically a screenshot).
+* option previewbar, whether to show the bar in the preview or not.
+* previewtag which takes a tag (unsigned int from 0 to the last tag) and
+  previews it. This allows to preview tags without using the
+  cursor/mouse (which avoids a recursive previews preview).
+  adding it to the TAGKEYS macro makes more sense so I've added it
+  replacing (keybinding wise, not functionality) toggletag.
+```
+\#define TAGKEYS(KEY,TAG) \
+	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
+	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
+	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
+->	{ MODKEY|ControlMask|ShiftMask, KEY,      previewtag,     {.ui = TAG } },
+```
+---
+ config.def.h |   4 +-
+ config.mk    |   5 +-
+ dwm.c        | 139 ++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 3 files changed, 145 insertions(+), 3 deletions(-)
+
+diff --git a/config.def.h b/config.def.h
+index a2ac963..eb70348 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -3,6 +3,8 @@
+ /* appearance */
+ static const unsigned int borderpx  = 1;        /* border pixel of windows */
+ static const unsigned int snap      = 32;       /* snap pixel */
++static const int scalepreview       = 4;        /* preview scaling (display w and h / scalepreview) */
++static const int previewbar         = 1;        /* show the bar in the preview window */
+ static const int showbar            = 1;        /* 0 means no bar */
+ static const int topbar             = 1;        /* 0 means bottom bar */
+ static const char *fonts[]          = { "monospace:size=10" };
+@@ -50,7 +52,7 @@ static const Layout layouts[] = {
+ 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
+ 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
+ 	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
+-	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
++	{ MODKEY|ControlMask|ShiftMask, KEY,      previewtag,     {.ui = TAG } },     \
+ 
+ /* helper for spawning shell commands in the pre dwm-5.0 fashion */
+ #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
+diff --git a/config.mk b/config.mk
+index b6eb7e0..6f5129e 100644
+--- a/config.mk
++++ b/config.mk
+@@ -20,9 +20,12 @@ FREETYPEINC = /usr/include/freetype2
+ # OpenBSD (uncomment)
+ #FREETYPEINC = ${X11INC}/freetype2
+ 
++# Imlib2 (tag previews)
++IMLIB2LIBS = -lImlib2
++
+ # includes and libs
+ INCS = -I${X11INC} -I${FREETYPEINC}
+-LIBS = -L${X11LIB} -lX11 ${XINERAMALIBS} ${FREETYPELIBS}
++LIBS = -L${X11LIB} -lX11 ${XINERAMALIBS} ${FREETYPELIBS} ${IMLIB2LIBS}
+ 
+ # flags
+ CPPFLAGS = -D_DEFAULT_SOURCE -D_BSD_SOURCE -D_POSIX_C_SOURCE=200809L -DVERSION=\"${VERSION}\" ${XINERAMAFLAGS}
+diff --git a/dwm.c b/dwm.c
+index a96f33c..0c0ba12 100644
+--- a/dwm.c
++++ b/dwm.c
+@@ -40,6 +40,7 @@
+ #include <X11/extensions/Xinerama.h>
+ #endif /* XINERAMA */
+ #include <X11/Xft/Xft.h>
++#include <Imlib2.h>
+ 
+ #include "drw.h"
+ #include "util.h"
+@@ -112,6 +113,9 @@ typedef struct {
+ } Layout;
+ 
+ struct Monitor {
++	int previewshow;
++	Window tagwin;
++	Pixmap *tagmap;
+ 	char ltsymbol[16];
+ 	float mfact;
+ 	int nmaster;
+@@ -235,6 +239,10 @@ static int xerrordummy(Display *dpy, XErrorEvent *ee);
+ static int xerrorstart(Display *dpy, XErrorEvent *ee);
+ static void zoom(const Arg *arg);
+ 
++static void showtagpreview(unsigned int i);
++static void takepreview(void);
++static void previewtag(const Arg *arg);
++
+ /* variables */
+ static const char broken[] = "broken";
+ static char stext[256];
+@@ -438,6 +446,11 @@ buttonpress(XEvent *e)
+ 		if (i < LENGTH(tags)) {
+ 			click = ClkTagBar;
+ 			arg.ui = 1 << i;
++			/* hide preview if we click the bar */
++			if (selmon->previewshow) {
++				selmon->previewshow = 0;
++				XUnmapWindow(dpy, selmon->tagwin);
++			}
+ 		} else if (ev->x < x + blw)
+ 			click = ClkLtSymbol;
+ 		else if (ev->x > selmon->ww - (int)TEXTW(stext))
+@@ -498,6 +511,7 @@ void
+ cleanupmon(Monitor *mon)
+ {
+ 	Monitor *m;
++	size_t i;
+ 
+ 	if (mon == mons)
+ 		mons = mons->next;
+@@ -505,8 +519,14 @@ cleanupmon(Monitor *mon)
+ 		for (m = mons; m && m->next != mon; m = m->next);
+ 		m->next = mon->next;
+ 	}
++	for (i = 0; i < LENGTH(tags); i++)
++		if (mon->tagmap[i])
++			XFreePixmap(dpy, mon->tagmap[i]);
++	free(mon->tagmap);
+ 	XUnmapWindow(dpy, mon->barwin);
+ 	XDestroyWindow(dpy, mon->barwin);
++	XUnmapWindow(dpy, mon->tagwin);
++	XDestroyWindow(dpy, mon->tagwin);
+ 	free(mon);
+ }
+ 
+@@ -641,6 +661,7 @@ createmon(void)
+ 	m->topbar = topbar;
+ 	m->lt[0] = &layouts[0];
+ 	m->lt[1] = &layouts[1 % LENGTH(layouts)];
++	m->tagmap = ecalloc(LENGTH(tags), sizeof(Pixmap));
+ 	strncpy(m->ltsymbol, layouts[0].symbol, sizeof m->ltsymbol);
+ 	return m;
+ }
+@@ -1125,6 +1146,36 @@ motionnotify(XEvent *e)
+ 	static Monitor *mon = NULL;
+ 	Monitor *m;
+ 	XMotionEvent *ev = &e->xmotion;
++	unsigned int i, x;
++
++	if (ev->window == selmon->barwin) {
++		i = x = 0;
++		do
++			x += TEXTW(tags[i]);
++		while (ev->x >= x && ++i < LENGTH(tags));
++	/* FIXME when hovering the mouse over the tags and we view the tag,
++	 *       the preview window get's in the preview shot */
++
++	     	if (i < LENGTH(tags)) {
++			if (selmon->previewshow != (i + 1)
++			&& !(selmon->tagset[selmon->seltags] & 1 << i)) {
++				selmon->previewshow = i + 1;
++				showtagpreview(i);
++			} else if (selmon->tagset[selmon->seltags] & 1 << i) {
++				selmon->previewshow = 0;
++				XUnmapWindow(dpy, selmon->tagwin);
++			}
++		} else if (selmon->previewshow) {
++			selmon->previewshow = 0;
++			XUnmapWindow(dpy, selmon->tagwin);
++		}
++	} else if (ev->window == selmon->tagwin) {
++		selmon->previewshow = 0;
++		XUnmapWindow(dpy, selmon->tagwin);
++	} else if (selmon->previewshow) {
++		selmon->previewshow = 0;
++		XUnmapWindow(dpy, selmon->tagwin);
++	}
+ 
+ 	if (ev->window != root)
+ 		return;
+@@ -1530,6 +1581,82 @@ setmfact(const Arg *arg)
+ 	arrange(selmon);
+ }
+ 
++void
++showtagpreview(unsigned int i)
++{
++	if (!selmon->previewshow || !selmon->tagmap[i]) {
++		XUnmapWindow(dpy, selmon->tagwin);
++		return;
++	}
++
++	XSetWindowBackgroundPixmap(dpy, selmon->tagwin, selmon->tagmap[i]);
++	XCopyArea(dpy, selmon->tagmap[i], selmon->tagwin, drw->gc, 0, 0,
++			selmon->mw / scalepreview, selmon->mh / scalepreview,
++			0, 0);
++	XSync(dpy, False);
++	XMapRaised(dpy, selmon->tagwin);
++}
++
++void
++takepreview(void)
++{
++	Client *c;
++	Imlib_Image image;
++	unsigned int occ = 0, i;
++
++	for (c = selmon->clients; c; c = c->next)
++		occ |= c->tags;
++		//occ |= c->tags == 255 ? 0 : c->tags; /* hide vacants */
++
++	for (i = 0; i < LENGTH(tags); i++) {
++		/* searching for tags that are occupied && selected */
++		if (!(occ & 1 << i) || !(selmon->tagset[selmon->seltags] & 1 << i))
++			continue;
++
++		if (selmon->tagmap[i]) { /* tagmap exist, clean it */
++			XFreePixmap(dpy, selmon->tagmap[i]);
++			selmon->tagmap[i] = 0;
++		}
++
++		/* try to unmap the window so it doesn't show the preview on the preview */
++		selmon->previewshow = 0;
++		XUnmapWindow(dpy, selmon->tagwin);
++		XSync(dpy, False);
++
++		if (!(image = imlib_create_image(sw, sh))) {
++			fprintf(stderr, "dwm: imlib: failed to create image, skipping.");
++			continue;
++		}
++		imlib_context_set_image(image);
++		imlib_context_set_display(dpy);
++		/* uncomment if using alpha patch */
++		//imlib_image_set_has_alpha(1);
++		//imlib_context_set_blend(0);
++		//imlib_context_set_visual(visual);
++		imlib_context_set_visual(DefaultVisual(dpy, screen));
++		imlib_context_set_drawable(root);
++
++		if (previewbar)
++			imlib_copy_drawable_to_image(0, selmon->wx, selmon->wy, selmon->ww, selmon->wh, 0, 0, 1);
++		else
++			imlib_copy_drawable_to_image(0, selmon->mx, selmon->my, selmon->mw ,selmon->mh, 0, 0, 1);
++		selmon->tagmap[i] = XCreatePixmap(dpy, selmon->tagwin, selmon->mw / scalepreview, selmon->mh / scalepreview, DefaultDepth(dpy, screen));
++		imlib_context_set_drawable(selmon->tagmap[i]);
++		imlib_render_image_part_on_drawable_at_size(0, 0, selmon->mw, selmon->mh, 0, 0, selmon->mw / scalepreview, selmon->mh / scalepreview);
++		imlib_free_image();
++	}
++}
++
++void
++previewtag(const Arg *arg)
++{
++	if (selmon->previewshow != (arg->ui + 1))
++		selmon->previewshow = arg->ui + 1;
++	else
++		selmon->previewshow = 0;
++	showtagpreview(arg->ui);
++}
++
+ void
+ setup(void)
+ {
+@@ -1746,6 +1873,7 @@ toggleview(const Arg *arg)
+ 	unsigned int newtagset = selmon->tagset[selmon->seltags] ^ (arg->ui & TAGMASK);
+ 
+ 	if (newtagset) {
++		takepreview();
+ 		selmon->tagset[selmon->seltags] = newtagset;
+ 		focus(NULL);
+ 		arrange(selmon);
+@@ -1811,10 +1939,18 @@ updatebars(void)
+ 	XSetWindowAttributes wa = {
+ 		.override_redirect = True,
+ 		.background_pixmap = ParentRelative,
+-		.event_mask = ButtonPressMask|ExposureMask
++		.event_mask = ButtonPressMask|ExposureMask|PointerMotionMask
+ 	};
++
+ 	XClassHint ch = {"dwm", "dwm"};
+ 	for (m = mons; m; m = m->next) {
++		if (!m->tagwin) {
++			m->tagwin = XCreateWindow(dpy, root, m->wx, m->by + bh, m->mw / scalepreview,
++				m->mh / scalepreview, 0, DefaultDepth(dpy, screen), CopyFromParent,
++				DefaultVisual(dpy, screen), CWOverrideRedirect|CWBackPixmap|CWEventMask, &wa);
++			XDefineCursor(dpy, m->tagwin, cursor[CurNormal]->cursor);
++			XUnmapWindow(dpy, m->tagwin);
++		}
+ 		if (m->barwin)
+ 			continue;
+ 		m->barwin = XCreateWindow(dpy, root, m->wx, m->by, m->ww, bh, 0, DefaultDepth(dpy, screen),
+@@ -2043,6 +2179,7 @@ view(const Arg *arg)
+ {
+ 	if ((arg->ui & TAGMASK) == selmon->tagset[selmon->seltags])
+ 		return;
++	takepreview();
+ 	selmon->seltags ^= 1; /* toggle sel tagset */
+ 	if (arg->ui & TAGMASK)
+ 		selmon->tagset[selmon->seltags] = arg->ui & TAGMASK;
+-- 
+2.37.3
+
