@@ -1011,7 +1011,7 @@ void read_Xresources(void) {
     if (XrmGetResource(xdb, "dmenu.color4", "*", &type, &xval) ==
         True) /* selected hi background color */
       colors[SchemeSelHighlight][ColBg] = strdup(xval.addr);
-    if (XrmGetResource(xdb, "dmenu.color5", "*", &type, &xval) ==
+    if (XrmGetResource(xdb, "dmenu.color7", "*", &type, &xval) ==
         True) /* normal hi foreground color */
       colors[SchemeNormHighlight][ColFg] = strdup(xval.addr);
     if (XrmGetResource(xdb, "dmenu.color0", "*", &type, &xval) ==
