@@ -7,7 +7,7 @@ while true; do
         fi
     else
         if ! ps -C xautolock >/dev/null; then
-            xautolock -detectsleep -time 10 -locker "(xset dpms force off; slock)" \
+            xautolock -detectsleep -time 1 -locker "(xset dpms force off; betterlockscreen -l)" \
                 -notify 15 -notifier "notify-send 'SLOCK' 'Screen will be locked in 15 seconds.\nPress any key to cancel.'" &
         fi
     fi

@@ -170,7 +170,7 @@ static const Key keys[] = {
   { MODKEY,                               XK_F3,                          spawn,                     SHCMD("telegram-desktop -l") },
   { 0,                                    XK_Print,                       spawn,                     SHCMD("screenshot") },
   { MODKEY,                               XK_Print,                       spawn,                     SHCMD("flameshot full") },
-  { MODKEY,                               XK_F11,                         spawn,                     SHCMD("slock") },
+  { MODKEY,                               XK_F11,                         spawn,                     SHCMD("betterlockscreen -l") },
   { 0,                                    XF86XK_AudioRaiseVolume,        spawn,                     SHCMD("statusvolume up") },
   { 0,                                    XF86XK_AudioLowerVolume,        spawn,                     SHCMD("statusvolume down") },
   { 0,                                    XF86XK_AudioMute,               spawn,                     SHCMD("statusvolume mute") },

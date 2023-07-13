@@ -20,6 +20,7 @@ do
     sed -i ~/.Xresources -re '1,1000d'
     cat ~/.cache/wal/colors.Xresources >> ~/.Xresources
     oomox-cli /opt/oomox/scripted_colors/xresources/xresources-reverse
+    betterlockscreen -u "$file"
     wal-telegram -t
     pywalfox update
     killall dunst && dunst &

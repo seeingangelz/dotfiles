@@ -3083,7 +3083,7 @@ updatebars(void)
 	XClassHint ch = {"dwm", "dwm"};
 	for (m = mons; m; m = m->next) {
         if (!m->tagwin) {
-            m->tagwin = XCreateWindow(dpy, root, m->wx + sp, m->by + vp + bh, m->mw / scalepreview - 2 * sp,
+            m->tagwin = XCreateWindow(dpy, root, m->wx + sp, m->by + 2 * vp + bh, m->mw / scalepreview - 2 * sp,
                 m->mh / scalepreview, 0, depth, CopyFromParent, visual, CWOverrideRedirect|CWBackPixel|CWBorderPixel|CWColormap|CWEventMask, &wa);
             XDefineCursor(dpy, m->tagwin, cursor[CurNormal]->cursor);
             XUnmapWindow(dpy, m->tagwin);
