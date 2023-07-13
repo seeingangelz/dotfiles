@@ -2651,9 +2651,9 @@ takepreview(void)
 		imlib_context_set_image(image);
 		imlib_context_set_display(dpy);
 		/* uncomment if using alpha patch */
-		//imlib_image_set_has_alpha(1);
-		//imlib_context_set_blend(0);
-		//imlib_context_set_visual(visual);
+		imlib_image_set_has_alpha(1);
+		imlib_context_set_blend(0);
+		imlib_context_set_visual(visual);
 		imlib_context_set_visual(DefaultVisual(dpy, screen));
 		imlib_context_set_drawable(root);
 
