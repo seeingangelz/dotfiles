@@ -243,8 +243,6 @@ static const Key keys[] = {
   { MODKEY,                               XK_space,                       setlayout,                 {0} },
   { MODKEY|ShiftMask,                     XK_space,                       togglefloating,            {0} },
   { MODKEY,                               XK_s,                           togglesticky,              {0} },
-  { MODKEY,                               XK_4,                           view,                      {.ui = ~0 } },
-  { MODKEY|ShiftMask,                     XK_4,                           tag,                       {.ui = ~0 } },
   { MODKEY,                               XK_comma,                       scratchpad_show,           {0} },
   { MODKEY|ShiftMask,                     XK_comma,                       scratchpad_hide,           {0} },
   { MODKEY,                               XK_period,                      scratchpad_remove,         {0} },

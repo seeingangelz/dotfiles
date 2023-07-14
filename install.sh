@@ -284,7 +284,9 @@ for program in "${suckless[@]}"; do
   cd "$path/.config/suckless/$program" && sudo make clean install
 done
 cd "$path/.config/xmenu" && sudo make install
+sleep 1 && clear
 
+echo "Running pywal..."
 wallpaper_dir="$HOME/Pictures/wallpapers"
 if [ -d "$wallpaper_dir" ]; then
   wallpaper=$(ls "$wallpaper_dir" | shuf -n 1)
@@ -292,6 +294,19 @@ if [ -d "$wallpaper_dir" ]; then
   wal -i "$wallpaper_path" &> /dev/null
   sed -i ~/.Xresources -re '1,1000d'
   cat ~/.cache/wal/colors.Xresources >> ~/.Xresources
+
+  if [ -n "$(pgrep Xorg)" ]; then
+    killall dwm &
+    dwmblocks &
+    picom --experimental-backends & > /dev/null
+    oomox-cli /opt/oomox/scripted_colors/xresources/xresources-reverse > /dev/null
+    betterlockscreen -u "$wallpaper_path" > /dev/null 2>&1
+    wal-telegram -t
+    pywalfox update
+    killall dunst && dunst &
+    sleep 1 && clear
+    notify-send "Rice updated!"
+  fi
 fi
 
 chmod +x $path/.local/bin
