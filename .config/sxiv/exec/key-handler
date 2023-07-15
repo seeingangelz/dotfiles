@@ -27,6 +27,7 @@ do
 
     if [ "$window_manager" = "dwm" ]; then
       killall dwm
+      killall dwmblocks
       dwmblocks &
     elif [ "$window_manager" = "awesome" ]; then
       pkill -HUP awesome

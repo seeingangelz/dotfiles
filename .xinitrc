@@ -6,7 +6,7 @@ userresources=$HOME/.Xresources
 wal -R &
 
 # Start the compositor (picom) with experimental backends enabled
-picom --experimental-backends &
+picom &
 
 # Start dunst
 dunst &
@@ -31,6 +31,9 @@ setxkbmap br &
 
 # Start xautolock
 alwayslock &
+
+# Check updates
+updnotify &
 
 # Check if sysresources and sysmodmap exist
 if [ -f $sysresources ]; then

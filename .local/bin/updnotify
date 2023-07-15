@@ -1,0 +1,11 @@
+#!/bin/bash
+
+while true; do
+  count=$(checkupdates | wc -l)
+
+  if [ "$count" -gt 0 ]; then
+    notify-send "UPDATES AVAILABLE:" "$count packages are ready to update."
+  fi
+
+  sleep 1h
+done

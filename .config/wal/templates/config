@@ -81,12 +81,12 @@ gradient = 1
 gradient_count = 6
 gradient_color_1 = "{color3}"
 gradient_color_2 = "{color4}"
-gradient_color_3 = "{color5}"
+gradient_color_3 = "{color4}"
 gradient_color_4 = "{color1}"
-gradient_color_5 = "{color1}"
-; gradient_color_6 = '#cc8033'
-; gradient_color_7 = '#cc5933'
-; gradient_color_8 = '#cc3333'
+gradient_color_5 = "{color5}"
+gradient_color_6 = "{color4}"
+gradient_color_7 = "{color4}"
+gradient_color_8 = "{color3}"
 
 
 
