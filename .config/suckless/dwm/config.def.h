@@ -9,6 +9,10 @@ static int smartgaps                      = 0;   /* 1 means no outer gap when th
 static const int swallowfloating          = 0;   /* 1 means swallow floating windows by default */
 static int showbar                        = 1;   /* 0 means no bar */
 static int topbar                         = 1;   /* 0 means bottom bar */
+static const char slopspawnstyle[]        = "-t 0 -c 0.92,0.85,0.69,0.3 -o"; /* do NOT define -f (format) here */
+static const char slopresizestyle[]       = "-t 0 -c 0.92,0.85,0.69,0.3"; /* do NOT define -f (format) here */
+static const int riodraw_borders          = 0;   /* 0 or 1, indicates whether the area drawn using slop includes the window borders */
+static const int riodraw_spawnasync       = 0;   /* 0 means that the application is only spawned after a successful selection while * 1 means that the application is being initialised in the background while the selection is made */
 static const int user_bh                  = 10;  /* 2 is the default spacing around the bar's font */
 static const int vertpad                  = 10;  /* vertical padding of bar */
 static const int sidepad                  = 10;  /* horizontal padding of bar */
@@ -166,6 +170,8 @@ static const Key keys[] = {
   /* modifier                             key                             function                   argument         */
   { MODKEY,                               XK_p,                           spawn,                     {.v = dmenucmd } },
   { MODKEY,                               XK_Return,                      spawn,                     {.v = termcmd } },
+  { MODKEY|ControlMask,                   XK_Return,                      riospawn,                  {.v = termcmd } },
+  { MODKEY|ControlMask,                   XK_s,                           rioresize,                 {0} },
   { MODKEY,                               XK_F2,                          spawn,                     {.v = browser } },
   { MODKEY,                               XK_F3,                          spawn,                     SHCMD("telegram-desktop -l") },
   { 0,                                    XK_Print,                       spawn,                     SHCMD("screenshot") },
