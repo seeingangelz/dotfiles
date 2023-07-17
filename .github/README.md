@@ -426,6 +426,11 @@ curl -sSL https://raw.githubusercontent.com/seeingangelz/dotfiles/master/.github
         <p title="Changes case-insensitive item matching to default behaviour."><kbd>case-insensitive</kbd></p>
       </a>
    </td>
+    <td>
+      <a href="https://tools.suckless.org/dmenu/patches/fuzzyhighlight/">
+        <p title="Fuzzy matches gets highlighted."><kbd>fuzzyhighlight</kbd></p>
+      </a>
+   </td>
 </tr>
 </table>
 
