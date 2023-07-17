@@ -1,5 +1,3 @@
-/* See LICENSE file for copyright and license details. */
-
 typedef struct {
 	Cursor cursor;
 } Cur;

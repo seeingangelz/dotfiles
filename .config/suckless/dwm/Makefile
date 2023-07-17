@@ -1,5 +1,4 @@
 # dwm - dynamic window manager
-# See LICENSE file for copyright and license details.
 
 include config.mk
 
@@ -46,7 +45,7 @@ install: all
 	test -f /usr/share/xsessions/dwm.desktop || cp -n dwm.desktop /usr/share/xsessions/
 	chmod 644 /usr/share/xsessions/dwm.desktop
 	chmod 644 ${DESTDIR}${MANPREFIX}/man1/dwm.1
-	rm config.h
+	rm config.h *.o
 
 uninstall:
 	rm -f ${DESTDIR}${PREFIX}/bin/dwm\
