@@ -297,6 +297,11 @@ curl -sSL https://raw.githubusercontent.com/seeingangelz/dotfiles/master/.github
         <p title="Adding rio-like draw-to-resize windows."><kbd>riodraw</kbd></p>
       </a>
     </td>
+    <td>
+      <a href="https://dwm.suckless.org/patches/center/">
+        <p title="Add an iscentered rule to automatically center clients."><kbd>center</kbd></p>
+      </a>
+    </td>
   </tr>
 </table>
   

@@ -42,7 +42,9 @@ install: all
 	chmod 755 ${DESTDIR}${PREFIX}/bin/dwm
 	mkdir -p ${DESTDIR}${MANPREFIX}/man1
 	sed "s/VERSION/${VERSION}/g" < dwm.1 > ${DESTDIR}${MANPREFIX}/man1/dwm.1
-	#cp -f dwm.desktop /usr/share/xsessions/dwm.desktop 	#Enable it only if using a Display Manager
+	mkdir -p /usr/share/xsessions
+	test -f /usr/share/xsessions/dwm.desktop || cp -n dwm.desktop /usr/share/xsessions/
+	chmod 644 /usr/share/xsessions/dwm.desktop
 	chmod 644 ${DESTDIR}${MANPREFIX}/man1/dwm.1
 	rm config.h
 

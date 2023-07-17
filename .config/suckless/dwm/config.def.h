@@ -83,24 +83,24 @@ static const Rule rules[] = {
   * WM_CLASS(STRING) = instance, class
   * WM_NAME(STRING) = title
   */
-  /* class                instance           title        tags mask   isfloating  isterminal  noswallow  monitor   float x,y,w,h  floatborderpx*/
-  { "Emacs",                NULL,             NULL,          1<<0,        0,          0,         -1,        -1,     -1,-1,-1,-1,        -1      },
-  { "firefox",              NULL,             NULL,          1<<1,        0,          0,         -1,        -1,     -1,-1,-1,-1,        -1      },
-  { "qutebrowser",          NULL,             NULL,          1<<1,        0,          0,         -1,        -1,     -1,-1,-1,-1,        -1      },
-  { "steam",                NULL,          "Steam",          1<<2,        0,          0,         -1,        -1,     -1,-1,-1,-1,        -1      },
-  { "steam",                NULL,   "Friends List",          1<<2,        1,          0,         -1,        -1,     -1,-1,-1,-1,        -1      },
-  { "TelegramDesktop",      NULL,             NULL,          1<<3,        0,          0,         -1,        -1,     -1,-1,-1,-1,        -1      },
-  { "St",                   NULL,             NULL,             0,        0,          1,          0,        -1,     -1,-1,-1,-1,        -1      },
-  { "Pcmanfm",              NULL,             NULL,             0,        0,          1,          0,        -1,     -1,-1,-1,-1,        -1      },
-  { "Qalculate-gtk",        NULL,             NULL,             0,        1,          0,          1,        -1,     -1,-1,-1,-1,        -1      },
-  { "Yad",                  NULL,       "Calendar",             0,        1,          0,          1,        -1,     -1,-1,-1,-1,        -1      },
-  { NULL,               "spterm",             NULL,      SPTAG(0),        1,          1,          1,        -1,     -1,-1,-1,-1,        -1      },
-  { NULL,              "spfiles",             NULL,      SPTAG(1),        1,          1,          1,        -1,     -1,-1,-1,-1,        -1      },
-  { NULL,              "spmusic",             NULL,      SPTAG(2),        1,          1,          1,        -1,     -1,-1,-1,-1,        -1      },
-  { NULL,                "spvol",             NULL,      SPTAG(3),        1,          1,          1,        -1,     -1,-1,-1,-1,        -1      },
-  { NULL,                  "obs",             NULL,      SPTAG(4),        1,          0,          1,        -1,     -1,-1,-1,-1,        -1      },
-  { NULL,                 "qalc",             NULL,      SPTAG(5),        1,          0,          1,        -1,     -1,-1,-1,-1,        -1      },
-  { NULL,                 "btop",             NULL,      SPTAG(6),        1,          0,          1,        -1,     -1,-1,-1,-1,        -1      },
+  /* class                instance           title        tags mask   iscentered  isfloating  isterminal  noswallow  monitor  float x,y,w,h  floatborderpx*/
+  { "Emacs",                NULL,             NULL,          1<<0,        0,          0,          0,         -1,       -1,     -1,-1,-1,-1,        -1      },
+  { "firefox",              NULL,             NULL,          1<<1,        0,          0,          0,         -1,       -1,     -1,-1,-1,-1,        -1      },
+  { "qutebrowser",          NULL,             NULL,          1<<1,        0,          0,          0,         -1,       -1,     -1,-1,-1,-1,        -1      },
+  { "steam",                NULL,          "Steam",          1<<2,        0,          0,          0,         -1,       -1,     -1,-1,-1,-1,        -1      },
+  { "steam",                NULL,   "Friends List",          1<<2,        0,          1,          0,         -1,       -1,     -1,-1,-1,-1,        -1      },
+  { "TelegramDesktop",      NULL,             NULL,          1<<3,        0,          0,          0,         -1,       -1,     -1,-1,-1,-1,        -1      },
+  { "St",                   NULL,             NULL,             0,        1,          0,          1,          0,       -1,     -1,-1,-1,-1,        -1      },
+  { "Pcmanfm",              NULL,             NULL,             0,        0,          0,          1,          0,       -1,     -1,-1,-1,-1,        -1      },
+  { "Qalculate-gtk",        NULL,             NULL,             0,        0,          1,          0,          1,       -1,     -1,-1,-1,-1,        -1      },
+  { "Yad",                  NULL,       "Calendar",             0,        0,          1,          0,          1,       -1,     -1,-1,-1,-1,        -1      },
+  { NULL,               "spterm",             NULL,      SPTAG(0),        0,          1,          1,          1,       -1,     -1,-1,-1,-1,        -1      },
+  { NULL,              "spfiles",             NULL,      SPTAG(1),        0,          1,          1,          1,       -1,     -1,-1,-1,-1,        -1      },
+  { NULL,              "spmusic",             NULL,      SPTAG(2),        0,          1,          1,          1,       -1,     -1,-1,-1,-1,        -1      },
+  { NULL,                "spvol",             NULL,      SPTAG(3),        0,          1,          1,          1,       -1,     -1,-1,-1,-1,        -1      },
+  { NULL,                  "obs",             NULL,      SPTAG(4),        0,          1,          0,          1,       -1,     -1,-1,-1,-1,        -1      },
+  { NULL,                 "qalc",             NULL,      SPTAG(5),        0,          1,          0,          1,       -1,     -1,-1,-1,-1,        -1      },
+  { NULL,                 "btop",             NULL,      SPTAG(6),        0,          1,          0,          1,       -1,     -1,-1,-1,-1,        -1      },
 };
 
 /* layout(s) */
