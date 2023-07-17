@@ -427,6 +427,11 @@ curl -sSL https://raw.githubusercontent.com/seeingangelz/dotfiles/master/.github
       </a>
    </td>
     <td>
+      <a href="https://tools.suckless.org/dmenu/patches/fuzzymatch/">
+        <p title="Adds support for fuzzy-matching to dmenu."><kbd>fuzzymatch</kbd></p>
+      </a>
+   </td>
+    <td>
       <a href="https://tools.suckless.org/dmenu/patches/fuzzyhighlight/">
         <p title="Fuzzy matches gets highlighted."><kbd>fuzzyhighlight</kbd></p>
       </a>
