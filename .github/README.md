@@ -275,6 +275,29 @@ curl -sSL https://raw.githubusercontent.com/seeingangelz/dotfiles/master/.github
         <p title="Adds indicator in their bar to show when a window is sticky."><kbd>stickyindicator</kbd></p>
       </a>
     </td>
+    <td>
+      <a href="https://github.com/bakkeby/patches/blob/master/dwm/dwm-dragfact-6.3.diff">
+        <p title="Allows resizing of windows with the mouse."><kbd>dragfact</kbd></p>
+      </a>
+    </td>
+    <td>
+      <a href="https://dwm.suckless.org/patches/tag-previews/">
+        <p title="Allows you to see the contents of an already viewed tag."><kbd>tagpreview</kbd></p>
+      </a>
+    </td>
+    <td>
+      <a href="https://dwm.suckless.org/patches/layoutmenu/">
+        <p title="Adds a context menu for layout switching."><kbd>layoutmenu</kbd></p>
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <a href="https://github.com/bakkeby/patches/blob/master/dwm/dwm-riodraw-nopidmatching-6.3_full.diff">
+        <p title="Adding rio-like draw-to-resize windows."><kbd>riodraw</kbd></p>
+      </a>
+    </td>
+  </tr>
 </table>
   
 > **Note**
