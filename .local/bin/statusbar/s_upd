@@ -5,6 +5,7 @@ fi
 
 case $BLOCK_BUTTON in
     1) setsid -f st -n spterm -g 90x20 -e sh -c "sudo pacman -Syu && kill -42 $(pidof dwmblocks) > /dev/null 2>&1 && setxkbmap br; exec zsh" ;;
+    2) xdotool key --clearmodifiers "Super_L+Shift+Return"; ;;
     3) notify-send "UPDATES AVALIABLE:" "$(checkupdates | awk '{print $1}')" ;;
     6) st -e nvim "$0" ;;
 esac
