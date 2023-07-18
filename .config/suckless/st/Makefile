@@ -31,7 +31,7 @@ st: $(OBJ)
 	$(CC) -o $@ $(OBJ) $(STLDFLAGS)
 
 clean:
-	rm -f st $(OBJ) st-$(VERSION).tar.gz *.orig *.rej
+	rm -f st $(OBJ) st-$(VERSION).tar.gz *.orig *.rej config.h
 
 dist: clean
 	mkdir -p st-$(VERSION)
@@ -53,7 +53,7 @@ install: st
 	cp -f st.desktop $(DESTDIR)$(APPPREFIX)
 	mkdir -p $(DESTDIR)$(ICONPREFIX)
 	[ -f $(ICONNAME) ] && cp -f $(ICONNAME) $(DESTDIR)$(ICONPREFIX) || :
-	rm config.h
+	rm config.h *.o
 
 uninstall:
 	rm -f $(DESTDIR)$(PREFIX)/bin/st

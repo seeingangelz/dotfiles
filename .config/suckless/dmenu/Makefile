@@ -29,7 +29,7 @@ stest: stest.o
 	$(CC) -o $@ stest.o $(LDFLAGS)
 
 clean:
-	rm -f dmenu stest $(OBJ) dmenu-$(VERSION).tar.gz *.orig *.rej
+	rm -f dmenu stest $(OBJ) dmenu-$(VERSION).tar.gz *.orig *.rej config.h
 
 dist: clean
 	mkdir -p dmenu-$(VERSION)
@@ -52,7 +52,7 @@ install: all
 	sed "s/VERSION/$(VERSION)/g" < stest.1 > $(DESTDIR)$(MANPREFIX)/man1/stest.1
 	chmod 644 $(DESTDIR)$(MANPREFIX)/man1/dmenu.1
 	chmod 644 $(DESTDIR)$(MANPREFIX)/man1/stest.1
-	rm config.h
+	rm config.h *.o
 
 uninstall:
 	rm -f $(DESTDIR)$(PREFIX)/bin/dmenu\
