@@ -16,9 +16,9 @@ static const int riodraw_spawnasync       = 0;   /* 0 means that the application
 static const int user_bh                  = 10;  /* 2 is the default spacing around the bar's font */
 static const int vertpad                  = 10;  /* vertical padding of bar */
 static const int sidepad                  = 10;  /* horizontal padding of bar */
-static const int windowmap                = 0;   /* 1 means windows get mapped or unmapped in Xorg */
+static const int windowmap                = 1;   /* 1 means windows get mapped or unmapped in Xorg */
 static const int scalepreview             = 6;   /* preview scaling (display w and h / scalepreview) */
-static const int previewbar               = 1;   /* show the bar in the preview window */
+static const int previewbar               = 0;   /* show the bar in the preview window */
 static const char buttonbar[]             = "";
 #define ICONSIZE                            10   /* icon size */
 #define ICONSPACING                         5    /* space between icon and title */
@@ -73,6 +73,7 @@ static Sp scratchpads[] = {
 /* tagging */
 static const char *tags[] = { "", "", "", "", "" };
 static const char *alttags[] = { "", "", "", "", "" };
+static const char *selectedtags[] = { "", "", "", "", "" };
 
 static const unsigned int ulinepad      = 5;    /* horizontal padding between the underline and tag */
 static const unsigned int ulinestroke   = 0;    /* thickness / height of the underline / 0 to disable */
