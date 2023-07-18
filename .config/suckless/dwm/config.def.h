@@ -16,6 +16,7 @@ static const int riodraw_spawnasync       = 0;   /* 0 means that the application
 static const int user_bh                  = 10;  /* 2 is the default spacing around the bar's font */
 static const int vertpad                  = 10;  /* vertical padding of bar */
 static const int sidepad                  = 10;  /* horizontal padding of bar */
+static const int windowmap                = 0;   /* 1 means windows get mapped or unmapped in Xorg */
 static const int scalepreview             = 6;   /* preview scaling (display w and h / scalepreview) */
 static const int previewbar               = 1;   /* show the bar in the preview window */
 static const char buttonbar[]             = "";

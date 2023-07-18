@@ -2993,24 +2993,33 @@ show(const Arg *arg)
 		selmon->hidsel = 0;
 }
 
-void
-showhide(Client *c)
+void showhide(Client *c)
 {
-	if (!c)
-		return;
-	if (ISVISIBLE(c)) {
-		if ((c->tags & SPTAGMASK) && c->isfloating) {
-			c->x = c->mon->wx + (c->mon->ww / 2 - WIDTH(c) / 2);
-			c->y = c->mon->wy + (c->mon->wh / 2 - HEIGHT(c) / 2);
-		}
-		/* show clients top down */
-		window_map(dpy, c, 1);
-		showhide(c->snext);
-	} else {
-		/* hide clients bottom up */
-		showhide(c->snext);
-		window_unmap(dpy, c->win, root, 1);
-	}
+    if (!c)
+        return;
+    if (ISVISIBLE(c)) {
+        if ((c->tags & SPTAGMASK) && c->isfloating) {
+            c->x = c->mon->wx + (c->mon->ww / 2 - WIDTH(c) / 2);
+            c->y = c->mon->wy + (c->mon->wh / 2 - HEIGHT(c) / 2);
+        }
+        /* show clients top down */
+        if (windowmap) {
+            window_map(dpy, c, 1);
+        } else {
+            XMoveWindow(dpy, c->win, c->x, c->y);
+        }
+        if ((!c->mon->lt[c->mon->sellt]->arrange || c->isfloating) && !c->isfullscreen) {
+            resize(c, c->x, c->y, c->w, c->h, 0);
+        }
+        showhide(c->snext);
+    } else {
+        /* hide clients bottom up */
+        if (windowmap) {
+            window_unmap(dpy, c->win, root, 1);
+        }
+        showhide(c->snext);
+        XMoveWindow(dpy, c->win, WIDTH(c) * -2, c->y);
+    }
 }
 
 void
