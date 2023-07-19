@@ -45,6 +45,7 @@ clean:
 install: $(BUILD_DIR)/$(BIN)
 	$(PRINTF) "INSTALL" $(INSTALL_DIR)/$(BIN)
 	$Qinstall -D -m 755 $< $(INSTALL_DIR)/$(BIN)
+	rm -rf build/
 
 uninstall:
 	$(PRINTF) "RM" $(INSTALL_DIR)/$(BIN)
