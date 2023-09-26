@@ -8,7 +8,7 @@ static const unsigned int fgalpha = OPAQUE;
 
 /* -fn option overrides fonts[0]; default X11 font or font set */
 static const char *fonts[] = {
-    "JetBrainsMono Nerd Font:style=Bold:size=8:antialias=true:autohint=true",
+    "JetBrainsMono Nerd Font:style=Bold:size=10:antialias=true:autohint=true",
     "NotoColorEmoji:pixelsize=8:antialias=true:autohint=true"};
 
 static const char *prompt =

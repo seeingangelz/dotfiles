@@ -22,7 +22,7 @@ static const int previewbar               = 0;   /* show the bar in the preview 
 static const char buttonbar[]             = "";
 #define ICONSIZE                            10   /* icon size */
 #define ICONSPACING                         5    /* space between icon and title */
-static const char *fonts[]                = { "JetBrainsMono Nerd Font:style=Bold:size=8:antialias=true:autohint=true" };
+static const char *fonts[]                = { "JetBrainsMono Nerd Font:style=Bold:size=10:antialias=true:autohint=true" };
 static char normbgcolor[]                 = "#222222";
 static char normbordercolor[]             = "#444444";
 static char normfgcolor[]                 = "#bbbbbb";
