@@ -655,6 +655,200 @@ unswallow(Client *c)
 	arrange(c->mon);
 }
 
+#if HIDEVACANT
+
+void
+buttonpress(XEvent *e)
+{
+	unsigned int i, x, click, occ;
+	Arg arg = {0};
+	Client *c;
+	Monitor *m;
+	XButtonPressedEvent *ev = &e->xbutton;
+	char *text, *s, ch;
+
+	click = ClkRootWin;
+	/* focus monitor if necessary */
+	if ((m = wintomon(ev->window)) && m != selmon) {
+		unfocus(selmon->sel, 1);
+		selmon = m;
+		focus(NULL);
+	}
+	if (ev->window == selmon->barwin) {
+		i = x = occ = 0;
+		/* Bitmask of occupied tags */
+		for (c = m->clients; c; c = c->next)
+			occ |= c->tags;
+
+    	x += TEXTW(buttonbar);
+		if(ev->x < x) {
+			click = ClkButton;
+		} else {
+            unsigned int occ = 0;
+		for(c = m->clients; c; c=c->next)
+			occ |= c->tags;
+		do {
+			/* Do not reserve space for vacant tags */
+			if (!(occ & 1 << i || m->tagset[m->seltags] & 1 << i))
+				continue;
+        x += TEXTW(occ & 1 << i ? (m->tagset[m->seltags] & 1 << i ? selectedtags[i] : alttags[i]) : tags[i]);
+            } while (ev->x >= x && ++i < LENGTH(tags));
+			if (i < LENGTH(tags)) {
+				click = ClkTagBar;
+				arg.ui = 1 << i;
+                /* hide preview if we click the bar */
+                if (selmon->previewshow) {
+                    selmon->previewshow = 0;
+                    XUnmapWindow(dpy, selmon->tagwin);
+                }
+			} else if (ev->x < x + TEXTW(selmon->ltsymbol))
+				click = ClkLtSymbol;
+        else if (ev->x > selmon->ww - statusw - 2 * sp) {
+          x = selmon->ww - statusw - 2 * sp;
+				click = ClkStatusText;
+          statussig = 0;
+      for (text = s = stext; *s && x <= ev->x; s++) {
+        if ((unsigned char)(*s) < ' ') {
+          ch = *s;
+          *s = '\0';
+          x += TEXTW(text) - lrpad;
+          *s = ch;
+          text = s + 1;
+          if (x >= ev->x)
+            break;
+          statussig = ch;
+        }
+      }
+    } else
+		click = ClkWinTitle;
+		}
+	} else if ((c = wintoclient(ev->window))) {
+		focus(c);
+		restack(selmon);
+		XAllowEvents(dpy, ReplayPointer, CurrentTime);
+		click = ClkClientWin;
+	}
+	for (i = 0; i < LENGTH(buttons); i++)
+		if (click == buttons[i].click && buttons[i].func && buttons[i].button == ev->button
+		&& CLEANMASK(buttons[i].mask) == CLEANMASK(ev->state))
+			buttons[i].func((click == ClkTagBar || click == ClkWinTitle) && buttons[i].arg.i == 0 ? &arg : &buttons[i].arg);
+}
+
+void
+drawbar(Monitor *m)
+{
+	int x, w, tw = 0, n = 0, scm;
+	int boxs = drw->fonts->h / 9;
+	int boxw = drw->fonts->h / 6 + 2;
+	unsigned int i, occ = 0, urg = 0;
+	const char *tagtext;
+	Client *c;
+
+	if (!m->showbar)
+		return;
+
+	/* draw status first so it can be overdrawn by tags later */
+	if (m == selmon || 1) { /* status is only drawn on selected monitor */
+		char *text, *s, ch;
+		drw_setscheme(drw, scheme[SchemeSel]);
+
+		x = 0;
+		for (text = s = stext; *s; s++) {
+			if ((unsigned char)(*s) < ' ') {
+				ch = *s;
+				*s = '\0';
+				tw = TEXTW(text) - lrpad;
+                drw_text(drw, m->ww - statusw - 2 * sp + x, 0, tw, bh, 0, text, 0);
+				x += tw;
+				*s = ch;
+				text = s + 1;
+			}
+		}
+		tw = TEXTW(text) - lrpad + 2;
+        drw_text(drw, m->ww - tw - 2 * sp, 0, tw, bh, 0, text, 0);
+		tw = statusw;
+	}
+
+	for (c = m->clients; c; c = c->next) {
+		if (ISVISIBLE(c))
+			n++;
+		occ |= c->tags;
+		if (c->isurgent)
+			urg |= c->tags;
+	}
+	x = 0;
+	w = TEXTW(buttonbar);
+	drw_setscheme(drw, scheme[SchemeSel]);
+	x = drw_text(drw, x, 0, w, bh, lrpad / 2, buttonbar, 0);
+    for (i = 0; i < LENGTH(tags); i++) {
+        /* Do not draw vacant tags */
+		if(!(occ & 1 << i || m->tagset[m->seltags] & 1 << i))
+			continue;
+        tagtext = occ & 1 << i ? (m->tagset[m->seltags] & 1 << i ? selectedtags[i] : alttags[i]) : tags[i];
+		w = TEXTW(tagtext);
+		drw_setscheme(drw, scheme[m->tagset[m->seltags] & 1 << i ? SchemeSel : SchemeNorm]);
+		drw_text(drw, x, 0, w, bh, lrpad / 2, tagtext, urg & 1 << i);
+		if (ulineall || m->tagset[m->seltags] & 1 << i) /* if there are conflicts, just move these lines directly underneath both 'drw_setscheme' and 'drw_text' :) */
+		drw_rect(drw, x + ulinepad, bh - ulinestroke - ulinevoffset, w - (ulinepad * 2), ulinestroke, 1, 0);
+
+        /* Uncomment this if you want the little box over tags
+		if (occ & 1 << i)
+			drw_rect(drw, x + boxs, boxs, boxw, boxw,
+				m == selmon && selmon->sel && selmon->sel->tags & 1 << i,
+				urg & 1 << i); */
+				
+		x += w;
+	}
+	w = TEXTW(m->ltsymbol);
+	drw_setscheme(drw, scheme[SchemeSel]);
+	x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->ltsymbol, 0);
+
+	if ((w = m->ww - tw - x) > bh) {
+		    /* fix overflow when window name is bigger than window width */
+			int mid = (m->ww - (int)TEXTW(m->sel->name)) / 2 - x;
+			/* make sure name will not overlap on tags even when it is very long */
+			mid = mid >= lrpad / 2 ? mid : lrpad / 2;
+		if (n > 0) {
+			int remainder = w % n;
+            int tabw = (1.0 / (double)n) * w + 1 - 2 * sp;
+			for (c = m->clients; c; c = c->next) {
+				if (!ISVISIBLE(c))
+					continue;
+				if (m->sel == c)
+					scm = SchemeSel;
+				else if (HIDDEN(c))
+					scm = SchemeHid;
+				else
+					scm = SchemeNorm;
+				drw_setscheme(drw, scheme[scm]);
+
+				if (remainder >= 0) {
+					if (remainder == 0) {
+						tabw--;
+					}
+					remainder--;
+				}
+					drw_text(drw, x, 0, tabw, bh, (TEXTW(c->name) < tabw ? (tabw - c->icw - TEXTW(c->name) + lrpad) / 2 : lrpad / 2) + (c->icon ? c->icw + ICONSPACING : 0), c->name, 0);
+				if (c->icon)
+					drw_pic(drw, x + (TEXTW(c->name) < tabw ? (tabw - c->icw - TEXTW(c->name) + lrpad) / 2 : lrpad / 2), (bh - c->ich) / 2, c->icw, c->ich, c->icon);
+                if (c->isfloating)
+                	drw_rect(drw, x + boxs, boxs, boxw, boxw, c->isfixed, 0);
+                if (c->issticky)
+                    drw_polygon(drw, x + boxs, c->isfloating ? boxs * 2 + boxw : boxs, stickyiconbb.x, stickyiconbb.y, boxw, boxw * stickyiconbb.y / stickyiconbb.x, stickyicon, LENGTH(stickyicon), Nonconvex, c->tags & c->mon->tagset[c->mon->seltags]);
+				x += tabw;
+			}
+		} else {
+			drw_setscheme(drw, scheme[SchemeNorm]);
+            drw_rect(drw, x, 0, w - 2 * sp, bh, 1, 1);
+		}
+	}
+	m->bt = n;
+	m->btw = w;
+	drw_map(drw, m->barwin, 0, 0, m->ww, bh);
+}
+
+#else
+
 void
 buttonpress(XEvent *e)
 {
@@ -725,6 +919,118 @@ buttonpress(XEvent *e)
 		&& CLEANMASK(buttons[i].mask) == CLEANMASK(ev->state))
 			buttons[i].func((click == ClkTagBar || click == ClkWinTitle) && buttons[i].arg.i == 0 ? &arg : &buttons[i].arg);
 }
+
+void
+drawbar(Monitor *m)
+{
+	int x, w, tw = 0, n = 0, scm;
+	int boxs = drw->fonts->h / 9;
+	int boxw = drw->fonts->h / 6 + 2;
+	unsigned int i, occ = 0, urg = 0;
+	const char *tagtext;
+	Client *c;
+
+	if (!m->showbar)
+		return;
+
+	/* draw status first so it can be overdrawn by tags later */
+	if (m == selmon || 1) { /* status is only drawn on selected monitor */
+		char *text, *s, ch;
+		drw_setscheme(drw, scheme[SchemeSel]);
+
+		x = 0;
+		for (text = s = stext; *s; s++) {
+			if ((unsigned char)(*s) < ' ') {
+				ch = *s;
+				*s = '\0';
+				tw = TEXTW(text) - lrpad;
+                drw_text(drw, m->ww - statusw - 2 * sp + x, 0, tw, bh, 0, text, 0);
+				x += tw;
+				*s = ch;
+				text = s + 1;
+			}
+		}
+		tw = TEXTW(text) - lrpad + 2;
+        drw_text(drw, m->ww - tw - 2 * sp, 0, tw, bh, 0, text, 0);
+		tw = statusw;
+	}
+
+	for (c = m->clients; c; c = c->next) {
+		if (ISVISIBLE(c))
+			n++;
+		occ |= c->tags;
+		if (c->isurgent)
+			urg |= c->tags;
+	}
+	x = 0;
+	w = TEXTW(buttonbar);
+	drw_setscheme(drw, scheme[SchemeSel]);
+	x = drw_text(drw, x, 0, w, bh, lrpad / 2, buttonbar, 0);
+    for (i = 0; i < LENGTH(tags); i++) {
+        tagtext = occ & 1 << i ? (m->tagset[m->seltags] & 1 << i ? selectedtags[i] : alttags[i]) : tags[i];
+		w = TEXTW(tagtext);
+		drw_setscheme(drw, scheme[m->tagset[m->seltags] & 1 << i ? SchemeSel : SchemeNorm]);
+		drw_text(drw, x, 0, w, bh, lrpad / 2, tagtext, urg & 1 << i);
+		if (ulineall || m->tagset[m->seltags] & 1 << i) /* if there are conflicts, just move these lines directly underneath both 'drw_setscheme' and 'drw_text' :) */
+		drw_rect(drw, x + ulinepad, bh - ulinestroke - ulinevoffset, w - (ulinepad * 2), ulinestroke, 1, 0);
+
+        /* Uncomment this if you want the little box over tags
+		if (occ & 1 << i)
+			drw_rect(drw, x + boxs, boxs, boxw, boxw,
+				m == selmon && selmon->sel && selmon->sel->tags & 1 << i,
+				urg & 1 << i); */
+				
+		x += w;
+	}
+	w = TEXTW(m->ltsymbol);
+	drw_setscheme(drw, scheme[SchemeSel]);
+	x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->ltsymbol, 0);
+
+	if ((w = m->ww - tw - x) > bh) {
+		    /* fix overflow when window name is bigger than window width */
+			int mid = (m->ww - (int)TEXTW(m->sel->name)) / 2 - x;
+			/* make sure name will not overlap on tags even when it is very long */
+			mid = mid >= lrpad / 2 ? mid : lrpad / 2;
+		if (n > 0) {
+			int remainder = w % n;
+            int tabw = (1.0 / (double)n) * w + 1 - 2 * sp;
+			for (c = m->clients; c; c = c->next) {
+				if (!ISVISIBLE(c))
+					continue;
+				if (m->sel == c)
+					scm = SchemeSel;
+				else if (HIDDEN(c))
+					scm = SchemeHid;
+				else
+					scm = SchemeNorm;
+				drw_setscheme(drw, scheme[scm]);
+
+				if (remainder >= 0) {
+					if (remainder == 0) {
+						tabw--;
+					}
+					remainder--;
+				}
+					drw_text(drw, x, 0, tabw, bh, (TEXTW(c->name) < tabw ? (tabw - c->icw - TEXTW(c->name) + lrpad) / 2 : lrpad / 2) + (c->icon ? c->icw + ICONSPACING : 0), c->name, 0);
+				if (c->icon)
+					drw_pic(drw, x + (TEXTW(c->name) < tabw ? (tabw - c->icw - TEXTW(c->name) + lrpad) / 2 : lrpad / 2), (bh - c->ich) / 2, c->icw, c->ich, c->icon);
+                if (c->isfloating)
+                	drw_rect(drw, x + boxs, boxs, boxw, boxw, c->isfixed, 0);
+                if (c->issticky)
+                    drw_polygon(drw, x + boxs, c->isfloating ? boxs * 2 + boxw : boxs, stickyiconbb.x, stickyiconbb.y, boxw, boxw * stickyiconbb.y / stickyiconbb.x, stickyicon, LENGTH(stickyicon), Nonconvex, c->tags & c->mon->tagset[c->mon->seltags]);
+				x += tabw;
+			}
+		} else {
+			drw_setscheme(drw, scheme[SchemeNorm]);
+            drw_rect(drw, x, 0, w - 2 * sp, bh, 1, 1);
+		}
+	}
+	m->bt = n;
+	m->btw = w;
+	drw_map(drw, m->barwin, 0, 0, m->ww, bh);
+}
+
+#endif
 
 void
 checkotherwm(void)
@@ -1072,116 +1378,6 @@ dragfact(const Arg *arg)
 
 	XUngrabPointer(dpy, CurrentTime);
 	while (XCheckMaskEvent(dpy, EnterWindowMask, &ev));
-}
-
-void
-drawbar(Monitor *m)
-{
-	int x, w, tw = 0, n = 0, scm;
-	int boxs = drw->fonts->h / 9;
-	int boxw = drw->fonts->h / 6 + 2;
-	unsigned int i, occ = 0, urg = 0;
-	const char *tagtext;
-	Client *c;
-
-	if (!m->showbar)
-		return;
-
-	/* draw status first so it can be overdrawn by tags later */
-	if (m == selmon || 1) { /* status is only drawn on selected monitor */
-		char *text, *s, ch;
-		drw_setscheme(drw, scheme[SchemeSel]);
-
-		x = 0;
-		for (text = s = stext; *s; s++) {
-			if ((unsigned char)(*s) < ' ') {
-				ch = *s;
-				*s = '\0';
-				tw = TEXTW(text) - lrpad;
-                drw_text(drw, m->ww - statusw - 2 * sp + x, 0, tw, bh, 0, text, 0);
-				x += tw;
-				*s = ch;
-				text = s + 1;
-			}
-		}
-		tw = TEXTW(text) - lrpad + 2;
-        drw_text(drw, m->ww - tw - 2 * sp, 0, tw, bh, 0, text, 0);
-		tw = statusw;
-	}
-
-	for (c = m->clients; c; c = c->next) {
-		if (ISVISIBLE(c))
-			n++;
-		occ |= c->tags;
-		if (c->isurgent)
-			urg |= c->tags;
-	}
-	x = 0;
-	w = TEXTW(buttonbar);
-	drw_setscheme(drw, scheme[SchemeSel]);
-	x = drw_text(drw, x, 0, w, bh, lrpad / 2, buttonbar, 0);
-    for (i = 0; i < LENGTH(tags); i++) {
-        tagtext = occ & 1 << i ? (m->tagset[m->seltags] & 1 << i ? selectedtags[i] : alttags[i]) : tags[i];
-		w = TEXTW(tagtext);
-		drw_setscheme(drw, scheme[m->tagset[m->seltags] & 1 << i ? SchemeSel : SchemeNorm]);
-		drw_text(drw, x, 0, w, bh, lrpad / 2, tagtext, urg & 1 << i);
-		if (ulineall || m->tagset[m->seltags] & 1 << i) /* if there are conflicts, just move these lines directly underneath both 'drw_setscheme' and 'drw_text' :) */
-		drw_rect(drw, x + ulinepad, bh - ulinestroke - ulinevoffset, w - (ulinepad * 2), ulinestroke, 1, 0);
-
-        /* Uncomment this if you want the little box over tags
-		if (occ & 1 << i)
-			drw_rect(drw, x + boxs, boxs, boxw, boxw,
-				m == selmon && selmon->sel && selmon->sel->tags & 1 << i,
-				urg & 1 << i); */
-				
-		x += w;
-	}
-	w = TEXTW(m->ltsymbol);
-	drw_setscheme(drw, scheme[SchemeSel]);
-	x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->ltsymbol, 0);
-
-	if ((w = m->ww - tw - x) > bh) {
-		    /* fix overflow when window name is bigger than window width */
-			int mid = (m->ww - (int)TEXTW(m->sel->name)) / 2 - x;
-			/* make sure name will not overlap on tags even when it is very long */
-			mid = mid >= lrpad / 2 ? mid : lrpad / 2;
-		if (n > 0) {
-			int remainder = w % n;
-            int tabw = (1.0 / (double)n) * w + 1 - 2 * sp;
-			for (c = m->clients; c; c = c->next) {
-				if (!ISVISIBLE(c))
-					continue;
-				if (m->sel == c)
-					scm = SchemeSel;
-				else if (HIDDEN(c))
-					scm = SchemeHid;
-				else
-					scm = SchemeNorm;
-				drw_setscheme(drw, scheme[scm]);
-
-				if (remainder >= 0) {
-					if (remainder == 0) {
-						tabw--;
-					}
-					remainder--;
-				}
-					drw_text(drw, x, 0, tabw, bh, (TEXTW(c->name) < tabw ? (tabw - c->icw - TEXTW(c->name) + lrpad) / 2 : lrpad / 2) + (c->icon ? c->icw + ICONSPACING : 0), c->name, 0);
-				if (c->icon)
-					drw_pic(drw, x + (TEXTW(c->name) < tabw ? (tabw - c->icw - TEXTW(c->name) + lrpad) / 2 : lrpad / 2), (bh - c->ich) / 2, c->icw, c->ich, c->icon);
-                if (c->isfloating)
-                	drw_rect(drw, x + boxs, boxs, boxw, boxw, c->isfixed, 0);
-                if (c->issticky)
-                    drw_polygon(drw, x + boxs, c->isfloating ? boxs * 2 + boxw : boxs, stickyiconbb.x, stickyiconbb.y, boxw, boxw * stickyiconbb.y / stickyiconbb.x, stickyicon, LENGTH(stickyicon), Nonconvex, c->tags & c->mon->tagset[c->mon->seltags]);
-				x += tabw;
-			}
-		} else {
-			drw_setscheme(drw, scheme[SchemeNorm]);
-            drw_rect(drw, x, 0, w - 2 * sp, bh, 1, 1);
-		}
-	}
-	m->bt = n;
-	m->btw = w;
-	drw_map(drw, m->barwin, 0, 0, m->ww, bh);
 }
 
 void

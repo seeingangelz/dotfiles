@@ -20,6 +20,7 @@ static const int windowmap                = 1;   /* 1 means windows get mapped o
 static const int scalepreview             = 6;   /* preview scaling (display w and h / scalepreview) */
 static const int previewbar               = 0;   /* show the bar in the preview window */
 static const char buttonbar[]             = "";
+#define HIDEVACANT                          0    /* hide vacant tags */
 #define ICONSIZE                            10   /* icon size */
 #define ICONSPACING                         5    /* space between icon and title */
 static const char *fonts[]                = { "JetBrainsMono Nerd Font:style=Bold:size=10:antialias=true:autohint=true" };
@@ -74,6 +75,9 @@ static Sp scratchpads[] = {
 static const char *tags[] = { "", "", "", "", "" };
 static const char *alttags[] = { "", "", "", "", "" };
 static const char *selectedtags[] = { "", "", "", "", "" };
+//static const char *tags[] = { "1", "2", "3", "4", "5" };
+//static const char *alttags[] = { "<1>", "<2>", "<3>", "<4>", "<5>" };
+//static const char *selectedtags[] = { "{1}", "{2}", "{3}", "{4}", "{5}" };
 
 static const unsigned int ulinepad      = 5;    /* horizontal padding between the underline and tag */
 static const unsigned int ulinestroke   = 0;    /* thickness / height of the underline / 0 to disable */
