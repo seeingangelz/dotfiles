@@ -286,8 +286,8 @@ curl -sSL https://raw.githubusercontent.com/seeingangelz/dotfiles/master/.github
       </a>
     </td>
     <td>
-      <a href="https://dwm.suckless.org/patches/layoutmenu/">
-        <p title="Adds a context menu for layout switching."><kbd>layoutmenu</kbd></p>
+      <a href="https://dwm.suckless.org/patches/hide_vacant_tags/">
+        <p title="This patch prevents dwm from drawing tags with no clients on the bar."><kbd>hidevacanttags</kbd></p>
       </a>
     </td>
   </tr>
@@ -295,6 +295,11 @@ curl -sSL https://raw.githubusercontent.com/seeingangelz/dotfiles/master/.github
     <td>
       <a href="https://github.com/bakkeby/patches/blob/master/dwm/dwm-riodraw-nopidmatching-6.3_full.diff">
         <p title="Adding rio-like draw-to-resize windows."><kbd>riodraw</kbd></p>
+      </a>
+    </td>
+    <td>
+      <a href="https://dwm.suckless.org/patches/layoutmenu/">
+        <p title="Adds a context menu for layout switching."><kbd>layoutmenu</kbd></p>
       </a>
     </td>
     <td>
