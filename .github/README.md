@@ -1,19 +1,19 @@
-<h3 align="center">
-	<img src="https://github-production-user-asset-6210df.s3.amazonaws.com/123886904/246940666-f8141f35-8955-4637-8ca8-3d1be6bad44b.gif" width="175" alt="Logo"/><br/>
-	<img src="https://github-production-user-asset-6210df.s3.amazonaws.com/123886904/246907525-4ad936bf-5f8e-4801-8292-7a28f5252e10.gif" width="300px"/>
-</h3>
+<div align="center">
+    <img src="https://github.com/seeingangelz/dotfiles/assets/123886904/95802264-b4b4-45c9-bfbf-68f5aec21f09" width="200"><br>
+    <img src="https://github.com/seeingangelz/dotfiles/assets/123886904/3ca03a4b-d6f5-46d6-a329-83cb1f862c08" width="300">
+</div><br>
 
 <div align=center>
   
-![](https://img.shields.io/github/stars/seeingangelz/dotfiles?color=48D8FC&logo=apachespark&logoColor=D9E0EE&style=for-the-badge&labelColor=191c27)
-![](https://img.shields.io/github/last-commit/seeingangelz/dotfiles?&logo=github&style=for-the-badge&color=48D8FC&logoColor=D9E0EE&labelColor=191c27)
-![](https://img.shields.io/github/repo-size/seeingangelz/dotfiles?color=48D8FC&logo=hackthebox&logoColor=D9E0EE&style=for-the-badge&labelColor=191c27)
+![](https://img.shields.io/github/stars/seeingangelz/dotfiles?color=CF9FFF&logo=apachespark&logoColor=D9E0EE&style=for-the-badge&labelColor=191c27)
+![](https://img.shields.io/github/last-commit/seeingangelz/dotfiles?&logo=github&style=for-the-badge&color=CF9FFF&logoColor=D9E0EE&labelColor=191c27)
+![](https://img.shields.io/github/repo-size/seeingangelz/dotfiles?color=CF9FFF&logo=hackthebox&logoColor=D9E0EE&style=for-the-badge&labelColor=191c27)
 
 </div>
 
 <img align="right" src="https://user-images.githubusercontent.com/123886904/252125154-ecf02580-1666-487d-ae65-046b6e053dd1.png" alt="Rice Preview" width="363px"/>
 
-```go
+```Go
 ❄️                  Setup / DWM                   ❄️
 ---------------------------------------------------
 ╭─ Distro          -> Arch Linux
